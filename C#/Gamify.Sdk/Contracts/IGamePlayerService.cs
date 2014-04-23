@@ -2,6 +2,6 @@
 {
 	public interface IGamePlayerService
 	{
-		GameMoveResponse ReceiveMove<T> (string senderPlayerName, GameMoveRequest moveRequest);
+		GameMoveResponse ReceiveMove (string senderPlayerName, GameMoveRequest moveRequest);
 	}
 }
