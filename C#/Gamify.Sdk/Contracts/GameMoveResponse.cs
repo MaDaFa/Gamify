@@ -1,12 +1,9 @@
-﻿using System.Runtime.Serialization;
-using Gamify.Sdk.Interfaces;
+﻿using Gamify.Sdk.Interfaces;
 
 namespace Gamify.Sdk.Contracts
 {
-	[DataContract]
 	public class GameMoveResponse
 	{
-		[DataMember]
 		private object gameMoveResponse;
 
 		public IGameMoveResponse<T> GetResponse<T>()
