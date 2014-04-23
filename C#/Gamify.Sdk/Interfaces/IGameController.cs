@@ -8,11 +8,11 @@ namespace Gamify.Sdk.Interfaces
 
         IEnumerable<ISingleGameSession> GameSessions { get; }
 
-		void AddPlayer (string playerName);
+		void ConnectPlayer (string playerName);
 
-		void CreateSession (string playerName);
+		void OpenSession (string playerName);
 
-		void CreateSession (string playerName, string versusPlayerName);
+		void OpenSession (string playerName, string versusPlayerName);
 
 		void CloseSession (string playerName);
     }
