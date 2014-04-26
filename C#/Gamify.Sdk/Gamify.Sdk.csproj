@@ -30,9 +30,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Alchemy">
-      <HintPath>..\packages\Alchemy.2.2.1\lib\net40\Alchemy.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -42,20 +39,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Contracts\GameMoveRequest.cs" />
-    <Compile Include="Contracts\GameMoveResponse.cs" />
-    <Compile Include="Contracts\IGameControllerService.cs" />
-    <Compile Include="Contracts\IGamePlayerService.cs" />
-    <Compile Include="GameMoveReceivedEventArgs.cs" />
-    <Compile Include="Interfaces\IGameController.cs" />
-    <Compile Include="Interfaces\IGameMove.cs" />
-    <Compile Include="Interfaces\IGameMoveResponse.cs" />
-    <Compile Include="Interfaces\IGamePlayer.cs" />
-    <Compile Include="Interfaces\ISingleGameSession.cs" />
+    <Compile Include="IGameController.cs" />
+    <Compile Include="IGameMove.cs" />
+    <Compile Include="IGameMoveResponse.cs" />
+    <Compile Include="IGamePlayer.cs" />
+    <Compile Include="IGameSession.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
