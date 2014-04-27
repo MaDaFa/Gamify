@@ -5,5 +5,7 @@
         public string PlayerName { get; set; }
 
         public string VersusPlayerName { get; set; }
+
+        public string AdditionalInformation { get; set; }
     }
 }

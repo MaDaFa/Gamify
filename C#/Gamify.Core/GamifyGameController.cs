@@ -52,8 +52,8 @@ namespace Gamify.Server
             var player1 = this.Players.FirstOrDefault(p => p.Name == playerName);
             var player2 = this.Players.FirstOrDefault(p => p.Name == versusPlayerName);
 
-            (player1 as GamifyGamePlayer).IsPlaying = true;
-            (player2 as GamifyGamePlayer).IsPlaying = true;
+            player1.IsPlaying = true;
+            player2.IsPlaying = true;
 
             var newSession = new GamifyGameSession(player1, player2);
 
@@ -82,7 +82,7 @@ namespace Gamify.Server
 
             var player = this.Players.FirstOrDefault(p => p.Name == playerName);
 
-            (player as GamifyGamePlayer).IsPlaying = false;
+            player.IsPlaying = false;
         }
 
         public void Disconnect(string playerName)

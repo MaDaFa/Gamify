@@ -35,10 +35,6 @@ namespace WebSocketsTest.Server.Services
             this.gameController = gameController;
         }
 
-        public abstract IGamePlayerBase GetNewPlayer(UserConnectRequestObject userConnectObject, UserContext context);
-
-        public abstract void HandleGameMove(string serializedRequestObject, UserContext context);
-
         public void OnConnect(UserContext context)
 		{
             this.ValidateExistingClient(context);
@@ -83,6 +79,22 @@ namespace WebSocketsTest.Server.Services
             var connectedClient = default(GamifyClient);
 
             this.connectedClients.TryRemove(context.ClientAddress.ToString(), out connectedClient);
+        }
+
+        protected abstract IGamePlayerBase GetNewPlayer(UserConnectRequestObject userConnectObject, UserContext context);
+
+        protected abstract void HandleGameMove(string serializedRequestObject, UserContext context);
+
+        protected virtual void PreOpenSession(string additionalInformation)
+        {
+            if (string.IsNullOrEmpty(additionalInformation))
+            {
+                return;
+            }
+        }
+
+        protected virtual void PostOpenSession(SessionOpenedNotificationObject notification)
+        {
         }
 
         protected void SendBroadcastNotification(GameNotificationType gameNotificationType, object notificationObject)
@@ -141,7 +153,11 @@ namespace WebSocketsTest.Server.Services
         private void OpenSession(GameRequest request)
         {
             var openSessionObject = JsonConvert.DeserializeObject<OpenSessionRequestObject>(request.SerializedRequestObject);
+
+            this.PreOpenSession(openSessionObject.AdditionalInformation);
+
             var newSession = this.gameController.OpenSession(openSessionObject.PlayerName, openSessionObject.VersusPlayerName);
+
             var notification = new SessionOpenedNotificationObject
             {
                 Player1Name = newSession.Player1.Name,
@@ -149,6 +165,8 @@ namespace WebSocketsTest.Server.Services
             };
             var client1 = this.connectedClients.Values.First(c => c.Player.Name == newSession.Player1.Name);
             var client2 = this.connectedClients.Values.First(c => c.Player.Name == newSession.Player2.Name);
+
+            this.PostOpenSession(notification);
 
             this.SendBroadcastNotification(GameNotificationType.UserConnected, notification, client1, client2);
         }
