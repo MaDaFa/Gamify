@@ -35,7 +35,7 @@ namespace WebSocketsTest.Server.Services
             this.gameController = gameController;
         }
 
-        public abstract IGamePlayer GetNewPlayer(UserConnectRequestObject userConnectObject, UserContext context);
+        public abstract IGamePlayerBase GetNewPlayer(UserConnectRequestObject userConnectObject, UserContext context);
 
         public abstract void HandleGameMove(string serializedRequestObject, UserContext context);
 

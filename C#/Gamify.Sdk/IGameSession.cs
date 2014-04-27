@@ -6,13 +6,13 @@
 
         bool IsReady { get; }
 
-        IGamePlayer Player1 { get; }
+        IGamePlayerBase Player1 { get; }
 
-        IGamePlayer Player2 { get; }
+        IGamePlayerBase Player2 { get; }
 
-        void AddPlayer(IGamePlayer player);
+        void AddPlayer(IGamePlayerBase player);
 
-        IGamePlayer GetPlayer(string playerName);
+        IGamePlayerBase GetPlayer(string playerName);
 
         void RemovePlayer(string playerName);
 

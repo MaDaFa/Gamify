@@ -9,28 +9,28 @@ namespace Gamify.Server
 
         public bool IsReady { get { return this.Player1 != null && this.Player2 != null; } }
 
-        public IGamePlayer Player1 { get; private set; }
+        public IGamePlayerBase Player1 { get; private set; }
 
-        public IGamePlayer Player2 { get; private set; }
+        public IGamePlayerBase Player2 { get; private set; }
 
         public GamifyGameSession()
         {
             this.Id = Guid.NewGuid().ToString();
         }
 
-        public GamifyGameSession(IGamePlayer player1)
+        public GamifyGameSession(IGamePlayerBase player1)
             : this()
         {
             this.AddPlayer(player1);
         }
 
-        public GamifyGameSession(IGamePlayer player1, IGamePlayer player2)
+        public GamifyGameSession(IGamePlayerBase player1, IGamePlayerBase player2)
             : this(player1)
         {
             this.AddPlayer(player2);
         }
 
-        public void AddPlayer(IGamePlayer player)
+        public void AddPlayer(IGamePlayerBase player)
         {
             if (this.IsReady)
             {
@@ -47,9 +47,9 @@ namespace Gamify.Server
             }
         }
 
-        public IGamePlayer GetPlayer(string playerName)
+        public IGamePlayerBase GetPlayer(string playerName)
         {
-            var player = default(IGamePlayer);
+            var player = default(IGamePlayerBase);
 
             this.ValidatePlayer(playerName);
 

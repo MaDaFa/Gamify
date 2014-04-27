@@ -7,20 +7,20 @@ namespace Gamify.Server
 {
     public class GamifyGameController : IGameController
     {
-        private readonly IList<IGamePlayer> players;
+        private readonly IList<IGamePlayerBase> players;
         private readonly IList<IGameSession> gameSessions;
 
-        public IEnumerable<IGamePlayer> Players { get { return this.players; } }
+        public IEnumerable<IGamePlayerBase> Players { get { return this.players; } }
 
         public IEnumerable<IGameSession> GameSessions { get { return this.gameSessions; } }
 
         public GamifyGameController()
         {
-            this.players = new List<IGamePlayer>();
+            this.players = new List<IGamePlayerBase>();
             this.gameSessions = new List<IGameSession>();
         }
 
-        public void Connect(IGamePlayer player)
+        public void Connect(IGamePlayerBase player)
         {
             this.ValidateNotExistingPlayer(player.Name);
 
@@ -69,7 +69,7 @@ namespace Gamify.Server
             var existingSession = this.GameSessions.FirstOrDefault(s => s.Id == sessionId && s.HasPlayer(playerName));
             var playerToCall = existingSession.Player1.Name == playerName ? existingSession.Player2 : existingSession.Player1;
 
-            return playerToCall.ProcessMove<T, U>(move);
+            return (playerToCall as IGamePlayer<T,U>).ProcessMove(move);
         }
 
         public void AbandonSession(string playerName, string sessionId)

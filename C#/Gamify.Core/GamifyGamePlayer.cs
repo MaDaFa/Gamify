@@ -2,7 +2,7 @@
 
 namespace Gamify.Server
 {
-    public abstract class GamifyGamePlayer : IGamePlayer
+    public abstract class GamifyGamePlayer : IGamePlayerBase
     {
         public string Name { get; set; }
 
