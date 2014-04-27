@@ -85,12 +85,8 @@ namespace WebSocketsTest.Server.Services
 
         protected abstract void HandleGameMove(string serializedRequestObject, UserContext context);
 
-        protected virtual void PreOpenSession(string additionalInformation)
+        protected virtual void PreOpenSession(OpenSessionRequestObject openSessionRequestObject)
         {
-            if (string.IsNullOrEmpty(additionalInformation))
-            {
-                return;
-            }
         }
 
         protected virtual void PostOpenSession(SessionOpenedNotificationObject notification)
@@ -154,7 +150,7 @@ namespace WebSocketsTest.Server.Services
         {
             var openSessionObject = JsonConvert.DeserializeObject<OpenSessionRequestObject>(request.SerializedRequestObject);
 
-            this.PreOpenSession(openSessionObject.AdditionalInformation);
+            this.PreOpenSession(openSessionObject);
 
             var newSession = this.gameController.OpenSession(openSessionObject.PlayerName, openSessionObject.VersusPlayerName);
 
