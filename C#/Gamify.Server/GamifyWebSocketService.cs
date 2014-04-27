@@ -159,8 +159,8 @@ namespace WebSocketsTest.Server.Services
                 Player1Name = newSession.Player1.Name,
                 Player2Name = newSession.Player2.Name
             };
-            var client1 = this.connectedClients.Values.First(c => c.Player.Name == newSession.Player1.Name);
-            var client2 = this.connectedClients.Values.First(c => c.Player.Name == newSession.Player2.Name);
+            var client1 = this.connectedClients.First(c => c.Value.Player.Name == newSession.Player1.Name).Value;
+            var client2 = this.connectedClients.First(c => c.Value.Player.Name == newSession.Player2.Name).Value;
 
             this.PostOpenSession(notification);
 
@@ -179,8 +179,8 @@ namespace WebSocketsTest.Server.Services
                 SessionId = abandonSessionObject.SessionId,
                 PlayerName = abandonSessionObject.PlayerName
             };
-            var client1 = this.connectedClients.Values.First(c => c.Player.Name == currentSession.Player1.Name);
-            var client2 = this.connectedClients.Values.First(c => c.Player.Name == currentSession.Player2.Name);
+            var client1 = this.connectedClients.First(c => c.Value.Player.Name == currentSession.Player1.Name).Value;
+            var client2 = this.connectedClients.First(c => c.Value.Player.Name == currentSession.Player2.Name).Value;
 
             this.SendBroadcastNotification(GameNotificationType.SessionAbandoned, notification, client1, client2);
         }
