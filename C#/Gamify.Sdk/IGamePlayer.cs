@@ -1,11 +1,14 @@
 ﻿namespace Gamify.Sdk
 {
-    public interface IGamePlayer
+    public interface IGamePlayer<TMove, UResponse> : IGamePlayerBase
+    {
+        IGameMoveResponse<UResponse> ProcessMove(IGameMove<TMove> move);
+    }
+
+    public interface IGamePlayerBase
     {
         string Name { get; }
 
         bool IsPlaying { get; }
-
-        IGameMoveResponse<U> ProcessMove<T, U>(IGameMove<T> move);
     }
 }

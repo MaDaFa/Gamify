@@ -7,6 +7,6 @@ namespace Gamify.Server
     {
         public UserContext Context { get; set; }
 
-        public IGamePlayer Player { get; set; }
+        public IGamePlayerBase Player { get; set; }
     }
 }
