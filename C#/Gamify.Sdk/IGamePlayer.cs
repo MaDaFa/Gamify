@@ -9,6 +9,6 @@
     {
         string Name { get; }
 
-        bool IsPlaying { get; }
+        bool IsPlaying { get; set; }
     }
 }
