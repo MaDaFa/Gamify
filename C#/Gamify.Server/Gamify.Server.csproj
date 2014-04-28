@@ -49,12 +49,14 @@
   <ItemGroup>
     <Compile Include="Configuration\GamifyConfiguration.cs" />
     <Compile Include="Configuration\IGamifyConfiguration.cs" />
+    <Compile Include="Contracts\Notifications\GameInviteNotificationObject.cs" />
     <Compile Include="Contracts\Notifications\SessionAbandonedNotificationObject.cs" />
     <Compile Include="Contracts\Notifications\SessionOpenedNotificationObject.cs" />
     <Compile Include="Contracts\Notifications\UserDisconnectedNotificationObject.cs" />
     <Compile Include="Contracts\Requests\AbandonSessionRequestObject.cs" />
     <Compile Include="Contracts\Notifications\ErrorNotificationObject.cs" />
     <Compile Include="Contracts\Notifications\GameNotification.cs" />
+    <Compile Include="Contracts\Requests\GameAcceptedRequestObject.cs" />
     <Compile Include="Contracts\Requests\GameRequest.cs" />
     <Compile Include="Contracts\Responses\GameResponse.cs" />
     <Compile Include="Contracts\Notifications\INotificationObject.cs" />

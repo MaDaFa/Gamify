@@ -4,8 +4,9 @@
     {
         UserConnect = 1,
         OpenSession = 2,
-        GameMove = 3,
-        AbandonSession = 4,
+        GameAccepted = 3,
+        GameMove = 4,
+        AbandonSession = 5,
         UserDisconnect = 255
     }
 

@@ -4,9 +4,11 @@
     {
         UserConnected = 1,
         SessionOpened = 2,
-        GameMove = 3,
-        SessionAbandoned = 4,
-        UserDisconnected = 5,
+        GameInvite = 3,
+        GameMove = 4,
+        GameMoveResult = 5,
+        SessionAbandoned = 6,
+        UserDisconnected = 7,
         Message = 254,
         Error = 255
     }
