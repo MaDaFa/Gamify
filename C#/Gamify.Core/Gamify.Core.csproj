@@ -39,6 +39,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GamifyGamePlayer.cs" />
     <Compile Include="GamifyGameSession.cs" />
     <Compile Include="GamifyGameController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
