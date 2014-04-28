@@ -6,8 +6,9 @@
         SessionOpened = 2,
         GameInvite = 3,
         GameMove = 4,
-        SessionAbandoned = 5,
-        UserDisconnected = 6,
+        GameMoveResult = 5,
+        SessionAbandoned = 6,
+        UserDisconnected = 7,
         Message = 254,
         Error = 255
     }
