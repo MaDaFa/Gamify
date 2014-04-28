@@ -58,7 +58,6 @@
     <Compile Include="Contracts\Notifications\GameNotification.cs" />
     <Compile Include="Contracts\Requests\GameAcceptedRequestObject.cs" />
     <Compile Include="Contracts\Requests\GameRequest.cs" />
-    <Compile Include="Contracts\Responses\GameResponse.cs" />
     <Compile Include="Contracts\Notifications\INotificationObject.cs" />
     <Compile Include="Contracts\Requests\IRequestObject.cs" />
     <Compile Include="Contracts\Notifications\MessageNotificationObject.cs" />
