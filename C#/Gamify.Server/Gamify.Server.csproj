@@ -66,6 +66,7 @@
     <Compile Include="Contracts\Notifications\UserConnectedNotificationObject.cs" />
     <Compile Include="Contracts\Requests\UserConnectRequestObject.cs" />
     <Compile Include="Contracts\Requests\UserDisconnectRequestObject.cs" />
+    <Compile Include="Contracts\Responses\IResponseObject.cs" />
     <Compile Include="GamifyClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="GamifyWebSocketService.cs" />
