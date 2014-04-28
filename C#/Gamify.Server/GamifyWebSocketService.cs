@@ -36,17 +36,17 @@ namespace WebSocketsTest.Server.Services
             this.gameController = gameController;
         }
 
-        public virtual void Start()
+        public void Start()
         {
             this.webSocketServer.Start();
         }
 
-        public virtual void Stop()
+        public void Stop()
         {
             this.webSocketServer.Stop();
         }
 
-        public virtual void Restart()
+        public void Restart()
         {
             this.webSocketServer.Restart();
         }
