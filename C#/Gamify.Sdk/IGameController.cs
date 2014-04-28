@@ -4,11 +4,11 @@ namespace Gamify.Sdk
 {
     public interface IGameController
     {
-        IEnumerable<IGamePlayerBase> Players { get; }
+        IEnumerable<IGamePlayer> Players { get; }
 
-        IEnumerable<IGameSession> GameSessions { get; }
+        IEnumerable<IGameSession> Sessions { get; }
 
-        void Connect(IGamePlayerBase player);
+        void Connect(IGamePlayer player);
 
         IGameSession OpenSession(string playerName, string versusPlayerName = null);
 

@@ -31,10 +31,14 @@ namespace WebSocketsTest.Server.Services
                 OnDisconnect = OnDisconnect,
                 TimeOut = new TimeSpan(configuration.TimeoutHours, configuration.TimeoutMinutes, configuration.TimeoutSeconds)
             };
-            this.webSocketServer.Start();
 
             this.connectedClients = new ConcurrentDictionary<string, GamifyClient>();
             this.gameController = gameController;
+        }
+
+        public virtual void Start()
+        {
+            this.webSocketServer.Start();
         }
 
         public void OnConnect(UserContext context)
@@ -85,8 +89,6 @@ namespace WebSocketsTest.Server.Services
 
             this.connectedClients.TryRemove(context.ClientAddress.ToString(), out connectedClient);
         }
-
-        protected abstract IGamePlayerBase GetNewPlayer(UserConnectRequestObject userConnectObject, UserContext context);
 
         protected abstract void HandleGameMove(string serializedRequestObject, UserContext context);
 
@@ -140,16 +142,18 @@ namespace WebSocketsTest.Server.Services
         private void ConnectUser(GameRequest request, UserContext context)
         {
             var userConnectObject = JsonConvert.DeserializeObject<UserConnectRequestObject>(request.SerializedRequestObject);
-            var newPlayer = this.GetNewPlayer(userConnectObject, context);
+            var newPlayer = new GamifyGamePlayer(userConnectObject.PlayerName);
             var connectedClient = this.connectedClients
                 .First(c => c.Key == context.ClientAddress.ToString())
                 .Value;
 
             connectedClient.Player = newPlayer;
 
+            this.gameController.Connect(newPlayer);
+
             var notification = new UserConnectedNotificationObject
             {
-                PlayerName = newPlayer.Name
+                PlayerName = newPlayer.UserName
             };
 
             this.SendBroadcastNotification(GameNotificationType.UserConnected, notification);
@@ -166,13 +170,13 @@ namespace WebSocketsTest.Server.Services
             var gameInviteNotificationObject = new GameInviteNotificationObject
             {
                 SessionId = newSession.Id,
-                Player1Name = newSession.Player1.Name
+                Player1Name = newSession.Player1.Information.UserName
             };
 
             this.PostOpenSession(gameInviteNotificationObject);
 
             var client2 = this.connectedClients
-                .First(c => c.Value.Player.Name == newSession.Player2.Name)
+                .First(c => c.Value.Player.UserName == newSession.Player2.Information.UserName)
                 .Value;
 
             this.SendNotification(GameNotificationType.GameInvite, gameInviteNotificationObject, client2);
@@ -184,17 +188,17 @@ namespace WebSocketsTest.Server.Services
 
             this.PreGameAccepted(gameAcceptedObject);
 
-            var newSession = this.gameController.GameSessions.First(s => s.Id == gameAcceptedObject.SessionId);
+            var newSession = this.gameController.Sessions.First(s => s.Id == gameAcceptedObject.SessionId);
 
             (newSession as GamifyGameSession).IsReady = true;
 
             var notification = new SessionOpenedNotificationObject
             {
-                Player1Name = newSession.Player1.Name,
-                Player2Name = newSession.Player2.Name
+                Player1Name = newSession.Player1.Information.UserName,
+                Player2Name = newSession.Player2.Information.UserName
             };
-            var client1 = this.connectedClients.First(c => c.Value.Player.Name == newSession.Player1.Name).Value;
-            var client2 = this.connectedClients.First(c => c.Value.Player.Name == newSession.Player2.Name).Value;
+            var client1 = this.connectedClients.First(c => c.Value.Player.UserName == newSession.Player1.Information.UserName).Value;
+            var client2 = this.connectedClients.First(c => c.Value.Player.UserName == newSession.Player2.Information.UserName).Value;
 
             this.SendBroadcastNotification(GameNotificationType.SessionOpened, notification, client1, client2);
         }
@@ -202,7 +206,7 @@ namespace WebSocketsTest.Server.Services
         private void AbandonSession(GameRequest request)
         {
             var abandonSessionObject = JsonConvert.DeserializeObject<AbandonSessionRequestObject>(request.SerializedRequestObject);
-            var currentSession = this.gameController.GameSessions.First(s => s.Id == abandonSessionObject.SessionId);
+            var currentSession = this.gameController.Sessions.First(s => s.Id == abandonSessionObject.SessionId);
 
             this.gameController.AbandonSession(abandonSessionObject.PlayerName, abandonSessionObject.SessionId);
 
@@ -211,8 +215,8 @@ namespace WebSocketsTest.Server.Services
                 SessionId = abandonSessionObject.SessionId,
                 PlayerName = abandonSessionObject.PlayerName
             };
-            var client1 = this.connectedClients.First(c => c.Value.Player.Name == currentSession.Player1.Name).Value;
-            var client2 = this.connectedClients.First(c => c.Value.Player.Name == currentSession.Player2.Name).Value;
+            var client1 = this.connectedClients.First(c => c.Value.Player.UserName == currentSession.Player1.Information.UserName).Value;
+            var client2 = this.connectedClients.First(c => c.Value.Player.UserName == currentSession.Player2.Information.UserName).Value;
 
             this.SendBroadcastNotification(GameNotificationType.SessionAbandoned, notification, client1, client2);
         }

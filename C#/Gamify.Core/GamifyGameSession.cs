@@ -9,28 +9,28 @@ namespace Gamify.Server
 
         public bool IsReady { get; set; }
 
-        public IGamePlayerBase Player1 { get; private set; }
+        public ISessionGamePlayerBase Player1 { get; private set; }
 
-        public IGamePlayerBase Player2 { get; private set; }
+        public ISessionGamePlayerBase Player2 { get; private set; }
 
         public GamifyGameSession()
         {
             this.Id = Guid.NewGuid().ToString();
         }
 
-        public GamifyGameSession(IGamePlayerBase player1)
+        public GamifyGameSession(ISessionGamePlayerBase player1)
             : this()
         {
             this.AddPlayer(player1);
         }
 
-        public GamifyGameSession(IGamePlayerBase player1, IGamePlayerBase player2)
+        public GamifyGameSession(ISessionGamePlayerBase player1, ISessionGamePlayerBase player2)
             : this(player1)
         {
             this.AddPlayer(player2);
         }
 
-        public void AddPlayer(IGamePlayerBase player)
+        public void AddPlayer(ISessionGamePlayerBase player)
         {
             if (this.IsReady)
             {
@@ -47,17 +47,17 @@ namespace Gamify.Server
             }
         }
 
-        public IGamePlayerBase GetPlayer(string playerName)
+        public ISessionGamePlayerBase GetPlayer(string playerName)
         {
-            var player = default(IGamePlayerBase);
+            var player = default(ISessionGamePlayerBase);
 
             this.ValidatePlayer(playerName);
 
-            if (this.Player1 != null && this.Player1.Name == playerName)
+            if (this.Player1 != null && this.Player1.Information.UserName == playerName)
             {
                 player = this.Player1;
             }
-            else if (this.Player2 != null && this.Player2.Name == playerName)
+            else if (this.Player2 != null && this.Player2.Information.UserName == playerName)
             {
                 player = this.Player2;
             }
@@ -69,11 +69,11 @@ namespace Gamify.Server
         {
             this.ValidatePlayer(playerName);
 
-            if (this.Player1 != null && this.Player1.Name == playerName)
+            if (this.Player1 != null && this.Player1.Information.UserName == playerName)
             {
                 this.Player1 = null;
             }
-            else if (this.Player2 != null && this.Player2.Name == playerName)
+            else if (this.Player2 != null && this.Player2.Information.UserName == playerName)
             {
                 this.Player2 = null;
             }
@@ -81,7 +81,7 @@ namespace Gamify.Server
 
         public bool HasPlayer(string playerName)
         {
-            return (this.Player1 != null && this.Player1.Name == playerName) || (this.Player2 != null && this.Player2.Name == playerName);
+            return (this.Player1 != null && this.Player1.Information.UserName == playerName) || (this.Player2 != null && this.Player2.Information.UserName == playerName);
         }
 
         private void ValidatePlayer(string playerName)
