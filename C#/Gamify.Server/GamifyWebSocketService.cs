@@ -41,6 +41,16 @@ namespace WebSocketsTest.Server.Services
             this.webSocketServer.Start();
         }
 
+        public virtual void Stop()
+        {
+            this.webSocketServer.Stop();
+        }
+
+        public virtual void Restart()
+        {
+            this.webSocketServer.Restart();
+        }
+
         public void OnConnect(UserContext context)
 		{
             this.ValidateExistingClient(context);
