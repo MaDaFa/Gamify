@@ -7,7 +7,16 @@ namespace Gamify.Server
     {
         public string Id { get; private set; }
 
-        public bool IsReady { get; set; }
+        public bool IsReady
+        {
+            get
+            {
+                var player1Ready = this.Player1 != null && this.Player1.IsReady;
+                var player2Ready = this.Player2 != null && this.Player2.IsReady;
+
+                return player1Ready && player2Ready;
+            }
+        }
 
         public ISessionGamePlayerBase Player1 { get; private set; }
 

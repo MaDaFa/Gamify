@@ -8,7 +8,7 @@ namespace Gamify.Server.Contracts.Notifications
         {
             get
             {
-                return string.Format("The player {0} has sent an invitation to join Session {1}", this.Player1Name, this.SessionId);
+                return string.Format("The player {0} has sent an invitation to join Game {1}", this.Player1Name, this.SessionId);
             }
         }
 

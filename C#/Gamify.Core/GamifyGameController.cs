@@ -20,6 +20,8 @@ namespace Gamify.Server
             this.sessions = new List<IGameSession>();
         }
 
+        protected abstract ISessionGamePlayerBase GetSessionPlayer(IGamePlayer player);
+
         public void Connect(IGamePlayer player)
         {
             this.ValidateNotExistingPlayer(player.UserName);
@@ -27,32 +29,13 @@ namespace Gamify.Server
             this.players.Add(player);
         }
 
-        public IGameSession OpenSession(string playerName, string versusPlayerName = null)
+        public IGameSession OpenSession(ISessionGamePlayerBase sessionPlayer1, ISessionGamePlayerBase sessionPlayer2 = null)
         {
-            if (string.IsNullOrEmpty(versusPlayerName))
+            if (sessionPlayer2 == null)
             {
-                var versusPlayer = this.Players
-                    .OrderBy(p => Guid.NewGuid())
-                    .FirstOrDefault(p => p.UserName != playerName);
-
-                if (versusPlayer == null)
-                {
-                    var errorMessage = "There are no users available to play";
-
-                    throw new ApplicationException(errorMessage);
-                }
-
-                versusPlayerName = versusPlayer.UserName;
+                sessionPlayer2 = this.GetRandomSessionPlayer2(sessionPlayer1);
             }
 
-            this.ValidateExistingPlayer(playerName);
-            this.ValidateExistingPlayer(versusPlayerName);
-
-            var player1 = this.Players.FirstOrDefault(p => p.UserName == playerName);
-            var player2 = this.Players.FirstOrDefault(p => p.UserName == versusPlayerName);
-
-            var sessionPlayer1 = this.GetSessionPlayer(player1);
-            var sessionPlayer2 = this.GetSessionPlayer(player2);
             var newSession = new GamifyGameSession(sessionPlayer1, sessionPlayer2);
 
             this.sessions.Add(newSession);
@@ -94,8 +77,6 @@ namespace Gamify.Server
             
             this.players.Remove(player);
         }
-
-        protected abstract ISessionGamePlayerBase GetSessionPlayer(IGamePlayer player);
 
         private void ValidateNotExistingPlayer(string playerName)
         {
@@ -140,6 +121,22 @@ namespace Gamify.Server
 
                 throw new ApplicationException(errorMessage);
             }
+        }
+
+        private ISessionGamePlayerBase GetRandomSessionPlayer2(ISessionGamePlayerBase sessionPlayer1)
+        {
+            var randomPlayer2 = this.Players
+                .OrderBy(p => Guid.NewGuid())
+                .FirstOrDefault(p => p.UserName != sessionPlayer1.Information.UserName);
+
+            if (randomPlayer2 == null)
+            {
+                var errorMessage = "There are no users available to play";
+
+                throw new ApplicationException(errorMessage);
+            }
+
+            return this.GetSessionPlayer(randomPlayer2);
         }
     }
 }

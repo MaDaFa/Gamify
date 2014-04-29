@@ -2,17 +2,17 @@
 {
     public enum GameRequestType : int
     {
-        UserConnect = 1,
-        OpenSession = 2,
+        PlayerConnect = 1,
+        CreateGame = 2,
         GameAccepted = 3,
         GameMove = 4,
-        AbandonSession = 5,
-        UserDisconnect = 255
+        AbandonGame = 5,
+        PlayerDisconnect = 255
     }
 
     public class GameRequest
     {
-        public GameRequestType Type { get; set; }
+        public int Type { get; set; }
 
         public string SerializedRequestObject { get; set; }
     }

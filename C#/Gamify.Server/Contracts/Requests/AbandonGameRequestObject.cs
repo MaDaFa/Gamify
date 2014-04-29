@@ -1,6 +1,6 @@
 ﻿namespace Gamify.Server.Contracts.Requests
 {
-    public class AbandonSessionRequestObject : IRequestObject
+    public class AbandonGameRequestObject : IRequestObject
     {
         public string SessionId { get; set; }
 
