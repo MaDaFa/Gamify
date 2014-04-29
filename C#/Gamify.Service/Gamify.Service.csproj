@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{63569E91-8ADF-4E6F-8D06-79AD85DD38AB}</ProjectGuid>
+    <ProjectGuid>{8468540E-22A2-42A1-896D-D6D9C34F4F34}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Gamify.Service</RootNamespace>
-    <AssemblyName>Gamify.Core</AssemblyName>
+    <AssemblyName>Gamify.Service</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -30,6 +30,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.6.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -39,16 +43,40 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GamifyGamePlayer.cs" />
-    <Compile Include="GamifyGameSession.cs" />
-    <Compile Include="GamifyGameController.cs" />
+    <Compile Include="Contracts\Notifications\ErrorNotificationObject.cs" />
+    <Compile Include="Contracts\Notifications\GameAbandonedNotificationObject.cs" />
+    <Compile Include="Contracts\Notifications\GameCreatedNotificationObject.cs" />
+    <Compile Include="Contracts\Notifications\GameInviteNotificationObject.cs" />
+    <Compile Include="Contracts\Notifications\GameNotification.cs" />
+    <Compile Include="Contracts\Notifications\INotificationObject.cs" />
+    <Compile Include="Contracts\Notifications\MessageNotificationObject.cs" />
+    <Compile Include="Contracts\Notifications\PlayerConnectedNotificationObject.cs" />
+    <Compile Include="Contracts\Notifications\PlayerDisconnectedNotificationObject.cs" />
+    <Compile Include="Contracts\Requests\AbandonGameRequestObject.cs" />
+    <Compile Include="Contracts\Requests\CreateGameRequestObject.cs" />
+    <Compile Include="Contracts\Requests\GameAcceptedRequestObject.cs" />
+    <Compile Include="Contracts\Requests\GameRequest.cs" />
+    <Compile Include="Contracts\Requests\IRequestObject.cs" />
+    <Compile Include="Contracts\Requests\PlayerConnectRequestObject.cs" />
+    <Compile Include="Contracts\Requests\PlayerDisconnectRequestObject.cs" />
+    <Compile Include="GamifyMessageEventArgs.cs" />
+    <Compile Include="GamifyService.cs" />
+    <Compile Include="IGamifyClient.cs" />
+    <Compile Include="IGamifyService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Gamify.Core\Gamify.Core.csproj">
+      <Project>{63569e91-8adf-4e6f-8d06-79ad85dd38ab}</Project>
+      <Name>Gamify.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Gamify.Sdk\Gamify.Sdk.csproj">
       <Project>{cb44312b-0775-404b-a6ec-08eb45b738e7}</Project>
       <Name>Gamify.Sdk</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

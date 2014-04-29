@@ -1,6 +1,6 @@
 ﻿using Gamify.Sdk;
 
-namespace Gamify.Server
+namespace Gamify.Service
 {
     public class GamifyGamePlayer : IGamePlayer
     {
