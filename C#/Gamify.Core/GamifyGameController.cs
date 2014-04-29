@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Gamify.Server
+namespace Gamify.Service
 {
     public abstract class GamifyGameController : IGameController
     {

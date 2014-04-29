@@ -1,7 +1,7 @@
 ﻿using Gamify.Sdk;
 using System;
 
-namespace Gamify.Server
+namespace Gamify.Service
 {
     public class GamifyGameSession : IGameSession
     {
