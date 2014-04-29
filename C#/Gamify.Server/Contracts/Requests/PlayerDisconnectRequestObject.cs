@@ -1,6 +1,6 @@
 ﻿namespace Gamify.Server.Contracts.Requests
 {
-    public class UserConnectRequestObject : IRequestObject
+    public class PlayerDisconnectRequestObject : IRequestObject
     {
         public string PlayerName { get; set; }
     }

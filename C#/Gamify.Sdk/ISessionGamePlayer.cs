@@ -4,7 +4,7 @@
     {
         IGamePlayer Information { get; set; }
 
-        bool IsPlaying { get; set; }
+        bool IsReady { get; set; }
 
         bool NeedsToMove { get; set; }
     }

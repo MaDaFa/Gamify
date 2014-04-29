@@ -10,7 +10,7 @@ namespace Gamify.Sdk
 
         void Connect(IGamePlayer player);
 
-        IGameSession OpenSession(string playerName, string versusPlayerName = null);
+        IGameSession OpenSession(ISessionGamePlayerBase sessionPlayer1, ISessionGamePlayerBase sessionPlayer2 = null);
 
         IGameMoveResponse<U> HandleMove<T, U>(string playerName, string sessionId, IGameMove<T> move);
 

@@ -1,6 +1,6 @@
 ﻿namespace Gamify.Server.Contracts.Notifications
 {
-    public class UserConnectedNotificationObject : INotificationObject
+    public class PlayerConnectedNotificationObject : INotificationObject
     {
         public string Message
         {

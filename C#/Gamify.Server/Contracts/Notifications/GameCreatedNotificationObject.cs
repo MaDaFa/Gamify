@@ -1,12 +1,12 @@
 ﻿namespace Gamify.Server.Contracts.Notifications
 {
-    public class SessionOpenedNotificationObject : INotificationObject
+    public class GameCreatedNotificationObject : INotificationObject
     {
         public string Message
         {
             get
             {
-                return string.Format("A new session between {0} and {1} has been opened", this.Player1Name, this.Player2Name);
+                return string.Format("A new game between {0} and {1} has been created", this.Player1Name, this.Player2Name);
             }
         }
 
