@@ -8,24 +8,24 @@ using System.Web.WebSockets;
 
 namespace Gamify.Service
 {
-    public abstract class WebSocketAsyncHandler : HttpTaskAsyncHandler
+    public abstract class GamifyWebSocketAsyncHandler : IHttpHandler
     {
         private static readonly int dataFrameBufferSize = 10240;
 
         protected readonly IGamifyService gamifyService;
 
-        public override bool IsReusable { get { return false; } }
+        public bool IsReusable { get { return false; } }
 
-        protected WebSocketAsyncHandler(IGamifyService gamifyService)
+        protected GamifyWebSocketAsyncHandler()
         {
-            this.gamifyService = gamifyService;
+            this.gamifyService = this.IntializeGamifyService();
             this.gamifyService.SendMessage += (sender, args) =>
             {
                 this.SendMessage(args.Client, args.Message);
             };
         }
 
-        public override void ProcessRequest(HttpContext context)
+        public void ProcessRequest(HttpContext context)
         {
             if (context.IsWebSocketRequest)
             {
@@ -38,33 +38,68 @@ namespace Gamify.Service
             }
         }
 
+        protected abstract IGamifyService IntializeGamifyService();
+
+        protected virtual void OnConnecting()
+        {
+        }
+
+        protected virtual void OnClosing(bool isClientRequest)
+        {
+        }
+
+        protected virtual void OnClosed()
+        {
+        }
+
         private async Task HandleWebSocketRequest(AspNetWebSocketContext context)
         {
-            while (context.WebSocket != null || context.WebSocket.State == WebSocketState.Open)
+            while (context.WebSocket != null && context.WebSocket.State != WebSocketState.Closed)
             {
-                var connectedClientId = this.GetConnectedClientId(context);
-                var dataFrameBuffer = new ArraySegment<byte>(new byte[dataFrameBufferSize]);
-                var receivedResult = await context.WebSocket.ReceiveAsync(dataFrameBuffer, CancellationToken.None);
-
-                try
+                if (context.WebSocket.State == WebSocketState.Open)
                 {
-                    switch (receivedResult.MessageType)
-                    {
-                        case WebSocketMessageType.Text:
-                            var receivedMessage = Encoding.UTF8.GetString(dataFrameBuffer.Array, 0, receivedResult.Count);
+                    var connectedClientId = this.GetConnectedClientId(context);
+                    var dataFrameBuffer = new ArraySegment<byte>(new byte[dataFrameBufferSize]);
+                    var receivedResult = await context.WebSocket.ReceiveAsync(dataFrameBuffer, CancellationToken.None);
 
-                            this.gamifyService.OnReceive(connectedClientId, receivedMessage);
-                            break;
-                        case WebSocketMessageType.Binary:
-                            throw new NotSupportedException("Binary message types are not supported");
-                        case WebSocketMessageType.Close:
-                            this.gamifyService.OnDisconnect(connectedClientId);
-                            break;
+                    try
+                    {
+                        switch (receivedResult.MessageType)
+                        {
+                            case WebSocketMessageType.Text:
+                                var receivedMessage = Encoding.UTF8.GetString(dataFrameBuffer.Array, 0, receivedResult.Count);
+
+                                this.gamifyService.OnReceive(connectedClientId, receivedMessage);
+                                break;
+                            case WebSocketMessageType.Binary:
+                                throw new NotSupportedException("Binary message types are not supported");
+                            case WebSocketMessageType.Close:
+                                this.gamifyService.OnDisconnect(connectedClientId);
+                                break;
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        this.gamifyService.OnError(connectedClientId, ex);
                     }
                 }
-                catch (Exception ex)
+                else
                 {
-                    this.gamifyService.OnError(connectedClientId, ex);
+                    switch (context.WebSocket.State)
+                    {
+                        case WebSocketState.Connecting:
+                            this.OnConnecting();
+                            break;
+                        case WebSocketState.CloseSent:
+                            this.OnClosing(false);
+                            break;
+                        case WebSocketState.CloseReceived:
+                            this.OnClosing(true);
+                            break;
+                        case WebSocketState.Closed:
+                            this.OnClosed();
+                            break;
+                    }
                 }
             }
         }
