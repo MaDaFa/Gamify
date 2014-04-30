@@ -166,6 +166,7 @@ namespace Gamify.Service
             this.DecorateGameInvitation(gameInviteNotificationObject);
 
             var client2 = this.connectedClients
+                .Where(c => c.Value.Player != null)
                 .First(c => c.Value.Player.UserName == newSession.Player2.Information.UserName)
                 .Value;
 
@@ -176,11 +177,16 @@ namespace Gamify.Service
         {
             var notification = new GameCreatedNotificationObject
             {
+                SessionId = newSession.Id,
                 Player1Name = newSession.Player1.Information.UserName,
                 Player2Name = newSession.Player2.Information.UserName
             };
-            var client1 = this.connectedClients.First(c => c.Value.Player.UserName == newSession.Player1.Information.UserName).Value;
-            var client2 = this.connectedClients.First(c => c.Value.Player.UserName == newSession.Player2.Information.UserName).Value;
+            var client1 = this.connectedClients
+                .Where(c => c.Value.Player != null)
+                .First(c => c.Value.Player.UserName == newSession.Player1.Information.UserName).Value;
+            var client2 = this.connectedClients
+                .Where(c => c.Value.Player != null)
+                .First(c => c.Value.Player.UserName == newSession.Player2.Information.UserName).Value;
 
             this.SendBroadcastNotification(GameNotificationType.GameCreated, notification, client1, client2);
         }
@@ -192,8 +198,12 @@ namespace Gamify.Service
                 SessionId = abandonGameObject.SessionId,
                 PlayerName = abandonGameObject.PlayerName
             };
-            var client1 = this.connectedClients.First(c => c.Value.Player.UserName == currentSession.Player1.Information.UserName).Value;
-            var client2 = this.connectedClients.First(c => c.Value.Player.UserName == currentSession.Player2.Information.UserName).Value;
+            var client1 = this.connectedClients
+                .Where(c => c.Value.Player != null)
+                .First(c => c.Value.Player.UserName == currentSession.Player1.Information.UserName).Value;
+            var client2 = this.connectedClients
+                .Where(c => c.Value.Player != null)
+                .First(c => c.Value.Player.UserName == currentSession.Player2.Information.UserName).Value;
 
             this.SendBroadcastNotification(GameNotificationType.GameAbandoned, notification, client1, client2);
         }
