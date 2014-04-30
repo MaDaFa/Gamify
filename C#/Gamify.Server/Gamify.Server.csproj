@@ -62,10 +62,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Gamify.Core\Gamify.Core.csproj">
-      <Project>{63569e91-8adf-4e6f-8d06-79ad85dd38ab}</Project>
-      <Name>Gamify.Core</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Gamify.Sdk\Gamify.Sdk.csproj">
       <Project>{cb44312b-0775-404b-a6ec-08eb45b738e7}</Project>
       <Name>Gamify.Sdk</Name>

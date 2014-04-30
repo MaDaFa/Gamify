@@ -1,7 +1,6 @@
-﻿using Gamify.Sdk;
-using System;
+﻿using System;
 
-namespace Gamify.Service
+namespace Gamify.Sdk
 {
     public class GamifyGameSession : IGameSession
     {

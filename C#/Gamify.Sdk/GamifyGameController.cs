@@ -1,9 +1,8 @@
-﻿using Gamify.Sdk;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Gamify.Service
+namespace Gamify.Sdk
 {
     public abstract class GamifyGameController : IGameController
     {
