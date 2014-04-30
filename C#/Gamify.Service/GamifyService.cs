@@ -26,7 +26,7 @@ namespace Gamify.Service
 
         protected abstract void GetSessionPlayer2Ready(GameAcceptedRequestObject gameAcceptedRequestObject);
 
-        protected abstract void HandleGameMove(string clientId, string serializedRequestObject);
+        protected abstract void HandleGameMove(string serializedRequestObject);
 
         protected virtual void DecorateGameInvitation(GameInviteNotificationObject gameInviteNotificationObject)
         {
@@ -64,7 +64,7 @@ namespace Gamify.Service
                     this.GameAccepted(gameRequest);
                     break;
                 case GameRequestType.GameMove:
-                    this.HandleGameMove(clientId, gameRequest.SerializedRequestObject);
+                    this.HandleGameMove(gameRequest.SerializedRequestObject);
                     break;
                 case GameRequestType.AbandonGame:
                     this.AbandonGame(gameRequest);
