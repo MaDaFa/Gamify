@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Gamify.Service;
+using System;
 using System.Net.WebSockets;
 using System.Text;
 using System.Threading;
@@ -6,23 +7,39 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.WebSockets;
 
-namespace Gamify.Service
+namespace Gamify.Server
 {
     public abstract class GamifyWebSocketAsyncHandler : IHttpHandler
     {
         private static readonly int dataFrameBufferSize = 10240;
+        private static readonly object lockObject = new object();
 
-        protected readonly IGamifyService gamifyService;
+        protected static IGamifyService gamifyService;
 
         public bool IsReusable { get { return false; } }
 
         protected GamifyWebSocketAsyncHandler()
         {
-            this.gamifyService = this.IntializeGamifyService();
-            this.gamifyService.SendMessage += (sender, args) =>
+            this.Initialize();
+        }
+
+        private void Initialize()
+        {
+            if (gamifyService == null)
             {
-                this.SendMessage(args.Client, args.Message);
-            };
+                lock (lockObject)
+                {
+                    if (gamifyService == null)
+                    {
+                        gamifyService = this.IntializeGamifyService();
+
+                        gamifyService.SendMessage += (sender, args) =>
+                        {
+                            this.SendMessage(args.Client, args.Message);
+                        };
+                    }
+                }
+            }
         }
 
         public void ProcessRequest(HttpContext context)
@@ -58,7 +75,7 @@ namespace Gamify.Service
             {
                 if (context.WebSocket.State == WebSocketState.Open)
                 {
-                    var connectedClientId = this.GetConnectedClientId(context);
+                    var connectedClientId = this.ConnectClient(context);
                     var dataFrameBuffer = new ArraySegment<byte>(new byte[dataFrameBufferSize]);
                     var receivedResult = await context.WebSocket.ReceiveAsync(dataFrameBuffer, CancellationToken.None);
 
@@ -69,18 +86,18 @@ namespace Gamify.Service
                             case WebSocketMessageType.Text:
                                 var receivedMessage = Encoding.UTF8.GetString(dataFrameBuffer.Array, 0, receivedResult.Count);
 
-                                this.gamifyService.OnReceive(connectedClientId, receivedMessage);
+                                gamifyService.OnReceive(connectedClientId, receivedMessage);
                                 break;
                             case WebSocketMessageType.Binary:
                                 throw new NotSupportedException("Binary message types are not supported");
                             case WebSocketMessageType.Close:
-                                this.gamifyService.OnDisconnect(connectedClientId);
+                                gamifyService.OnDisconnect(connectedClientId);
                                 break;
                         }
                     }
                     catch (Exception ex)
                     {
-                        this.gamifyService.OnError(connectedClientId, ex);
+                        gamifyService.OnError(connectedClientId, ex);
                     }
                 }
                 else
@@ -104,21 +121,17 @@ namespace Gamify.Service
             }
         }
 
-        private string GetConnectedClientId(AspNetWebSocketContext context)
+        private string ConnectClient(AspNetWebSocketContext context)
         {
-            var connectedClient = default(IGamifyClientBase);
-
-            if (!this.gamifyService.HasClient(context.UserHostAddress))
+            var connectedClientId = Guid.NewGuid().ToString();
+            var connectedClient = new GamifyWebSocketClient(connectedClientId)
             {
-                connectedClient = new GamifyWebSocketClient
-                {
-                    Context = context
-                };
+                Context = context
+            };
 
-                this.gamifyService.AddClient(context.UserHostAddress, connectedClient);
-            }
+            gamifyService.AddClient(connectedClientId, connectedClient);
 
-            return context.UserHostAddress;
+            return connectedClientId;
         }
 
         private void SendMessage(IGamifyClientBase client, string message)
