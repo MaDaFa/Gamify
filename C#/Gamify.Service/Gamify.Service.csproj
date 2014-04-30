@@ -46,6 +46,7 @@
     <Compile Include="Contracts\Notifications\ErrorNotificationObject.cs" />
     <Compile Include="Contracts\Notifications\GameAbandonedNotificationObject.cs" />
     <Compile Include="Contracts\Notifications\GameCreatedNotificationObject.cs" />
+    <Compile Include="Contracts\Notifications\GameFinishedNotificationObject.cs" />
     <Compile Include="Contracts\Notifications\GameInviteNotificationObject.cs" />
     <Compile Include="Contracts\Notifications\GameNotification.cs" />
     <Compile Include="Contracts\Notifications\INotificationObject.cs" />

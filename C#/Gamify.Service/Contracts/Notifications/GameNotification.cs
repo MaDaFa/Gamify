@@ -9,6 +9,7 @@
         GameMoveResult = 5,
         GameAbandoned = 6,
         PlayerDisconnected = 7,
+        GameFinished = 8,
         Message = 254,
         Error = 255
     }
