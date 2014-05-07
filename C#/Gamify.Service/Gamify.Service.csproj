@@ -62,7 +62,6 @@
     <Compile Include="Contracts\Requests\PlayerDisconnectRequestObject.cs" />
     <Compile Include="GamifyMessageEventArgs.cs" />
     <Compile Include="GamifyService.cs" />
-    <Compile Include="IGamifyClient.cs" />
     <Compile Include="IGamifyService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

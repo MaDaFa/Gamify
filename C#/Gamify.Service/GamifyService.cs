@@ -3,7 +3,6 @@ using Gamify.Service.Contracts.Notifications;
 using Gamify.Service.Contracts.Requests;
 using Newtonsoft.Json;
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -11,14 +10,12 @@ namespace Gamify.Service
 {
     public abstract class GamifyService : IGamifyService
     {
-        protected readonly ConcurrentDictionary<string, IGamifyClientBase> connectedClients;
         protected readonly IGameController gameController;
 
         public event EventHandler<GamifyMessageEventArgs> SendMessage;
 
         protected GamifyService(IGameController gameController)
         {
-            this.connectedClients = new ConcurrentDictionary<string, IGamifyClientBase>();
             this.gameController = gameController;
         }
 
@@ -32,22 +29,16 @@ namespace Gamify.Service
         {
         }
 
-        public void AddClient(string id, IGamifyClientBase client)
+        public void ConnectUser(string userName)
         {
-            if (this.HasClient(id))
-            {
-                return;
-            }
+            var newPlayer = new GamifyGamePlayer(userName);
 
-            this.connectedClients.TryAdd(id, client);
+            this.gameController.Connect(newPlayer);
+
+            this.SendPlayerConnectedNotification(newPlayer.UserName);
         }
 
-        public bool HasClient(string id)
-        {
-            return this.connectedClients.Any(c => c.Key == id);
-        }
-
-        public void OnReceive(string clientId, string message)
+        public void OnReceive(string userName, string message)
         {
             var gameRequest = JsonConvert.DeserializeObject<GameRequest>(message);
             var gameRequestType = (GameRequestType)gameRequest.Type;
@@ -55,8 +46,7 @@ namespace Gamify.Service
             switch (gameRequestType)
             {
                 case GameRequestType.PlayerConnect:
-                    this.ConnectPlayer(clientId, gameRequest);
-                    break;
+                    throw new ApplicationException("Player Connect message is not supported right now.");
                 case GameRequestType.CreateGame:
                     this.CreateGame(gameRequest);
                     break;
@@ -75,31 +65,14 @@ namespace Gamify.Service
             }
         }
 
-        public void OnDisconnect(string clientId)
+        public void OnDisconnect(string userName)
         {
-            var connectedClient = default(IGamifyClientBase);
-
-            this.connectedClients.TryRemove(clientId, out connectedClient);
+            this.DisconnectPlayer(userName);
         }
 
-        public void OnError(string clientId, Exception ex)
+        public void OnError(string userName, Exception ex)
         {
-            this.SendErrorNotification(clientId, ex);
-        }
-
-        private void ConnectPlayer(string clientId, GameRequest request)
-        {
-            var playerConnectObject = JsonConvert.DeserializeObject<PlayerConnectRequestObject>(request.SerializedRequestObject);
-            var newPlayer = new GamifyGamePlayer(playerConnectObject.PlayerName);
-            var connectedClient = this.connectedClients
-                .First(c => c.Key == clientId)
-                .Value;
-
-            connectedClient.Player = newPlayer;
-
-            this.gameController.Connect(newPlayer);
-
-            this.SendPlayerConnectedNotification(newPlayer.UserName);
+            this.SendErrorNotification(userName, ex);
         }
 
         private void CreateGame(GameRequest request)
@@ -140,9 +113,14 @@ namespace Gamify.Service
         {
             var playerDisconnectObject = JsonConvert.DeserializeObject<PlayerDisconnectRequestObject>(request.SerializedRequestObject);
 
-            this.gameController.Disconnect(playerDisconnectObject.PlayerName);
+            this.DisconnectPlayer(playerDisconnectObject.PlayerName);
+        }
 
-            this.SendPlayerDisconnectedNotification(playerDisconnectObject.PlayerName);
+        private void DisconnectPlayer(string userName)
+        {
+            this.gameController.Disconnect(userName);
+
+            this.SendPlayerDisconnectedNotification(userName);
         }
 
         private void SendPlayerConnectedNotification(string playerName)
@@ -165,12 +143,7 @@ namespace Gamify.Service
 
             this.DecorateGameInvitation(gameInviteNotificationObject);
 
-            var client2 = this.connectedClients
-                .Where(c => c.Value.Player != null)
-                .First(c => c.Value.Player.UserName == newSession.Player2.Information.UserName)
-                .Value;
-
-            this.SendNotification(GameNotificationType.GameInvite, gameInviteNotificationObject, client2);
+            this.SendNotification(GameNotificationType.GameInvite, gameInviteNotificationObject, newSession.Player2.Information.UserName);
         }
 
         private void SendGameCreatedNotification(IGameSession newSession)
@@ -181,14 +154,8 @@ namespace Gamify.Service
                 Player1Name = newSession.Player1.Information.UserName,
                 Player2Name = newSession.Player2.Information.UserName
             };
-            var client1 = this.connectedClients
-                .Where(c => c.Value.Player != null)
-                .First(c => c.Value.Player.UserName == newSession.Player1.Information.UserName).Value;
-            var client2 = this.connectedClients
-                .Where(c => c.Value.Player != null)
-                .First(c => c.Value.Player.UserName == newSession.Player2.Information.UserName).Value;
 
-            this.SendBroadcastNotification(GameNotificationType.GameCreated, notification, client1, client2);
+            this.SendBroadcastNotification(GameNotificationType.GameCreated, notification, newSession.Player1.Information.UserName, newSession.Player2.Information.UserName);
         }
 
         private void SendAbandonGameNotification(AbandonGameRequestObject abandonGameObject, IGameSession currentSession)
@@ -198,51 +165,44 @@ namespace Gamify.Service
                 SessionId = abandonGameObject.SessionId,
                 PlayerName = abandonGameObject.PlayerName
             };
-            var client1 = this.connectedClients
-                .Where(c => c.Value.Player != null)
-                .First(c => c.Value.Player.UserName == currentSession.Player1.Information.UserName).Value;
-            var client2 = this.connectedClients
-                .Where(c => c.Value.Player != null)
-                .First(c => c.Value.Player.UserName == currentSession.Player2.Information.UserName).Value;
 
-            this.SendBroadcastNotification(GameNotificationType.GameAbandoned, notification, client1, client2);
+            this.SendBroadcastNotification(GameNotificationType.GameAbandoned, notification, currentSession.Player1.Information.UserName, currentSession.Player2.Information.UserName);
         }
 
-        private void SendPlayerDisconnectedNotification(string playerName)
+        private void SendPlayerDisconnectedNotification(string userName)
         {
             var notification = new PlayerDisconnectedNotificationObject
             {
-                PlayerName = playerName
+                PlayerName = userName
             };
 
             this.SendBroadcastNotification(GameNotificationType.PlayerDisconnected, notification);
         }
 
-        private void SendErrorNotification(string clientId, Exception exception)
+        private void SendErrorNotification(string userName, Exception exception)
         {
-            var client = this.connectedClients.First(c => c.Key == clientId).Value;
             var notification = new ErrorNotificationObject
             {
                 Message = exception.Message
             };
 
-            this.SendBroadcastNotification(GameNotificationType.Error, notification, client);
+            this.SendBroadcastNotification(GameNotificationType.Error, notification, userName);
         }
 
         protected void SendBroadcastNotification(GameNotificationType gameNotificationType, object notificationObject)
         {
-            this.SendBroadcastNotification(gameNotificationType, notificationObject, this.connectedClients.Values.ToArray());
+            this.SendBroadcastNotification(gameNotificationType, notificationObject, this.gameController.Players.Select(p => p.UserName).ToArray());
         }
 
-        protected void SendBroadcastNotification(GameNotificationType gameNotificationType, object notificationObject, params IGamifyClientBase[] clients)
+        protected void SendBroadcastNotification(GameNotificationType gameNotificationType, object notificationObject, params string[] userNames)
         {
-            foreach (var connectedClient in clients)
+            foreach (var userName in userNames)
             {
-                this.SendNotification(gameNotificationType, notificationObject, connectedClient);
+                this.SendNotification(gameNotificationType, notificationObject, userName);
             }
         }
 
-        protected void SendNotification(GameNotificationType gameNotificationType, object notificationObject, IGamifyClientBase client)
+        protected void SendNotification(GameNotificationType gameNotificationType, object notificationObject, string userName)
         {
             var notification = new GameNotification
             {
@@ -254,7 +214,7 @@ namespace Gamify.Service
 
             if (sendMessageHandler != null)
             {
-                sendMessageHandler(this, new GamifyMessageEventArgs(client, serializedNotification));
+                sendMessageHandler(this, new GamifyMessageEventArgs(userName, serializedNotification));
             }
         }
     }

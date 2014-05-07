@@ -7,6 +7,9 @@
         GameAccepted = 3,
         GameMove = 4,
         AbandonGame = 5,
+        GetConnectedPlayers = 6,
+        GetActiveGames = 7,
+        OpenGame = 8,
         PlayerDisconnect = 255
     }
 

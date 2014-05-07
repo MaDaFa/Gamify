@@ -6,14 +6,12 @@ namespace Gamify.Service
     {
         event EventHandler<GamifyMessageEventArgs> SendMessage;
 
-        void AddClient(string id, IGamifyClientBase client);
+        void ConnectUser(string userName);
 
-        bool HasClient(string id);
+        void OnReceive(string userName, string message);
 
-        void OnReceive(string clientId, string message);
+        void OnDisconnect(string userName);
 
-        void OnDisconnect(string clientId);
-
-        void OnError(string clientId, Exception ex);
+        void OnError(string userName, Exception ex);
     }
 }

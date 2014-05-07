@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Gamify.Server")]
+[assembly: AssemblyTitle("Gamify.WebServer")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Gamify.Server")]
+[assembly: AssemblyProduct("Gamify.WebServer")]
 [assembly: AssemblyCopyright("Copyright ©  2014")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("cbe4d62a-84fd-4d90-98ac-5544c214eb16")]
+[assembly: Guid("c7074c10-3f51-4573-a3b6-784b12ac8116")]
 
 // Version information for an assembly consists of the following four values:
 //
