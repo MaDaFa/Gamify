@@ -4,13 +4,13 @@ namespace Gamify.Service
 {
     public class GamifyMessageEventArgs : EventArgs
     {
-        public IGamifyClientBase Client { get; set; }
+        public string UserName { get; set; }
 
         public string  Message { get; set; }
 
-        public GamifyMessageEventArgs(IGamifyClientBase client, string message)
+        public GamifyMessageEventArgs(string userName, string message)
         {
-            this.Client = client;
+            this.UserName = userName;
             this.Message = message;
         }
 
