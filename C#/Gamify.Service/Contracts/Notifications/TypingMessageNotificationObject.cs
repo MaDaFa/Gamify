@@ -1,6 +1,6 @@
 ﻿namespace Gamify.Service.Contracts.Notifications
 {
-    public class MessageNotificationObject : INotificationObject
+    public class TypingMessageNotificationObject : INotificationObject
     {
         public string FromPlayerName { get; set; }
 

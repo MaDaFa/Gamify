@@ -4,7 +4,7 @@ namespace Gamify.Service
 {
     public interface IGamifyService
     {
-        event EventHandler<GamifyMessageEventArgs> SendMessage;
+        event EventHandler<GamifyNotificationEventArgs> Notification;
 
         void ConnectUser(string userName);
 

@@ -3,14 +3,19 @@
     public enum GameNotificationType : int
     {
         PlayerConnected = 1,
-        GameCreated = 2,
-        GameInvite = 3,
-        GameMove = 4,
-        GameMoveResult = 5,
-        GameAbandoned = 6,
-        PlayerDisconnected = 7,
-        GameFinished = 8,
-        Message = 254,
+        GameInvite = 2,
+        GameCreated = 3,
+        GameRejected = 4,
+        GameMove = 5,
+        GameMoveResult = 6,
+        GameAbandoned = 7,
+        SendConnectedPlayers = 8,
+        SendActiveGames = 9,
+        SendGameInformation = 10,
+        GameFinished = 11,
+        Message = 12,
+        TypingMessage = 13,
+        PlayerDisconnected = 14,
         Error = 255
     }
 

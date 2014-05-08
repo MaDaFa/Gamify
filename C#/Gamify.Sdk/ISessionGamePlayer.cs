@@ -11,6 +11,8 @@
 
     public interface ISessionGamePlayer<TMove, UResponse> : ISessionGamePlayerBase
     {
+        ISessionGamePlayerHistory<TMove, UResponse> MovesHistory { get; }
+
         IGameMoveResponse<UResponse> ProcessMove(IGameMove<TMove> move);
     }
 }
