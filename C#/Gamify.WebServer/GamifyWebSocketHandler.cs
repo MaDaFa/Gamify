@@ -37,9 +37,9 @@ namespace Gamify.WebServer
                     {
                         gamifyService = this.IntializeGamifyService();
 
-                        gamifyService.SendMessage += (sender, args) =>
+                        gamifyService.Notification += (sender, args) =>
                         {
-                            this.SendMessage(args.UserName, args.Message);
+                            this.SendMessage(args.UserName, args.Notification);
                         };
                     }
                 }

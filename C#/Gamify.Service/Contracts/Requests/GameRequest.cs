@@ -5,11 +5,14 @@
         PlayerConnect = 1,
         CreateGame = 2,
         GameAccepted = 3,
-        GameMove = 4,
-        AbandonGame = 5,
-        GetConnectedPlayers = 6,
-        GetActiveGames = 7,
-        OpenGame = 8,
+        GameRejected = 4,
+        GameMove = 5,
+        AbandonGame = 6,
+        GetConnectedPlayers = 7,
+        GetActiveGames = 8,
+        OpenGame = 9,
+        Message = 10,
+        TypingMessage = 11,
         PlayerDisconnect = 255
     }
 
