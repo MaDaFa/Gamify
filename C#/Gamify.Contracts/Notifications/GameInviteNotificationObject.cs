@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Gamify.Service.Contracts.Notifications
+namespace Gamify.Contracts.Notifications
 {
     public class GameInviteNotificationObject : INotificationObject
     {

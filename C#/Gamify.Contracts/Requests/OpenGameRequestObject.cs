@@ -1,6 +1,8 @@
-﻿namespace Gamify.Service.Contracts.Requests
+﻿using System;
+
+namespace Gamify.Contracts.Requests
 {
-    public class GameRejectedRequestObject : IRequestObject
+    public class OpenGameRequestObject : IRequestObject
     {
         public string SessionId { get; set; }
 

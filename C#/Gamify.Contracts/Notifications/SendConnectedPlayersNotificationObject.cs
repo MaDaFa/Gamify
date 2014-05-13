@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Gamify.Service.Contracts.Notifications
+namespace Gamify.Contracts.Notifications
 {
     public class SendConnectedPlayersNotificationObject : INotificationObject
     {

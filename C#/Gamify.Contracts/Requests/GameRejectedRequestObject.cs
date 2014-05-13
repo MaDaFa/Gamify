@@ -1,6 +1,6 @@
-﻿namespace Gamify.Service.Contracts.Requests
+﻿namespace Gamify.Contracts.Requests
 {
-    public class AbandonGameRequestObject : IRequestObject
+    public class GameRejectedRequestObject : IRequestObject
     {
         public string SessionId { get; set; }
 

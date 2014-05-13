@@ -1,6 +1,6 @@
-﻿using Gamify.Sdk;
-using Gamify.Service.Contracts.Notifications;
-using Gamify.Service.Contracts.Requests;
+﻿using Gamify.Contracts.Notifications;
+using Gamify.Contracts.Requests;
+using Gamify.Sdk;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -147,6 +147,7 @@ namespace Gamify.Service
         {
             var getConnectedPlayersObject = JsonConvert.DeserializeObject<GetConnectedPlayersRequestObject>(request.SerializedRequestObject);
             var sortedPlayers = this.gameController.Players
+                .Where(p => p.UserName != getConnectedPlayersObject.PlayerName)
                 .OrderBy(p => p.UserName);
             var sortedPlayersPage = sortedPlayers.Take(getConnectedPlayersObject.PageSize);
             var notification = new SendConnectedPlayersNotificationObject

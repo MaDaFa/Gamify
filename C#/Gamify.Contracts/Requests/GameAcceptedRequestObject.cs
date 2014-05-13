@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Gamify.Service.Contracts.Requests
+namespace Gamify.Contracts.Requests
 {
     public class GameAcceptedRequestObject : IRequestObject
     {
