@@ -1,4 +1,4 @@
-﻿namespace Gamify.Service.Contracts.Requests
+﻿namespace Gamify.Contracts.Requests
 {
     public class PlayerConnectRequestObject : IRequestObject
     {

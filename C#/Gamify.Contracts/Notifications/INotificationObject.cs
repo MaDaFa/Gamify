@@ -1,4 +1,4 @@
-﻿namespace Gamify.Service.Contracts.Notifications
+﻿namespace Gamify.Contracts.Notifications
 {
     public interface INotificationObject
     {

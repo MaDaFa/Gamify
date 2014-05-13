@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Gamify.Service.Contracts.Notifications
+namespace Gamify.Contracts.Notifications
 {
     public class SendActiveGamesNotificationObject : INotificationObject
     {

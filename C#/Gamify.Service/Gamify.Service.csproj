@@ -43,39 +43,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Contracts\Notifications\ErrorNotificationObject.cs" />
-    <Compile Include="Contracts\Notifications\GameAbandonedNotificationObject.cs" />
-    <Compile Include="Contracts\Notifications\GameCreatedNotificationObject.cs" />
-    <Compile Include="Contracts\Notifications\GameFinishedNotificationObject.cs" />
-    <Compile Include="Contracts\Notifications\GameInviteNotificationObject.cs" />
-    <Compile Include="Contracts\Notifications\GameNotification.cs" />
-    <Compile Include="Contracts\Notifications\GameRejectedNotificationObject.cs" />
-    <Compile Include="Contracts\Notifications\INotificationObject.cs" />
-    <Compile Include="Contracts\Notifications\MessageNotificationObject.cs" />
-    <Compile Include="Contracts\Notifications\PlayerConnectedNotificationObject.cs" />
-    <Compile Include="Contracts\Notifications\PlayerDisconnectedNotificationObject.cs" />
-    <Compile Include="Contracts\Notifications\SendActiveGamesNotificationObject.cs" />
-    <Compile Include="Contracts\Notifications\SendConnectedPlayersNotificationObject.cs" />
-    <Compile Include="Contracts\Notifications\TypingMessageNotificationObject.cs" />
-    <Compile Include="Contracts\Requests\AbandonGameRequestObject.cs" />
-    <Compile Include="Contracts\Requests\CreateGameRequestObject.cs" />
-    <Compile Include="Contracts\Requests\GameAcceptedRequestObject.cs" />
-    <Compile Include="Contracts\Requests\GameRejectedRequestObject.cs" />
-    <Compile Include="Contracts\Requests\GameRequest.cs" />
-    <Compile Include="Contracts\Requests\GetActiveGamesRequestObject.cs" />
-    <Compile Include="Contracts\Requests\GetConnectedPlayersRequestObject.cs" />
-    <Compile Include="Contracts\Requests\IRequestObject.cs" />
-    <Compile Include="Contracts\Requests\MessageRequestObject.cs" />
-    <Compile Include="Contracts\Requests\OpenGameRequestObject.cs" />
-    <Compile Include="Contracts\Requests\PlayerConnectRequestObject.cs" />
-    <Compile Include="Contracts\Requests\PlayerDisconnectRequestObject.cs" />
-    <Compile Include="Contracts\Requests\TypingMessageRequestObject.cs" />
     <Compile Include="GamifyNotificationEventArgs.cs" />
     <Compile Include="GamifyService.cs" />
     <Compile Include="IGamifyService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Gamify.Contracts\Gamify.Contracts.csproj">
+      <Project>{174e05b6-efe4-42eb-b4ff-f56fb6b885db}</Project>
+      <Name>Gamify.Contracts</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Gamify.Sdk\Gamify.Sdk.csproj">
       <Project>{cb44312b-0775-404b-a6ec-08eb45b738e7}</Project>
       <Name>Gamify.Sdk</Name>
