@@ -99,13 +99,14 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Facades\GameCreationManager.cs" />
     <Compile Include="GameNotificationEventArgs.cs" />
     <Compile Include="GamifyClient.cs" />
-    <Compile Include="GamifySerializer.cs" />
-    <Compile Include="GamifyService.cs" />
+    <Compile Include="GamifyJsonSerializer.cs" />
+    <Compile Include="Services\GamifyService.cs" />
     <Compile Include="IGamifyClient.cs" />
     <Compile Include="IGamifySerializer.cs" />
-    <Compile Include="IGamifyService.cs" />
+    <Compile Include="Services\IGamifyService.cs" />
     <Compile Include="MessageReceivedEventArgs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -1,7 +1,7 @@
 ﻿using Gamify.Contracts.Requests;
 using System;
 
-namespace GuessMyNumber.Client.Net
+namespace Gamify.Client.Net
 {
     public interface IGamifyClient
     {

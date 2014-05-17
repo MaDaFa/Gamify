@@ -1,8 +1,8 @@
 ﻿using Newtonsoft.Json;
 
-namespace GuessMyNumber.Client.Net
+namespace Gamify.Client.Net
 {
-    public class GamifySerializer<TObject> : IGamifySerializer<TObject>
+    public class GamifyJsonSerializer<TObject> : IGamifySerializer<TObject>
     {
         public TObject Deserialize(string serializedObj)
         {
