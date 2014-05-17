@@ -21,5 +21,19 @@
         public int Type { get; set; }
 
         public string SerializedRequestObject { get; set; }
+
+        public GameRequest(GameRequestType type)
+        {
+            this.Type = (int)type;
+        }
+
+        public GameRequest(int type)
+        {
+            this.Type = type;
+        }
+
+        public GameRequest()
+        {
+        }
     }
 }

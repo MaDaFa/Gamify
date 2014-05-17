@@ -1,4 +1,4 @@
-﻿namespace GuessMyNumber.Client.Net
+﻿namespace Gamify.Client.Net
 {
     public interface IGamifySerializer<TObject>
     {

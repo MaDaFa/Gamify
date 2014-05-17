@@ -5,7 +5,7 @@ using System.Threading;
 using Windows.Networking.Sockets;
 using Windows.Storage.Streams;
 
-namespace GuessMyNumber.Client.Net
+namespace Gamify.Client.Net
 {
     public class GamifyClient : IGamifyClient
     {
@@ -28,8 +28,8 @@ namespace GuessMyNumber.Client.Net
         public GamifyClient(string guessMyNumberServerUri)
         {
             this.guessMyNumberServerUri = new Uri(guessMyNumberServerUri);
-            this.requestSerializer = new GamifySerializer<GameRequest>();
-            this.notificationSerializer = new GamifySerializer<GameNotification>();
+            this.requestSerializer = new GamifyJsonSerializer<GameRequest>();
+            this.notificationSerializer = new GamifyJsonSerializer<GameNotification>();
         }
 
         public async void Initialize()

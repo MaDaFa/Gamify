@@ -24,5 +24,19 @@
         public int Type { get; set; }
 
         public string SerializedNotificationObject { get; set; }
+
+        public GameNotification(GameNotificationType type)
+        {
+            this.Type = (int)type;
+        }
+
+        public GameNotification(int type)
+        {
+            this.Type = type;
+        }
+
+        public GameNotification()
+        {
+        }
     }
 }

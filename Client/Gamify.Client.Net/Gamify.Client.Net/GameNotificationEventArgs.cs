@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace GuessMyNumber.Client.Net
+namespace Gamify.Client.Net
 {
     public class GameNotificationEventArgs<TNotification> : EventArgs
     {
