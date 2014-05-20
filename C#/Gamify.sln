@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gamify.Sdk", "Gamify.Sdk\Gamify.Sdk.csproj", "{CB44312B-0775-404B-A6EC-08EB45B738E7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gamify.Core", "Gamify.Core\Gamify.Core.csproj", "{CB44312B-0775-404B-A6EC-08EB45B738E7}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gamify.Service", "Gamify.Service\Gamify.Service.csproj", "{8468540E-22A2-42A1-896D-D6D9C34F4F34}"
 EndProject
