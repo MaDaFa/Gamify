@@ -54,9 +54,6 @@
     <Reference Include="System.Xml" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.EnterpriseServices" />
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.4.5.6\lib\net40\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="System.Net.Http">
     </Reference>
     <Reference Include="System.Net.Http.Formatting, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -69,17 +66,21 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GamifyController.cs" />
-    <Compile Include="GamifyWebSocketHandler.cs" />
+    <Compile Include="GameApiController.cs" />
+    <Compile Include="GameWebSocketHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Gamify.Sdk\Gamify.Sdk.csproj">
+    <ProjectReference Include="..\Gamify.Contracts\Gamify.Contracts.csproj">
+      <Project>{174e05b6-efe4-42eb-b4ff-f56fb6b885db}</Project>
+      <Name>Gamify.Contracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Gamify.Core\Gamify.Core.csproj">
       <Project>{cb44312b-0775-404b-a6ec-08eb45b738e7}</Project>
-      <Name>Gamify.Sdk</Name>
+      <Name>Gamify.Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\Gamify.Service\Gamify.Service.csproj">
       <Project>{8468540e-22a2-42a1-896d-d6d9c34f4f34}</Project>

@@ -99,14 +99,18 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Facades\GameCreationManager.cs" />
+    <Compile Include="Managers\GameConnectionManager.cs" />
+    <Compile Include="Managers\GameCreationManager.cs" />
+    <Compile Include="Managers\MessageManager.cs" />
+    <Compile Include="GameCreationManagerTest.cs" />
     <Compile Include="GameNotificationEventArgs.cs" />
-    <Compile Include="GamifyClient.cs" />
-    <Compile Include="GamifyJsonSerializer.cs" />
-    <Compile Include="Services\GamifyService.cs" />
-    <Compile Include="IGamifyClient.cs" />
-    <Compile Include="IGamifySerializer.cs" />
-    <Compile Include="Services\IGamifyService.cs" />
+    <Compile Include="GameClient.cs" />
+    <Compile Include="GameClientFactory.cs" />
+    <Compile Include="JsonSerializer.cs" />
+    <Compile Include="Services\GameService.cs" />
+    <Compile Include="IGameClient.cs" />
+    <Compile Include="ISerializer.cs" />
+    <Compile Include="Services\IGameService.cs" />
     <Compile Include="MessageReceivedEventArgs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -122,6 +126,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="GamifyClientDiagram.cd" />
     <None Include="packages.config" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '11.0' ">
