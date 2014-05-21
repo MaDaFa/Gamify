@@ -1,5 +1,6 @@
 ﻿using Gamify.Core.Interfaces;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -7,17 +8,21 @@ namespace Gamify.Core
 {
     public abstract class GameController : IGameController
     {
-        private readonly IList<IGamePlayer> players;
-        private readonly IList<IGameSession> sessions;
+        private static readonly ConcurrentDictionary<string, IGamePlayer> players;
+        private static readonly ConcurrentDictionary<string, IGameSession> sessions;
 
-        public IEnumerable<IGamePlayer> Players { get { return this.players; } }
+        public IEnumerable<IGamePlayer> Players { get { return players.Values; } }
 
-        public IEnumerable<IGameSession> Sessions { get { return this.sessions; } }
+        public IEnumerable<IGameSession> Sessions { get { return sessions.Values; } }
 
-        public GameController()
+        static GameController()
         {
-            this.players = new List<IGamePlayer>();
-            this.sessions = new List<IGameSession>();
+            players = new ConcurrentDictionary<string, IGamePlayer>();
+            sessions = new ConcurrentDictionary<string, IGameSession>();
+        }
+
+        protected GameController()
+        {
         }
 
         protected abstract ISessionGamePlayerBase GetSessionPlayer(IGamePlayer player);
@@ -26,7 +31,7 @@ namespace Gamify.Core
         {
             this.ValidateNotExistingPlayer(player.UserName);
 
-            this.players.Add(player);
+            players.TryAdd(player.UserName, player);
         }
 
         public IGameSession OpenSession(ISessionGamePlayerBase sessionPlayer1, ISessionGamePlayerBase sessionPlayer2 = null)
@@ -38,7 +43,7 @@ namespace Gamify.Core
 
             var newSession = new GameSession(sessionPlayer1, sessionPlayer2);
 
-            this.sessions.Add(newSession);
+            sessions.TryAdd(newSession.Id, newSession);
 
             return newSession;
         }
@@ -47,7 +52,10 @@ namespace Gamify.Core
         {
             this.ValidatePlayerInSession(playerName, sessionId);
 
-            var existingSession = this.Sessions.FirstOrDefault(s => s.Id == sessionId && s.HasPlayer(playerName));
+            var existingSession = sessions
+                .Where(s => s.Key == sessionId && s.Value.HasPlayer(playerName))
+                .Select(s => s.Value)
+                .First();
             var playerToCall = existingSession.Player1.Information.UserName == playerName ? existingSession.Player2 : existingSession.Player1;
 
             return (playerToCall as ISessionGamePlayer<T,U>).ProcessMove(move);
@@ -57,7 +65,10 @@ namespace Gamify.Core
         {
             this.ValidatePlayerInSession(playerName, sessionId);
 
-            var existingSession = this.Sessions.FirstOrDefault(s => s.Id == sessionId && s.HasPlayer(playerName));
+            var existingSession = sessions
+                .Where(s => s.Key == sessionId && s.Value.HasPlayer(playerName))
+                .Select(s => s.Value)
+                .First();
 
             existingSession.RemovePlayer(playerName);
         }
@@ -66,21 +77,25 @@ namespace Gamify.Core
         {
             this.ValidateExistingPlayer(playerName);
 
-            var existingSessions = this.Sessions.Where(s => s.HasPlayer(playerName));
+            var existingSessions = sessions
+                .Where(s => s.Value.HasPlayer(playerName))
+                .Select(s => s.Value);
 
             foreach (var existingSession in existingSessions)
             {
                 existingSession.RemovePlayer(playerName);
             }
 
-            var player = this.Players.FirstOrDefault(p => p.UserName == playerName);
-            
-            this.players.Remove(player);
+            var removedPlayer = default(IGamePlayer);
+
+            players.TryRemove(playerName, out removedPlayer);
         }
 
         private void ValidateNotExistingPlayer(string playerName)
         {
-            if (this.Players.Any(p => p.UserName == playerName))
+            var existingPlayer = default(IGamePlayer);
+
+            if (players.TryGetValue(playerName, out existingPlayer))
             {
                 var errorMessage = string.Format("The player {0} is already connected", playerName);
 
@@ -90,7 +105,9 @@ namespace Gamify.Core
 
         private void ValidateExistingPlayer(string playerName)
         {
-            if (!this.Players.Any(p => p.UserName == playerName))
+            var existingPlayer = default(IGamePlayer);
+
+            if (!players.TryGetValue(playerName, out existingPlayer))
             {
                 var errorMessage = string.Format("The player {0} is not connected", playerName);
 
@@ -100,7 +117,9 @@ namespace Gamify.Core
 
         private void ValidateExistingSession(string sessionId)
         {
-            if (!this.Sessions.Any(s => s.Id == sessionId))
+            var existingSession = default(IGameSession);
+
+            if (!sessions.TryGetValue(sessionId, out existingSession))
             {
                 var errorMessage = string.Format("The session {0} does not exists", sessionId);
 
@@ -113,7 +132,9 @@ namespace Gamify.Core
             this.ValidateExistingPlayer(playerName);
             this.ValidateExistingSession(sessionId);
 
-            var existingSession = this.Sessions.FirstOrDefault(s => s.Id == sessionId && s.HasPlayer(playerName));
+            var existingSession = sessions
+                .Where(s => s.Key == sessionId && s.Value.HasPlayer(playerName))
+                .Select(s => s.Value);
 
             if (existingSession == null)
             {
@@ -125,7 +146,8 @@ namespace Gamify.Core
 
         private ISessionGamePlayerBase GetRandomSessionPlayer2(ISessionGamePlayerBase sessionPlayer1)
         {
-            var randomPlayer2 = this.Players
+            var randomPlayer2 = players
+                .Select(p => p.Value)
                 .OrderBy(p => Guid.NewGuid())
                 .FirstOrDefault(p => p.UserName != sessionPlayer1.Information.UserName);
 

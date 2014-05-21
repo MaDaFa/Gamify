@@ -3,11 +3,14 @@ using System;
 
 namespace Gamify.Service
 {
-    public interface IGameService
+    public interface IGameServiceSetup
+    {
+        void RegisterComponent(IGameComponent component);
+    }
+
+    public interface IGameService : IGameServiceSetup
     {
         event EventHandler<GameNotificationEventArgs> Notification;
-
-        void RegisterComponent(IGameComponent component);
 
         void ConnectUser(string userName);
 

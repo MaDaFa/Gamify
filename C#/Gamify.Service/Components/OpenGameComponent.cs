@@ -7,8 +7,8 @@ namespace Gamify.Service.Components
 {
     public abstract class OpenGameComponent : IGameComponent
     {
-        private readonly ISerializer<OpenGameRequestObject> serializer;
-        private readonly IGameController gameController;
+        protected readonly ISerializer<OpenGameRequestObject> serializer;
+        protected readonly IGameController gameController;
         protected readonly INotificationService notificationService;
 
         protected OpenGameComponent(INotificationService notificationService, IGameController gameController)
