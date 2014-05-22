@@ -9,9 +9,9 @@ namespace Gamify.Service.Components
 {
     public abstract class CreateGameComponent : IGameComponent
     {
-        private readonly ISerializer<CreateGameRequestObject> serializer;
-        private readonly INotificationService notificationService;
-        private readonly IGameController gameController;
+        protected readonly ISerializer<CreateGameRequestObject> serializer;
+        protected readonly INotificationService notificationService;
+        protected readonly IGameController gameController;
 
         protected CreateGameComponent(INotificationService notificationService, IGameController gameController)
         {

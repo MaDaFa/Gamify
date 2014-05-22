@@ -1,8 +1,8 @@
 ﻿using Gamify.Contracts.Notifications;
-using Gamify.Core;
 using Gamify.Core.Interfaces;
 using Gamify.Service;
 using Microsoft.Web.WebSockets;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Gamify.WebServer
@@ -12,9 +12,9 @@ namespace Gamify.WebServer
         private static readonly object lockObject = new object();
 
         protected static WebSocketCollection connectedClients;
-        protected static IGameService gameService;
 
-        private readonly ISerializer<object> serializer;
+        protected ISerializer<object> serializer;
+        protected IGameService gameService;
 
         public string UserName { get; private set; }
 
@@ -23,34 +23,31 @@ namespace Gamify.WebServer
             connectedClients = new WebSocketCollection();
         }
 
-        public GameWebSocketHandler(string userName)
+        public GameWebSocketHandler(string userName, IGameService gameService)
         {
-            this.serializer = new JsonSerializer<object>();
+            this.gameService = gameService;
+
             this.UserName = userName;
 
-            this.CheckServiceInitialization();
+            this.ConfigureGameService();
         }
 
-        private void CheckServiceInitialization()
+        private void ConfigureGameService()
         {
-            if (gameService == null)
+            this.gameService.Notification += (sender, args) =>
             {
-                lock (lockObject)
-                {
-                    if (gameService == null)
-                    {
-                        gameService = this.IntializeGameService();
+                SendMessage(args.UserName, args.Notification);
+            };
 
-                        gameService.Notification += (sender, args) =>
-                        {
-                            this.SendMessage(args.UserName, args.Notification);
-                        };
-                    }
-                }
+            var gameConfigurators = this.GetGameConfigurators();
+
+            foreach (var gameConfigurator in gameConfigurators)
+            {
+                gameConfigurator.Configure(gameService);
             }
         }
 
-        protected abstract IGameService IntializeGameService();
+        protected abstract IEnumerable<IGameConfigurator> GetGameConfigurators();
 
         public override void OnOpen()
         {

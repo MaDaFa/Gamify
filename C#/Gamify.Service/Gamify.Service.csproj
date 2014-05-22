@@ -51,6 +51,8 @@
     <Compile Include="GameNotificationEventArgs.cs" />
     <Compile Include="GameService.cs" />
     <Compile Include="Components\IGameComponent.cs" />
+    <Compile Include="GamifyConfigurator.cs" />
+    <Compile Include="IGameConfigurator.cs" />
     <Compile Include="IGameService.cs" />
     <Compile Include="INotificationService.cs" />
     <Compile Include="NotificationService.cs" />

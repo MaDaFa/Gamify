@@ -18,7 +18,7 @@ namespace Gamify.Service
 
         public event EventHandler<GameNotificationEventArgs> Notification;
 
-        protected GameService(INotificationService notificationService, IGameController gameController)
+        public GameService(INotificationService notificationService, IGameController gameController)
         {
             this.serializer = new JsonSerializer<GameRequest>();
             this.components = new List<IGameComponent>();

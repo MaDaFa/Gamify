@@ -12,11 +12,10 @@ namespace Gamify.Service.Components
         private readonly INotificationService notificationService;
         private readonly IGameController gameController;
 
-        public AbandonGameComponent(INotificationService notificationService, IGameController gameController)
+        public AbandonGameComponent(INotificationService notificationService)
         {
             this.serializer = new JsonSerializer<AbandonGameRequestObject>();
             this.notificationService = notificationService;
-            this.gameController = gameController;
         }
 
         public bool CanHandleRequest(GameRequest request)
