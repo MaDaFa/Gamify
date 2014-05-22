@@ -99,20 +99,26 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Client\IGameClientFactory.cs" />
+    <Compile Include="GameClientException.cs" />
     <Compile Include="Managers\GameConnectionManager.cs" />
     <Compile Include="Managers\GameCreationManager.cs" />
+    <Compile Include="Managers\GameMoveManager.cs" />
+    <Compile Include="Managers\GameProgressManager.cs" />
     <Compile Include="Managers\MessageManager.cs" />
-    <Compile Include="GameCreationManagerTest.cs" />
     <Compile Include="GameNotificationEventArgs.cs" />
-    <Compile Include="GameClient.cs" />
-    <Compile Include="GameClientFactory.cs" />
+    <Compile Include="Client\GameClient.cs" />
+    <Compile Include="Client\GameClientFactory.cs" />
     <Compile Include="JsonSerializer.cs" />
+    <Compile Include="Services\GameListener.cs" />
     <Compile Include="Services\GameService.cs" />
-    <Compile Include="IGameClient.cs" />
+    <Compile Include="Client\IGameClient.cs" />
     <Compile Include="ISerializer.cs" />
-    <Compile Include="Services\IGameService.cs" />
-    <Compile Include="MessageReceivedEventArgs.cs" />
+    <Compile Include="Services\IGameListener.cs" />
+    <Compile Include="Services\IGameSender.cs" />
+    <Compile Include="Client\MessageReceivedEventArgs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\IGameService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Gamify.Contracts">
@@ -126,7 +132,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="GamifyClientDiagram.cd" />
     <None Include="packages.config" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '11.0' ">

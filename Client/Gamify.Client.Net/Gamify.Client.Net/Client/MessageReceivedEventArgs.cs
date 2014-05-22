@@ -1,7 +1,7 @@
 ﻿using Gamify.Contracts.Notifications;
 using System;
 
-namespace Gamify.Client.Net
+namespace Gamify.Client.Net.Client
 {
     public class MessageReceivedEventArgs : EventArgs
     {

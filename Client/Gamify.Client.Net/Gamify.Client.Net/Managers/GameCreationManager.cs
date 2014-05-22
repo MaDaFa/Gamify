@@ -1,4 +1,5 @@
-﻿using Gamify.Client.Net.Services;
+﻿using Gamify.Client.Net.Client;
+using Gamify.Client.Net.Services;
 using Gamify.Contracts.Notifications;
 using Gamify.Contracts.Requests;
 using System;
@@ -15,13 +16,13 @@ namespace Gamify.Client.Net.Managers
         public event EventHandler<GameNotificationEventArgs<GameCreatedNotificationObject>> GameCreatedNotificationReceived;
         public event EventHandler<GameNotificationEventArgs<GameRejectedNotificationObject>> GameRejectedNotificationReceived;
 
-        public GameCreationManager(string playerName)
+        public GameCreationManager(string playerName, IGameClientFactory clientFactory)
         {
-            var gamifyClient = GameClientFactory.GetGameClient(playerName);
+            var gameClient = clientFactory.GetGameClient(playerName);
 
-            this.createGameService = new GameService<CreateGameRequestObject, GameInviteNotificationObject>(GameRequestType.CreateGame, GameNotificationType.GameInvite, gamifyClient);
-            this.acceptGameService = new GameService<GameAcceptedRequestObject, GameCreatedNotificationObject>(GameRequestType.GameAccepted, GameNotificationType.GameCreated, gamifyClient);
-            this.rejectGameService = new GameService<GameRejectedRequestObject, GameRejectedNotificationObject>(GameRequestType.GameRejected, GameNotificationType.GameRejected, gamifyClient);
+            this.createGameService = new GameService<CreateGameRequestObject, GameInviteNotificationObject>(GameRequestType.CreateGame, GameNotificationType.GameInvite, gameClient);
+            this.acceptGameService = new GameService<GameAcceptedRequestObject, GameCreatedNotificationObject>(GameRequestType.GameAccepted, GameNotificationType.GameCreated, gameClient);
+            this.rejectGameService = new GameService<GameRejectedRequestObject, GameRejectedNotificationObject>(GameRequestType.GameRejected, GameNotificationType.GameRejected, gameClient);
 
             this.createGameService.NotificationReceived += (sender, args) =>
             {

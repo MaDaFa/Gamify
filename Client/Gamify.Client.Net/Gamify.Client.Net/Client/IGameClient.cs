@@ -1,7 +1,7 @@
 ﻿using Gamify.Contracts.Requests;
 using System;
 
-namespace Gamify.Client.Net
+namespace Gamify.Client.Net.Client
 {
     public interface IGameClient
     {

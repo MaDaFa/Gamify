@@ -1,4 +1,5 @@
-﻿using Gamify.Client.Net.Services;
+﻿using Gamify.Client.Net.Client;
+using Gamify.Client.Net.Services;
 using Gamify.Contracts.Notifications;
 using Gamify.Contracts.Requests;
 using System;
@@ -15,13 +16,13 @@ namespace Gamify.Client.Net.Managers
         public event EventHandler<GameNotificationEventArgs<PlayerDisconnectedNotificationObject>> PlayerDisconnectedNotificationReceived;
         public event EventHandler<GameNotificationEventArgs<SendConnectedPlayersNotificationObject>> ConnectedPlayersNotificationReceived;
 
-        public GameConnectionManager(string playerName)
+        public GameConnectionManager(string playerName, IGameClientFactory clientFactory)
         {
-            var gamifyClient = GameClientFactory.GetGameClient(playerName);
+            var gameClient = clientFactory.GetGameClient(playerName);
 
-            this.playerConnectService = new GameService<PlayerConnectRequestObject, PlayerConnectedNotificationObject>(GameRequestType.PlayerConnect, GameNotificationType.PlayerConnected, gamifyClient);
-            this.playerDisconnectService = new GameService<PlayerDisconnectRequestObject, PlayerDisconnectedNotificationObject>(GameRequestType.PlayerDisconnect, GameNotificationType.PlayerDisconnected, gamifyClient);
-            this.connectedPlayersService = new GameService<GetConnectedPlayersRequestObject, SendConnectedPlayersNotificationObject>(GameRequestType.GetConnectedPlayers, GameNotificationType.SendConnectedPlayers, gamifyClient);
+            this.playerConnectService = new GameService<PlayerConnectRequestObject, PlayerConnectedNotificationObject>(GameRequestType.PlayerConnect, GameNotificationType.PlayerConnected, gameClient);
+            this.playerDisconnectService = new GameService<PlayerDisconnectRequestObject, PlayerDisconnectedNotificationObject>(GameRequestType.PlayerDisconnect, GameNotificationType.PlayerDisconnected, gameClient);
+            this.connectedPlayersService = new GameService<GetConnectedPlayersRequestObject, SendConnectedPlayersNotificationObject>(GameRequestType.GetConnectedPlayers, GameNotificationType.SendConnectedPlayers, gameClient);
 
             this.playerConnectService.NotificationReceived += (sender, args) =>
             {
