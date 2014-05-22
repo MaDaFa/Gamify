@@ -1,15 +1,11 @@
 ﻿using Gamify.Contracts.Notifications;
 using Gamify.Contracts.Requests;
-using System;
 
 namespace Gamify.Client.Net.Services
 {
-    public interface IGameService<TRequest, UNotification>
+    public interface IGameService<TRequest, UNotification> : IGameSender<TRequest>, IGameListener<UNotification>
         where TRequest : IRequestObject
         where UNotification : INotificationObject
     {
-        event EventHandler<GameNotificationEventArgs<UNotification>> NotificationReceived;
-
-        void Send(TRequest request);
     }
 }

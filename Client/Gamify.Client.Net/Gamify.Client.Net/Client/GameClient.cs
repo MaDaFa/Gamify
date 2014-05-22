@@ -5,7 +5,7 @@ using System.Threading;
 using Windows.Networking.Sockets;
 using Windows.Storage.Streams;
 
-namespace Gamify.Client.Net
+namespace Gamify.Client.Net.Client
 {
     public class GameClient : IGameClient
     {
@@ -63,7 +63,7 @@ namespace Gamify.Client.Net
         {
             if (!this.IsInitialized)
             {
-                throw new Exception("The client is not initialized");
+                throw new GameClientException("The client is not initialized");
             }
 
             var serializedGameRequest = this.requestSerializer.Serialize(gameRequest);
@@ -91,15 +91,14 @@ namespace Gamify.Client.Net
             catch (Exception ex)
             {
                 var status = WebSocketError.GetStatus(ex.GetBaseException().HResult);
-                // Add your specific error-handling code here.
+                var errorMessage = string.Format("An error occured while trying to send a message to the server. Error type: {0}", status.ToString());
+
+                throw new GameClientException(errorMessage, ex);
             }
         }
 
         private void CloseConnection(WebSocketClosedEventArgs args)
         {
-            // You can add code to log or display the code and reason
-            // for the closure (stored in args.Code and args.Reason)
-
             var webSocketClient = Interlocked.Exchange(ref this.gameWebSocketClient, null);
 
             if (webSocketClient != null)
