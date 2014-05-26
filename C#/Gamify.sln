@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gamify.WebServer", "Gamify.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gamify.Contracts", "Gamify.Contracts\Gamify.Contracts.csproj", "{174E05B6-EFE4-42EB-B4FF-F56FB6B885DB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gamify.Data", "Gamify.Data\Gamify.Data.csproj", "{B535FD9D-E1C0-42EB-8F95-945C8B745858}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -31,6 +33,10 @@ Global
 		{174E05B6-EFE4-42EB-B4FF-F56FB6B885DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{174E05B6-EFE4-42EB-B4FF-F56FB6B885DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{174E05B6-EFE4-42EB-B4FF-F56FB6B885DB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B535FD9D-E1C0-42EB-8F95-945C8B745858}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B535FD9D-E1C0-42EB-8F95-945C8B745858}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B535FD9D-E1C0-42EB-8F95-945C8B745858}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B535FD9D-E1C0-42EB-8F95-945C8B745858}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

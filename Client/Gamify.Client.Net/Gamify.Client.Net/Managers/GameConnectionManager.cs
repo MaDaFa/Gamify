@@ -50,6 +50,11 @@ namespace Gamify.Client.Net.Managers
             this.playerDisconnectService.Send(playerDisconnectRequest);
         }
 
+        public void GetConnectedPlayers(GetConnectedPlayersRequestObject getConnectedPlayersRequest)
+        {
+            this.connectedPlayersService.Send(getConnectedPlayersRequest);
+        }
+
         private void NotifyPlayerConnected(GameNotificationEventArgs<PlayerConnectedNotificationObject> args)
         {
             if (this.PlayerConnectedNotificationReceived != null)
