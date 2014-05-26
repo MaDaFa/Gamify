@@ -2,7 +2,7 @@ package ar.com.mdf.gamify.objects.notification;
 
 import com.google.gson.annotations.SerializedName;
 
-public abstract class NotificationObject {
+public abstract class NotificationObject implements INotificationObject {
 	
 	@SerializedName("Message")
 	private String message;

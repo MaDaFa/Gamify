@@ -2,7 +2,7 @@ package ar.com.mdf.gamify.objects.request;
 
 import com.google.gson.annotations.SerializedName;
 
-public class PlayerNameRequestObject {
+public class PlayerNameRequestObject implements IRequestObject{
 
 	@SerializedName("PlayerName")
 	private String playerName;

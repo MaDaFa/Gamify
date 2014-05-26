@@ -25,10 +25,10 @@ public enum NotificationType {
 	private static Map<Integer, NotificationType> map = null;
 	
 	static {
-		NotificationType[] estadosAfiliacion = NotificationType.values();
+		NotificationType[] notificationType = NotificationType.values();
 		map = new HashMap<Integer, NotificationType>();
-		for (int i = 0; i < estadosAfiliacion.length; i++) {
-			map.put(estadosAfiliacion[i].type, estadosAfiliacion[i]);
+		for (int i = 0; i < notificationType.length; i++) {
+			map.put(notificationType[i].type, notificationType[i]);
 		}
 	}
 	
@@ -39,4 +39,10 @@ public enum NotificationType {
 	private NotificationType(int type) {
 		this.type = type;
 	}
+
+	public Integer getType() {
+		return type;
+	}
+	
+	
 }
