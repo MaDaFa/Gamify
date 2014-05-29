@@ -1,7 +1,7 @@
 ﻿using Gamify.Contracts.Notifications;
 using Gamify.Contracts.Requests;
 using Gamify.Core;
-using Gamify.Core.Interfaces;
+using Gamify.Service.Interfaces;
 using System.Linq;
 
 namespace Gamify.Service.Components
@@ -9,14 +9,16 @@ namespace Gamify.Service.Components
     public class ConnectedPlayersComponent : IGameComponent
     {
         private readonly ISerializer<GetConnectedPlayersRequestObject> serializer;
-        private readonly INotificationService notificationService;
-        private readonly IGameController gameController;
+        private readonly IPlayerService playerService;
 
-        public ConnectedPlayersComponent(INotificationService notificationService, IGameController gameController)
+        public INotificationService NotificationService { get; private set; }
+
+        public ConnectedPlayersComponent(IPlayerService playerService, INotificationService notificationService)
         {
             this.serializer = new JsonSerializer<GetConnectedPlayersRequestObject>();
-            this.notificationService = notificationService;
-            this.gameController = gameController;
+            this.playerService = playerService;
+
+            this.NotificationService = notificationService;
         }
 
         public bool CanHandleRequest(GameRequest request)
@@ -27,8 +29,7 @@ namespace Gamify.Service.Components
         public void HandleRequest(GameRequest request)
         {
             var getConnectedPlayersObject = this.serializer.Deserialize(request.SerializedRequestObject);
-            var sortedPlayers = this.gameController.Players
-                .Where(p => p.UserName != getConnectedPlayersObject.PlayerName)
+            var sortedPlayers = this.playerService.GetAll(playerNameToExclude: getConnectedPlayersObject.PlayerName)
                 .OrderBy(p => p.UserName);
             var sortedPlayersPage = sortedPlayers.Take(getConnectedPlayersObject.PageSize);
             var notification = new SendConnectedPlayersNotificationObject
@@ -38,7 +39,7 @@ namespace Gamify.Service.Components
                 ConectedPlayersCount = sortedPlayers.Count()
             };
 
-            this.notificationService.Send(GameNotificationType.SendConnectedPlayers, notification, getConnectedPlayersObject.PlayerName);
+            this.NotificationService.Send(GameNotificationType.SendConnectedPlayers, notification, getConnectedPlayersObject.PlayerName);
         }
     }
 }

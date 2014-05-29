@@ -1,7 +1,7 @@
 ﻿using Gamify.Contracts.Notifications;
 using System;
 
-namespace Gamify.Service
+namespace Gamify.Service.Interfaces
 {
     public interface INotificationService
     {

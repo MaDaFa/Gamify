@@ -1,4 +1,4 @@
-﻿namespace Gamify.Core.Interfaces
+﻿namespace Gamify.Core
 {
     public interface IGameMoveResponse<T>
     {

@@ -1,27 +1,30 @@
-﻿using Gamify.Core.Interfaces;
-using Gamify.Service.Components;
+﻿using Gamify.Service.Components;
+using Gamify.Service.Interfaces;
 
 namespace Gamify.Service
 {
     public class GamifyConfigurator : IGameConfigurator
     {
+        private readonly IPlayerService playerService;
+        private readonly ISessionService sessionService;
         private readonly INotificationService notificationService;
-        private readonly IGameController gameController;
 
-        public GamifyConfigurator(INotificationService notificationService, IGameController gameController)
+        public GamifyConfigurator(IPlayerService playerService, ISessionService sessionService, INotificationService notificationService)
         {
+            this.playerService = playerService;
+            this.sessionService = sessionService;
             this.notificationService = notificationService;
-            this.gameController = gameController;
         }
 
         public void Configure(IGameServiceSetup gameServiceSetup)
         {
-            gameServiceSetup.RegisterComponent(new AbandonGameComponent(this.notificationService));
-            gameServiceSetup.RegisterComponent(new ActiveGamesComponent(this.notificationService, this.gameController));
-            gameServiceSetup.RegisterComponent(new ConnectedPlayersComponent(this.notificationService, this.gameController));
-            gameServiceSetup.RegisterComponent(new DisconnectPlayerComponent(this.notificationService, this.gameController));
+            gameServiceSetup.RegisterComponent(new ConnectPlayerComponent(this.playerService, this.notificationService));
+            gameServiceSetup.RegisterComponent(new AbandonGameComponent(this.sessionService, this.notificationService));
+            gameServiceSetup.RegisterComponent(new ActiveGamesComponent(this.sessionService, this.notificationService));
+            gameServiceSetup.RegisterComponent(new ConnectedPlayersComponent(this.playerService, this.notificationService));
+            gameServiceSetup.RegisterComponent(new DisconnectPlayerComponent(this.playerService, this.notificationService));
             gameServiceSetup.RegisterComponent(new MessageComponent(this.notificationService));
-            gameServiceSetup.RegisterComponent(new RejectGameComponent(this.notificationService, this.gameController));
+            gameServiceSetup.RegisterComponent(new RejectGameComponent(this.sessionService, this.notificationService));
         }
     }
 }

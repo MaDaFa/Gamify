@@ -1,7 +1,7 @@
 ﻿using Gamify.Contracts.Notifications;
+using Gamify.Contracts.Requests;
 using Gamify.Core;
-using Gamify.Core.Interfaces;
-using Gamify.Service;
+using Gamify.Service.Interfaces;
 using Microsoft.Web.WebSockets;
 using System;
 using System.Collections.Generic;
@@ -13,8 +13,10 @@ namespace Gamify.WebServer
     {
         protected static WebSocketCollection connectedClients;
 
-        private bool isInitialized;
-        private ISerializer<object> serializer;
+        private bool isConfigured;
+        private bool isConnected;
+        private ISerializer<GameRequest> requestSerializer;
+        private ISerializer<GameNotification> notificationSerializer;
         private IGameService gameService;
 
         public string UserName { get; private set; }
@@ -24,11 +26,10 @@ namespace Gamify.WebServer
             connectedClients = new WebSocketCollection();
         }
 
-        public GameWebSocketHandler(string userName)
+        public GameWebSocketHandler()
         {
-            this.serializer = new JsonSerializer<object>();
-
-            this.UserName = userName;
+            this.requestSerializer = new JsonSerializer<GameRequest>();
+            this.notificationSerializer = new JsonSerializer<GameNotification>();
         }
 
         public void Initialize(IGameService gameService)
@@ -36,7 +37,7 @@ namespace Gamify.WebServer
             this.gameService = gameService;
             this.gameService.Notification += (sender, args) =>
             {
-                SendMessage(args.UserName, args.Notification);
+                this.PushMessage(args.UserName, args.Notification);
             };
 
             var gameConfigurators = this.GetGameConfigurators();
@@ -46,7 +47,7 @@ namespace Gamify.WebServer
                 gameConfigurator.Configure(gameService);
             }
 
-            this.isInitialized = true;
+            this.isConfigured = true;
         }
 
         protected abstract IEnumerable<IGameConfigurator> GetGameConfigurators();
@@ -56,15 +57,14 @@ namespace Gamify.WebServer
             this.ValidateInitialization();
 
             connectedClients.Add(this);
-
-            gameService.ConnectUser(this.UserName);
         }
 
         public override void OnMessage(string message)
         {
             this.ValidateInitialization();
+            this.ValidateConnection(message);
 
-            gameService.ReceiveMessage(message);
+            gameService.Send(message);
         }
 
         public override void OnClose()
@@ -74,12 +74,12 @@ namespace Gamify.WebServer
             base.OnClose();
 
             connectedClients.Remove(this);
-            gameService.DisconnectUser(this.UserName);
+            gameService.Disconnect(this.UserName);
         }
 
-        private void SendMessage(string userName, GameNotification notification)
+        private void PushMessage(string userName, GameNotification notification)
         {
-            var serializedNotification = this.serializer.Serialize(notification);
+            var serializedNotification = this.notificationSerializer.Serialize(notification);
             var client = connectedClients
                 .Cast<GameWebSocketHandler>()
                 .FirstOrDefault(c => c.UserName == userName);
@@ -89,9 +89,24 @@ namespace Gamify.WebServer
 
         private void ValidateInitialization()
         {
-            if (!isInitialized)
+            if (!isConfigured)
             {
                 throw new ApplicationException("The web socket handler must be explicitly initialized before using it");
+            }
+        }
+
+        private void ValidateConnection(string message)
+        {
+            var gameRequest = this.requestSerializer.Deserialize(message);
+
+            if (gameRequest.Type == (int)GameRequestType.PlayerConnect && this.isConnected)
+            {
+                throw new ApplicationException("A connection error occurred when trying to connect a player already connected");
+            }
+
+            if (gameRequest.Type != (int)GameRequestType.PlayerConnect && !this.isConnected)
+            {
+                throw new ApplicationException("A connection error occurred. The players must be connected in order to perform other type of requests");
             }
         }
     }

@@ -1,5 +1,4 @@
-﻿using Gamify.Core.Interfaces;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
 namespace Gamify.Core
 {

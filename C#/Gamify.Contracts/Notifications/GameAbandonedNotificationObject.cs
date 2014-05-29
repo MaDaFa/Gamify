@@ -6,11 +6,11 @@
         {
             get
             {
-                return string.Format("The game {0} has been abandoned by {1}", this.SessionId, this.PlayerName);
+                return string.Format("The game {0} has been abandoned by {1}", this.SessionName, this.PlayerName);
             }
         }
 
-        public string SessionId { get; set; }
+        public string SessionName { get; set; }
 
         public string PlayerName { get; set; }
     }

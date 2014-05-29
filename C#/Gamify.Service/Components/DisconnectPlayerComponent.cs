@@ -1,7 +1,7 @@
 ﻿using Gamify.Contracts.Notifications;
 using Gamify.Contracts.Requests;
 using Gamify.Core;
-using Gamify.Core.Interfaces;
+using Gamify.Service.Interfaces;
 using System.Linq;
 
 namespace Gamify.Service.Components
@@ -9,14 +9,16 @@ namespace Gamify.Service.Components
     public class DisconnectPlayerComponent : IGameComponent
     {
         private readonly ISerializer<PlayerDisconnectRequestObject> serializer;
-        private readonly INotificationService notificationService;
-        private readonly IGameController gameController;
+        private readonly IPlayerService playerService;
 
-        public DisconnectPlayerComponent(INotificationService notificationService, IGameController gameController)
+        public INotificationService NotificationService { get; private set; }
+
+        public DisconnectPlayerComponent(IPlayerService playerService, INotificationService notificationService)
         {
             this.serializer = new JsonSerializer<PlayerDisconnectRequestObject>();
-            this.notificationService = notificationService;
-            this.gameController = gameController;
+            this.playerService = playerService;
+
+            this.NotificationService = notificationService;
         }
 
         public bool CanHandleRequest(GameRequest request)
@@ -28,7 +30,6 @@ namespace Gamify.Service.Components
         {
             var playerDisconnectObject = this.serializer.Deserialize(request.SerializedRequestObject);
 
-            this.gameController.Disconnect(playerDisconnectObject.PlayerName);
             this.SendPlayerDisconnectedNotification(playerDisconnectObject.PlayerName);
         }
 
@@ -38,11 +39,10 @@ namespace Gamify.Service.Components
             {
                 PlayerName = userName
             };
-            var players = this.gameController.Players
-                .Where(p => p.UserName != userName)
+            var players = this.playerService.GetAll(playerNameToExclude: userName)
                 .Select(p => p.UserName);
 
-            this.notificationService.SendBroadcast(GameNotificationType.PlayerDisconnected, notification, players.ToArray());
+            this.NotificationService.SendBroadcast(GameNotificationType.PlayerDisconnected, notification, players.ToArray());
         }
     }
 }

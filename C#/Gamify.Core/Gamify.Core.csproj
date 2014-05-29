@@ -43,20 +43,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GameController.cs" />
-    <Compile Include="GamePlayer.cs" />
-    <Compile Include="GameSession.cs" />
     <Compile Include="JsonSerializer.cs" />
-    <Compile Include="Interfaces\IGameController.cs" />
-    <Compile Include="Interfaces\ISerializer.cs" />
-    <Compile Include="Interfaces\ISessionGamePlayerHistory.cs" />
-    <Compile Include="Interfaces\IGameMove.cs" />
-    <Compile Include="Interfaces\IGameMoveResponse.cs" />
-    <Compile Include="Interfaces\IGamePlayer.cs" />
-    <Compile Include="Interfaces\IGameSession.cs" />
-    <Compile Include="Interfaces\ISessionGamePlayer.cs" />
+    <Compile Include="ISerializer.cs" />
+    <Compile Include="ISessionHistory.cs" />
+    <Compile Include="IGameMove.cs" />
+    <Compile Include="IGameMoveResponse.cs" />
+    <Compile Include="IGamePlayer.cs" />
+    <Compile Include="IGameSession.cs" />
+    <Compile Include="ISessionGamePlayer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SessionGamePlayerHistory.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

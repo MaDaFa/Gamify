@@ -1,8 +1,7 @@
-﻿using Gamify.Contracts.Notifications;
-using Gamify.Contracts.Requests;
+﻿using Gamify.Contracts.Requests;
 using Gamify.Core;
-using Gamify.Core.Interfaces;
 using Gamify.Service.Components;
+using Gamify.Service.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,21 +10,20 @@ namespace Gamify.Service
 {
     public class GameService : IGameService
     {
-        private readonly ISerializer<GameRequest> serializer;
+        private readonly ISerializer<GameRequest> gameSerializer;
         private readonly IList<IGameComponent> components;
-        private readonly INotificationService notificationService;
-        private readonly IGameController gameController;
 
         public event EventHandler<GameNotificationEventArgs> Notification;
 
-        public GameService(INotificationService notificationService, IGameController gameController)
+        public GameService()
         {
-            this.serializer = new JsonSerializer<GameRequest>();
+            this.gameSerializer = new JsonSerializer<GameRequest>();
             this.components = new List<IGameComponent>();
-            this.notificationService = notificationService;
-            this.gameController = gameController;
+        }
 
-            this.notificationService.Notification += (sender, args) =>
+        public void RegisterComponent(IGameComponent component)
+        {
+            component.NotificationService.Notification += (sender, args) =>
             {
                 var sendMessageHandler = this.Notification;
 
@@ -34,31 +32,31 @@ namespace Gamify.Service
                     sendMessageHandler(this, args);
                 }
             };
-        }
 
-        public void RegisterComponent(IGameComponent component)
-        {
             this.components.Add(component);
         }
 
-        public void ConnectUser(string userName)
+        public void Connect(string userName, string accessToken)
         {
-            var newPlayer = new GamePlayer(userName);
-            var notification = new PlayerConnectedNotificationObject
+            var playerConnectRequest = new PlayerConnectRequestObject
             {
-                PlayerName = userName
+                PlayerName = userName,
+                AccessToken = accessToken
             };
-            var playersToNotify = this.gameController.Players
-                .Where(p => p.UserName != userName)
-                .Select(p => p.UserName);
+            var playerConnectSerializer = new JsonSerializer<PlayerConnectRequestObject>();
+            var gameRequest = new GameRequest
+            {
+                Type = (int)GameRequestType.PlayerConnect,
+                SerializedRequestObject = playerConnectSerializer.Serialize(playerConnectRequest)
+            };
+            var message = this.gameSerializer.Serialize(gameRequest);
 
-            this.gameController.Connect(newPlayer);
-            this.notificationService.SendBroadcast(GameNotificationType.PlayerConnected, notification, playersToNotify.ToArray());
+            this.Send(message);
         }
 
-        public void ReceiveMessage(string message)
+        public void Send(string message)
         {
-            var gameRequest = this.serializer.Deserialize(message);
+            var gameRequest = this.gameSerializer.Deserialize(message);
             var component = this.components.FirstOrDefault(c => c.CanHandleRequest(gameRequest));
 
             if (component == null)
@@ -71,28 +69,21 @@ namespace Gamify.Service
             component.HandleRequest(gameRequest);
         }
 
-        public void DisconnectUser(string userName)
+        public void Disconnect(string userName)
         {
-            var notification = new PlayerDisconnectedNotificationObject
+            var playerDisconnectRequest = new PlayerDisconnectRequestObject
             {
                 PlayerName = userName
             };
-            var playersToNotify = this.gameController.Players
-                .Where(p => p.UserName != userName)
-                .Select(p => p.UserName);
-
-            this.gameController.Disconnect(userName);
-            this.notificationService.SendBroadcast(GameNotificationType.PlayerDisconnected, notification, playersToNotify.ToArray());
-        }
-
-        private void SendErrorNotification(string userName, Exception exception)
-        {
-            var notification = new ErrorNotificationObject
+            var playerDisconnectSerializer = new JsonSerializer<PlayerDisconnectRequestObject>();
+            var gameRequest = new GameRequest
             {
-                Message = exception.Message
+                Type = (int)GameRequestType.PlayerDisconnect,
+                SerializedRequestObject = playerDisconnectSerializer.Serialize(playerDisconnectRequest)
             };
+            var message = this.gameSerializer.Serialize(gameRequest);
 
-            this.notificationService.Send(GameNotificationType.Error, notification, userName);
+            this.Send(message);
         }
     }
 }

@@ -1,22 +1,23 @@
 ﻿using Gamify.Contracts.Notifications;
 using Gamify.Contracts.Requests;
 using Gamify.Core;
-using Gamify.Core.Interfaces;
-using System.Linq;
+using Gamify.Service.Interfaces;
 
 namespace Gamify.Service.Components
 {
     public abstract class AcceptGameComponent : IGameComponent
     {
         protected readonly ISerializer<GameAcceptedRequestObject> serializer;
-        protected readonly INotificationService notificationService;
-        protected readonly IGameController gameController;
+        protected readonly ISessionService sessionService;
 
-        protected AcceptGameComponent(INotificationService notificationService, IGameController gameController)
+        public INotificationService NotificationService { get; private set; }
+
+        protected AcceptGameComponent(ISessionService sessionService, INotificationService notificationService)
         {
             this.serializer = new JsonSerializer<GameAcceptedRequestObject>();
-            this.notificationService = notificationService;
-            this.gameController = gameController;
+            this.sessionService = sessionService;
+
+            this.NotificationService = notificationService;
         }
 
         public bool CanHandleRequest(GameRequest request)
@@ -30,9 +31,9 @@ namespace Gamify.Service.Components
 
             this.GetSessionPlayer2Ready(gameAcceptedObject);
 
-            var newSession = this.gameController.Sessions.First(s => s.Id == gameAcceptedObject.SessionId);
+            var newSession = this.sessionService.GetByName(gameAcceptedObject.SessionName);
 
-            newSession.Player1.NeedsToMove = true;
+            newSession.Player1.PendingToMove = true;
 
             this.SendGameCreatedNotification(newSession);
         }
@@ -43,12 +44,12 @@ namespace Gamify.Service.Components
         {
             var notification = new GameCreatedNotificationObject
             {
-                SessionId = newSession.Id,
+                SessionName = newSession.Name,
                 Player1Name = newSession.Player1.Information.UserName,
                 Player2Name = newSession.Player2.Information.UserName
             };
 
-            this.notificationService.SendBroadcast(GameNotificationType.GameCreated, notification, newSession.Player1.Information.UserName, newSession.Player2.Information.UserName);
+            this.NotificationService.SendBroadcast(GameNotificationType.GameCreated, notification, newSession.Player1.Information.UserName, newSession.Player2.Information.UserName);
         }
     }
 }

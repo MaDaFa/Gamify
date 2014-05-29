@@ -1,6 +1,6 @@
 ﻿using Gamify.Contracts.Notifications;
 using Gamify.Core;
-using Gamify.Core.Interfaces;
+using Gamify.Service.Interfaces;
 using System;
 
 namespace Gamify.Service

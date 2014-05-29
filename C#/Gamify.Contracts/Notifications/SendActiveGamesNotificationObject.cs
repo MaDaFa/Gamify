@@ -47,7 +47,7 @@ namespace Gamify.Contracts.Notifications
 
     public class GameObject
     {
-        public string SessionId { get; set; }
+        public string SessionName { get; set; }
 
         public string Player1Name { get; set; }
 

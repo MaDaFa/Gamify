@@ -1,7 +1,7 @@
 ﻿using Gamify.Service.Components;
 using System;
 
-namespace Gamify.Service
+namespace Gamify.Service.Interfaces
 {
     public interface IGameServiceSetup
     {
@@ -12,10 +12,10 @@ namespace Gamify.Service
     {
         event EventHandler<GameNotificationEventArgs> Notification;
 
-        void ConnectUser(string userName);
+        void Connect(string userName, string accessToken);
 
-        void ReceiveMessage(string message);
+        void Send(string message);
 
-        void DisconnectUser(string userName);
+        void Disconnect(string userName);
     }
 }

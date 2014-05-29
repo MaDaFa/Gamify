@@ -1,8 +1,8 @@
-﻿using Gamify.Core.Interfaces;
+﻿using Gamify.Core;
 
-namespace Gamify.Core
+namespace Gamify.Data.Entities
 {
-    public class GamePlayer : IGamePlayer
+    public class GamePlayer : MongoEntity, IGamePlayer
     {
         public string UserName { get; set; }
 

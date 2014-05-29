@@ -2,7 +2,7 @@
 {
     public class GameRejectedRequestObject : IRequestObject
     {
-        public string SessionId { get; set; }
+        public string SessionName { get; set; }
 
         public string PlayerName { get; set; }
     }

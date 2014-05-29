@@ -1,4 +1,6 @@
 ﻿using Gamify.Data.Configuration;
+using Gamify.Data.Entities;
+using MongoDB.Bson;
 using MongoDB.Driver;
 using MongoDB.Driver.Builders;
 using MongoDB.Driver.Linq;
@@ -9,7 +11,7 @@ using System.Linq.Expressions;
 namespace Gamify.Data
 {
     public class Repository<T> : IRepository<T>
-        where T : DataObject
+        where T : MongoEntity
     {
         private static readonly string idName = "_id";
         private static readonly string collectionName = typeof(T).Name;
@@ -43,18 +45,18 @@ namespace Gamify.Data
             return filteredCollection.FirstOrDefault();
         }
 
-        public T Get(Guid id)
+        public bool Exist(Expression<Func<T, bool>> predicate = null)
         {
-            var collection = this.database.GetCollection<T>(collectionName);
+            var existingDataObject = this.Get(predicate);
 
-            return collection.FindOneByIdAs<T>(id);
+            return existingDataObject != default(T);
         }
 
         ///<exception cref="GameDataException">GameDataException</exception>
-        public Guid Create(T dataObject)
+        public void Create(T dataEntity)
         {
             var collection = this.database.GetCollection<T>(collectionName);
-            var insertResult = collection.Insert(dataObject);
+            var insertResult = collection.Insert(dataEntity);
 
             if (!insertResult.Ok)
             {
@@ -62,32 +64,30 @@ namespace Gamify.Data
 
                 throw new GameDataException(errorMessage);
             }
-
-            return dataObject.Id;
         }
 
         ///<exception cref="GameDataException">GameDataException</exception>
-        public void Update(T dataObject)
+        public void Update(T dataEntity)
         {
             var collection = this.database.GetCollection<T>(collectionName);
-            var saveResult = collection.Save(dataObject);
+            var saveResult = collection.Save(dataEntity);
 
             if (!saveResult.Ok)
             {
-                var errorMessage = string.Concat("Update of document {0} with Id {1} failed", collectionName, dataObject.Id);
+                var errorMessage = string.Concat("Update of document {0} with Id {1} failed", collectionName, dataEntity.Id);
 
                 throw new GameDataException(errorMessage);
             }
         }
 
         ///<exception cref="GameDataException">GameDataException</exception>
-        public void Delete(T dataObject)
+        public void Delete(T dataEntity)
         {
-            this.Delete(dataObject.Id);
+            this.Delete(dataEntity.Id);
         }
 
         ///<exception cref="GameDataException">GameDataException</exception>
-        public void Delete(Guid id)
+        public void Delete(ObjectId id)
         {
             var collection = this.database.GetCollection<T>(collectionName);
             var removeQuery = Query.EQ(idName, id);

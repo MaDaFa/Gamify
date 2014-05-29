@@ -1,21 +1,22 @@
 ﻿using Gamify.Contracts.Requests;
 using Gamify.Core;
-using Gamify.Core.Interfaces;
-using System.Linq;
+using Gamify.Service.Interfaces;
 
 namespace Gamify.Service.Components
 {
     public abstract class OpenGameComponent : IGameComponent
     {
         protected readonly ISerializer<OpenGameRequestObject> serializer;
-        protected readonly IGameController gameController;
-        protected readonly INotificationService notificationService;
+        protected readonly ISessionService sessionService;
 
-        protected OpenGameComponent(INotificationService notificationService, IGameController gameController)
+        public INotificationService NotificationService { get; private set; }
+
+        protected OpenGameComponent(ISessionService sessionService, INotificationService notificationService)
         {
             this.serializer = new JsonSerializer<OpenGameRequestObject>();
-            this.notificationService = notificationService;
-            this.gameController = gameController;
+            this.sessionService = sessionService;
+
+            this.NotificationService = notificationService;
         }
 
         public bool CanHandleRequest(GameRequest request)
@@ -26,7 +27,7 @@ namespace Gamify.Service.Components
         public void HandleRequest(GameRequest request)
         {
             var openGameObject = this.serializer.Deserialize(request.SerializedRequestObject);
-            var currentSession = this.gameController.Sessions.First(s => s.Id == openGameObject.SessionId);
+            var currentSession = this.sessionService.GetByName(openGameObject.SessionName);
 
             this.SendGameInformation(openGameObject.PlayerName, currentSession);
         }

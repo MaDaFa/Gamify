@@ -43,6 +43,7 @@
     <Compile Include="Components\AcceptGameComponent.cs" />
     <Compile Include="Components\ActiveGamesComponent.cs" />
     <Compile Include="Components\ConnectedPlayersComponent.cs" />
+    <Compile Include="Components\ConnectPlayerComponent.cs" />
     <Compile Include="Components\CreateGameComponent.cs" />
     <Compile Include="Components\DisconnectPlayerComponent.cs" />
     <Compile Include="Components\MessageComponent.cs" />
@@ -52,11 +53,19 @@
     <Compile Include="GameService.cs" />
     <Compile Include="Components\IGameComponent.cs" />
     <Compile Include="GamifyConfigurator.cs" />
-    <Compile Include="IGameConfigurator.cs" />
-    <Compile Include="IGameService.cs" />
-    <Compile Include="INotificationService.cs" />
+    <Compile Include="Interfaces\IGameConfigurator.cs" />
+    <Compile Include="Interfaces\IGameService.cs" />
+    <Compile Include="Interfaces\IMoveService.cs" />
+    <Compile Include="Interfaces\INotificationService.cs" />
+    <Compile Include="Interfaces\IPlayerService.cs" />
+    <Compile Include="Interfaces\ISessionHistoryService.cs" />
+    <Compile Include="Interfaces\ISessionService.cs" />
+    <Compile Include="MoveService.cs" />
     <Compile Include="NotificationService.cs" />
+    <Compile Include="PlayerService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SessionHistoryService.cs" />
+    <Compile Include="SessionService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Gamify.Contracts\Gamify.Contracts.csproj">
@@ -66,6 +75,10 @@
     <ProjectReference Include="..\Gamify.Core\Gamify.Core.csproj">
       <Project>{cb44312b-0775-404b-a6ec-08eb45b738e7}</Project>
       <Name>Gamify.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Gamify.Data\Gamify.Data.csproj">
+      <Project>{b535fd9d-e1c0-42eb-8f95-945c8b745858}</Project>
+      <Name>Gamify.Data</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

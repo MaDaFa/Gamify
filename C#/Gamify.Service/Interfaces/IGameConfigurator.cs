@@ -1,4 +1,4 @@
-﻿namespace Gamify.Service
+﻿namespace Gamify.Service.Interfaces
 {
     public interface IGameConfigurator
     {

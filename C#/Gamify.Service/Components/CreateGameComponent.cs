@@ -1,7 +1,7 @@
 ﻿using Gamify.Contracts.Notifications;
 using Gamify.Contracts.Requests;
 using Gamify.Core;
-using Gamify.Core.Interfaces;
+using Gamify.Service.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -10,14 +10,16 @@ namespace Gamify.Service.Components
     public abstract class CreateGameComponent : IGameComponent
     {
         protected readonly ISerializer<CreateGameRequestObject> serializer;
-        protected readonly INotificationService notificationService;
-        protected readonly IGameController gameController;
+        protected readonly ISessionService sessionService;
 
-        protected CreateGameComponent(INotificationService notificationService, IGameController gameController)
+        public INotificationService NotificationService { get; private set; }
+
+        protected CreateGameComponent(ISessionService sessionService, INotificationService notificationService)
         {
             this.serializer = new JsonSerializer<CreateGameRequestObject>();
-            this.notificationService = notificationService;
-            this.gameController = gameController;
+            this.sessionService = sessionService;
+
+            this.NotificationService = notificationService;
         }
 
         public bool CanHandleRequest(GameRequest request)
@@ -31,7 +33,7 @@ namespace Gamify.Service.Components
             var sessionPlayers = this.GetSessionPlayers(createGameObject);
             var sessionPlayer1 = sessionPlayers.First(p => p.Information.UserName == createGameObject.PlayerName);
             var sessionPlayer2 = sessionPlayers.First(p => p.Information.UserName == createGameObject.InvitedPlayerName);
-            var newSession = this.gameController.OpenSession(sessionPlayer1, sessionPlayer2);
+            var newSession = this.sessionService.Open(sessionPlayer1, sessionPlayer2);
 
             this.SendGameInviteNotification(newSession);
         }
@@ -46,13 +48,13 @@ namespace Gamify.Service.Components
         {
             var gameInviteNotificationObject = new GameInviteNotificationObject
             {
-                SessionId = newSession.Id,
+                SessionName = newSession.Name,
                 Player1Name = newSession.Player1.Information.UserName
             };
 
             this.DecorateGameInvitation(gameInviteNotificationObject);
 
-            this.notificationService.Send(GameNotificationType.GameInvite, gameInviteNotificationObject, newSession.Player2.Information.UserName);
+            this.NotificationService.Send(GameNotificationType.GameInvite, gameInviteNotificationObject, newSession.Player2.Information.UserName);
         }
     }
 }

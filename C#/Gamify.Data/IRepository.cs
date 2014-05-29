@@ -1,23 +1,25 @@
-﻿using System;
+﻿using Gamify.Data.Entities;
+using MongoDB.Bson;
+using System;
 using System.Linq;
 using System.Linq.Expressions;
 
 namespace Gamify.Data
 {
-    public interface IRepository<T> where T : DataObject
+    public interface IRepository<T> where T : MongoEntity
     {
         IQueryable<T> GetAll(Expression<Func<T, bool>> predicate = null);
 
         T Get(Expression<Func<T, bool>> predicate = null);
 
-        T Get(Guid id);
+        bool Exist(Expression<Func<T, bool>> predicate = null);
 
-        Guid Create(T dataObject);
+        void Create(T dataEntity);
 
-        void Update(T dataObject);
+        void Update(T dataEntity);
 
-        void Delete(T dataObject);
+        void Delete(T dataEntity);
 
-        void Delete(Guid id);
+        void Delete(ObjectId id);
     }
 }

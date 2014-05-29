@@ -12,7 +12,7 @@ namespace Gamify.Contracts.Notifications
             }
         }
 
-        public string SessionId { get; set; }
+        public string SessionName { get; set; }
 
         public string WinnerPlayerName { get; set; }
 

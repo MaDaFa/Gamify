@@ -1,4 +1,4 @@
-﻿namespace Gamify.Core.Interfaces
+﻿namespace Gamify.Core
 {
     public interface ISessionGamePlayerBase
     {
@@ -6,12 +6,12 @@
 
         bool IsReady { get; set; }
 
-        bool NeedsToMove { get; set; }
+        bool PendingToMove { get; set; }
     }
 
     public interface ISessionGamePlayer<TMove, UResponse> : ISessionGamePlayerBase
     {
-        ISessionGamePlayerHistory<TMove, UResponse> MovesHistory { get; }
+        ISessionHistory<TMove, UResponse> History { get; }
 
         IGameMoveResponse<UResponse> ProcessMove(IGameMove<TMove> move);
     }

@@ -1,21 +1,23 @@
 ﻿using Gamify.Contracts.Notifications;
 using Gamify.Contracts.Requests;
 using Gamify.Core;
-using Gamify.Core.Interfaces;
-using System.Linq;
+using Gamify.Service.Interfaces;
 
 namespace Gamify.Service.Components
 {
     public class AbandonGameComponent : IGameComponent
     {
         private readonly ISerializer<AbandonGameRequestObject> serializer;
-        private readonly INotificationService notificationService;
-        private readonly IGameController gameController;
+        private readonly ISessionService sessionService;
 
-        public AbandonGameComponent(INotificationService notificationService)
+        public INotificationService NotificationService { get; private set; }
+
+        public AbandonGameComponent(ISessionService sessionService, INotificationService notificationService)
         {
             this.serializer = new JsonSerializer<AbandonGameRequestObject>();
-            this.notificationService = notificationService;
+            this.sessionService = sessionService;
+
+            this.NotificationService = notificationService;
         }
 
         public bool CanHandleRequest(GameRequest request)
@@ -26,9 +28,9 @@ namespace Gamify.Service.Components
         public void HandleRequest(GameRequest request)
         {
             var abandonGameObject = this.serializer.Deserialize(request.SerializedRequestObject);
-            var currentSession = this.gameController.Sessions.First(s => s.Id == abandonGameObject.SessionId);
+            var currentSession = this.sessionService.GetByName(abandonGameObject.SessionName);
 
-            this.gameController.AbandonSession(abandonGameObject.PlayerName, abandonGameObject.SessionId);
+            this.sessionService.Abandon(currentSession.Name);
 
             this.SendAbandonGameNotification(abandonGameObject, currentSession);
         }
@@ -37,11 +39,11 @@ namespace Gamify.Service.Components
         {
             var notification = new GameAbandonedNotificationObject
             {
-                SessionId = abandonGameObject.SessionId,
+                SessionName = abandonGameObject.SessionName,
                 PlayerName = abandonGameObject.PlayerName
             };
 
-            this.notificationService.SendBroadcast(GameNotificationType.GameAbandoned, notification, currentSession.Player1.Information.UserName, currentSession.Player2.Information.UserName);
+            this.NotificationService.SendBroadcast(GameNotificationType.GameAbandoned, notification, currentSession.Player1.Information.UserName, currentSession.Player2.Information.UserName);
         }
     }
 }
