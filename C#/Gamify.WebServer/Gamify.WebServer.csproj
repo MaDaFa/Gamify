@@ -39,6 +39,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Autofac">
+      <HintPath>..\packages\Autofac.3.4.1\lib\net40\Autofac.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.WebSockets">
       <HintPath>..\packages\Microsoft.WebSockets.0.2.3\lib\net45\Microsoft.WebSockets.dll</HintPath>
@@ -67,25 +70,28 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GameApiController.cs" />
+    <Compile Include="GameDependencyModule.cs" />
     <Compile Include="GameWebSocketHandler.cs" />
+    <Compile Include="IGameDependencyModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Gamify.Contracts\Gamify.Contracts.csproj">
-      <Project>{174e05b6-efe4-42eb-b4ff-f56fb6b885db}</Project>
-      <Name>Gamify.Contracts</Name>
+    <ProjectReference Include="..\Gamify.Sdk\Gamify.Sdk.csproj">
+      <Project>{2ad62b4b-9d86-4cdd-abb5-02c1d905ee91}</Project>
+      <Name>Gamify.Sdk</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Gamify.Core\Gamify.Core.csproj">
-      <Project>{cb44312b-0775-404b-a6ec-08eb45b738e7}</Project>
-      <Name>Gamify.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Gamify.Service\Gamify.Service.csproj">
-      <Project>{8468540e-22a2-42a1-896d-d6d9c34f4f34}</Project>
-      <Name>Gamify.Service</Name>
-    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="web.config" />
+    <None Include="web.Debug.config">
+      <DependentUpon>web.config</DependentUpon>
+    </None>
+    <None Include="web.Release.config">
+      <DependentUpon>web.config</DependentUpon>
+    </None>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

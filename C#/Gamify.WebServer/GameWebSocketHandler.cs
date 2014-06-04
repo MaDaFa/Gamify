@@ -1,22 +1,23 @@
-﻿using Gamify.Contracts.Notifications;
+﻿using Autofac;
 using Gamify.Contracts.Requests;
-using Gamify.Core;
-using Gamify.Service.Interfaces;
+using Gamify.Sdk;
+using Gamify.Sdk.Contracts.Notifications;
+using Gamify.Sdk.Services;
+using Gamify.Sdk.Setup;
 using Microsoft.Web.WebSockets;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace Gamify.WebServer
 {
-    public abstract class GameWebSocketHandler : WebSocketHandler
+    public class GameWebSocketHandler : WebSocketHandler
     {
-        protected static WebSocketCollection connectedClients;
+        private static WebSocketCollection connectedClients;
 
-        private bool isConfigured;
-        private bool isConnected;
-        private ISerializer<GameRequest> requestSerializer;
-        private ISerializer<GameNotification> notificationSerializer;
+        private readonly IGameDefinition gameDefinition;
+
+        private IGameDependencyModule gameDependencyModule;
+        private ISerializer serializer;
         private IGameService gameService;
 
         public string UserName { get; private set; }
@@ -26,88 +27,78 @@ namespace Gamify.WebServer
             connectedClients = new WebSocketCollection();
         }
 
-        public GameWebSocketHandler()
+        public GameWebSocketHandler(IGameDefinition gameDefinition)
         {
-            this.requestSerializer = new JsonSerializer<GameRequest>();
-            this.notificationSerializer = new JsonSerializer<GameNotification>();
+            this.gameDefinition = gameDefinition;
         }
-
-        public void Initialize(IGameService gameService)
-        {
-            this.gameService = gameService;
-            this.gameService.Notification += (sender, args) =>
-            {
-                this.PushMessage(args.UserName, args.Notification);
-            };
-
-            var gameConfigurators = this.GetGameConfigurators();
-
-            foreach (var gameConfigurator in gameConfigurators)
-            {
-                gameConfigurator.Configure(gameService);
-            }
-
-            this.isConfigured = true;
-        }
-
-        protected abstract IEnumerable<IGameConfigurator> GetGameConfigurators();
 
         public override void OnOpen()
         {
-            this.ValidateInitialization();
+            this.Initialize();
 
             connectedClients.Add(this);
         }
 
         public override void OnMessage(string message)
         {
-            this.ValidateInitialization();
-            this.ValidateConnection(message);
+            var gameRequest = this.serializer.Deserialize<GameRequest>(message);
 
-            gameService.Send(message);
+            if (gameRequest.Type != (int)GameRequestType.PlayerConnect && string.IsNullOrEmpty(this.UserName))
+            {
+                throw new ApplicationException("A connection error occurred. The players must be connected in order to perform other type of requests");
+            }
+
+            if (gameRequest.Type == (int)GameRequestType.PlayerConnect && !string.IsNullOrEmpty(this.UserName))
+            {
+                throw new ApplicationException("A connection error occurred when trying to connect a player already connected");
+            }
+
+            if (gameRequest.Type == (int)GameRequestType.PlayerConnect)
+            {
+                var playerConnectRequest = this.serializer.Deserialize<PlayerConnectRequestObject>(gameRequest.SerializedRequestObject);
+
+                this.UserName = playerConnectRequest.PlayerName;
+
+                this.gameService.Connect(playerConnectRequest.PlayerName, playerConnectRequest.AccessToken);
+            }
+            else
+            {
+                this.gameService.Send(message);
+            }
         }
 
         public override void OnClose()
         {
-            this.ValidateInitialization();
-
             base.OnClose();
 
             connectedClients.Remove(this);
             gameService.Disconnect(this.UserName);
+            this.gameDependencyModule.GetContainer().Dispose();
+        }
+
+        private void Initialize()
+        {
+            this.gameDependencyModule = new GameDependencyModule(this.gameDefinition);
+            this.serializer = gameDependencyModule.GetContainer().Resolve<ISerializer>();
+
+            var gameBuilder = (IGameBuilder)gameDependencyModule.GetContainer().Resolve(gameDefinition.GetGameBuilderType());
+
+            this.gameService = gameBuilder.Build();
+
+            this.gameService.Notification += (sender, args) =>
+            {
+                this.PushMessage(args.UserName, args.Notification);
+            };
         }
 
         private void PushMessage(string userName, GameNotification notification)
         {
-            var serializedNotification = this.notificationSerializer.Serialize(notification);
+            var serializedNotification = this.serializer.Serialize(notification);
             var client = connectedClients
                 .Cast<GameWebSocketHandler>()
                 .FirstOrDefault(c => c.UserName == userName);
 
             client.Send(serializedNotification);
-        }
-
-        private void ValidateInitialization()
-        {
-            if (!isConfigured)
-            {
-                throw new ApplicationException("The web socket handler must be explicitly initialized before using it");
-            }
-        }
-
-        private void ValidateConnection(string message)
-        {
-            var gameRequest = this.requestSerializer.Deserialize(message);
-
-            if (gameRequest.Type == (int)GameRequestType.PlayerConnect && this.isConnected)
-            {
-                throw new ApplicationException("A connection error occurred when trying to connect a player already connected");
-            }
-
-            if (gameRequest.Type != (int)GameRequestType.PlayerConnect && !this.isConnected)
-            {
-                throw new ApplicationException("A connection error occurred. The players must be connected in order to perform other type of requests");
-            }
         }
     }
 }
