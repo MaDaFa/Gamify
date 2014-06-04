@@ -24,22 +24,24 @@ namespace Gamify.Sdk.Services
 
         public void Add(string sessionName, string playerName, ISessionHistoryItem<TMove, UResponse> historyItem)
         {
+            var historyExists = true;
             var existingHistory = this.sessionHistoryRepository.Get(h => h.SessionName == sessionName && h.PlayerName == playerName);
 
             if (existingHistory == null)
             {
+                historyExists = false;
                 existingHistory = new SessionHistory<TMove, UResponse>(sessionName, playerName);
             }
 
             existingHistory.Add(historyItem.Move, historyItem.Response);
 
-            if (existingHistory == null)
+            if (historyExists)
             {
-                this.sessionHistoryRepository.Create(existingHistory);
+                this.sessionHistoryRepository.Update(existingHistory);
             }
             else
             {
-                this.sessionHistoryRepository.Update(existingHistory);
+                this.sessionHistoryRepository.Create(existingHistory);
             }
         }
     }

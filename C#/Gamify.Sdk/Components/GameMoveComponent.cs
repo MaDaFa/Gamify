@@ -37,7 +37,7 @@ namespace Gamify.Sdk.Components
             var moveRequestObject = this.serializer.Deserialize<MoveRequestObject>(request.SerializedRequestObject);
             var currentSession = this.sessionService.GetByName(moveRequestObject.SessionName);
             var originPlayer = currentSession.GetPlayer(moveRequestObject.PlayerName);
-            var destinationPlayer = currentSession.GetVersusPlayer(originPlayer.Information.Name);
+            var destinationPlayer = currentSession.GetVersusPlayer(originPlayer.Information.UserName);
             var moveResponse = this.moveHandler.Handle(moveRequestObject, this.moveService);
 
             if (moveResponse.IsWin)
@@ -45,8 +45,8 @@ namespace Gamify.Sdk.Components
                 var gameFinishedNotificationObject = new GameFinishedNotificationObject
                 {
                     SessionName = currentSession.Name,
-                    WinnerPlayerName = originPlayer.Information.Name,
-                    LooserPlayerName = destinationPlayer.Information.Name
+                    WinnerPlayerName = originPlayer.Information.UserName,
+                    LooserPlayerName = destinationPlayer.Information.UserName
                 };
 
                 this.NotificationService.SendBroadcast(GameNotificationType.GameFinished, gameFinishedNotificationObject, gameFinishedNotificationObject.WinnerPlayerName, gameFinishedNotificationObject.LooserPlayerName);

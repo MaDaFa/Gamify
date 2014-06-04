@@ -29,7 +29,7 @@ namespace Gamify.Sdk.Services
 
         public IEnumerable<IGameSession> GetAllByPlayer(string playerName)
         {
-            return this.sessionRepository.GetAll(s => s.Player1.Information.Name == playerName || s.Player2.Information.Name == playerName);
+            return this.sessionRepository.GetAll(s => s.Player1.Information.UserName == playerName || s.Player2.Information.UserName == playerName);
         }
 
         public IGameSession GetByName(string sessionName)
@@ -49,7 +49,7 @@ namespace Gamify.Sdk.Services
 
             if (existSession)
             {
-                var errorMessage = string.Format("There is already an active session for players {0} and {1}", sessionPlayer1.Information.Name, sessionPlayer2.Information.Name);
+                var errorMessage = string.Format("There is already an active session for players {0} and {1}", sessionPlayer1.Information.UserName, sessionPlayer2.Information.UserName);
 
                 throw new ApplicationException(errorMessage);
             }
@@ -93,7 +93,7 @@ namespace Gamify.Sdk.Services
 
         private ISessionGamePlayerBase GetRandomSessionPlayer2(ISessionGamePlayerBase sessionPlayer1)
         {
-            var randomPlayer2 = this.playerService.GetRandom(playerNameToExclude: sessionPlayer1.Information.Name);
+            var randomPlayer2 = this.playerService.GetRandom(playerNameToExclude: sessionPlayer1.Information.UserName);
 
             if (randomPlayer2 == null)
             {

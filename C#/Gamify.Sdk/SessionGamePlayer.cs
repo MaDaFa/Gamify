@@ -4,13 +4,26 @@ namespace Gamify.Sdk
 {
     public abstract class SessionGamePlayer<TMove, UResponse> : ISessionGamePlayer<TMove, UResponse>
     {
+        private string sessionName;
+
         protected ISessionHistoryService<TMove, UResponse> sessionHistoryService;
+
+        public bool IsReady { get; private set; }
 
         public IGamePlayer Information { get; set; }
 
-        public string SessionName { get; set; }
-
-        public bool IsReady { get; set; }
+        public string SessionName
+        {
+            get
+            {
+                return this.sessionName;
+            }
+            set
+            {
+                this.sessionName = value;
+                this.IsReady = true;
+            }
+        }
 
         public bool PendingToMove { get; set; }
 

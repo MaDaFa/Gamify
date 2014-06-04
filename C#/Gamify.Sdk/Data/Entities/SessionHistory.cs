@@ -13,6 +13,8 @@ namespace Gamify.Sdk.Data.Entities
 
         public SessionHistory(string sessionName, string playerName)
         {
+            this.Moves = new List<ISessionHistoryItem<TMove, UResponse>>();
+
             this.SessionName = sessionName;
             this.PlayerName = playerName;
         }

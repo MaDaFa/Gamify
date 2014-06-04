@@ -16,10 +16,11 @@ namespace Gamify.Sdk.Data.Entities
         {
             this.Player1 = player1;
             this.Player2 = player2;
-            this.Name = string.Concat(this.Player1.Information.Name, "-vs-", this.Player2.Information.Name);
+            this.Name = string.Concat(this.Player1.Information.UserName, "-vs-", this.Player2.Information.UserName);
             this.State = SessionState.Active;
 
             this.Player1.SessionName = this.Name;
+            this.Player1.PendingToMove = true;
             this.Player2.SessionName = this.Name;
         }
 

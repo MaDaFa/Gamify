@@ -16,6 +16,11 @@ namespace Gamify.Sdk.Services
 
         public void SendBroadcast(GameNotificationType gameNotificationType, object notificationObject, params string[] userNames)
         {
+            this.SendBroadcast((int)gameNotificationType, notificationObject, userNames);
+        }
+
+        public void SendBroadcast(int gameNotificationType, object notificationObject, params string[] userNames)
+        {
             foreach (var userName in userNames)
             {
                 this.Send(gameNotificationType, notificationObject, userName);
@@ -24,9 +29,14 @@ namespace Gamify.Sdk.Services
 
         public void Send(GameNotificationType gameNotificationType, object notificationObject, string userName)
         {
+            this.Send((int)gameNotificationType, notificationObject, userName);
+        }
+
+        public void Send(int gameNotificationType, object notificationObject, string userName)
+        {
             var notification = new GameNotification
             {
-                Type = (int)gameNotificationType,
+                Type = gameNotificationType,
                 SerializedNotificationObject = this.serializer.Serialize(notificationObject)
             };
 

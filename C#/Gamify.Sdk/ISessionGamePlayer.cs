@@ -2,11 +2,11 @@
 {
     public interface ISessionGamePlayerBase
     {
+        bool IsReady { get; }
+
         IGamePlayer Information { get; set; }
 
         string SessionName { get; set; }
-
-        bool IsReady { get; set; }
 
         bool PendingToMove { get; set; }
     }
