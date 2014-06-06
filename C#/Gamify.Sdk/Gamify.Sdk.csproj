@@ -94,8 +94,8 @@
     <Compile Include="Contracts\Requests\PlayerConnectRequestObject.cs" />
     <Compile Include="Contracts\Requests\PlayerDisconnectRequestObject.cs" />
     <Compile Include="Contracts\Requests\TypingMessageRequestObject.cs" />
-    <Compile Include="Data\Configuration\GameDataConfiguration.cs" />
-    <Compile Include="Data\Configuration\IGameDataConfiguration.cs" />
+    <Compile Include="Data\Configuration\GameDataSection.cs" />
+    <Compile Include="Data\Configuration\IGameDataSection.cs" />
     <Compile Include="Data\Entities\DataEntity.cs" />
     <Compile Include="Data\Entities\GamePlayer.cs" />
     <Compile Include="Data\Entities\GameSession.cs" />

@@ -11,7 +11,7 @@ namespace Gamify.Sdk.Tests.TestModels
     public class TestRepository<T> : IRepository<T>
         where T : MongoEntity
     {
-        private readonly IList<T> entityList;
+        private IList<T> entityList;
 
         public TestRepository()
         {
@@ -75,6 +75,11 @@ namespace Gamify.Sdk.Tests.TestModels
             }
 
             this.entityList.Remove(existingEntity);
+        }
+
+        public void DeleteAll()
+        {
+            this.entityList = new List<T>();
         }
     }
 }

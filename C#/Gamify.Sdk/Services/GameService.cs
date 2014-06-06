@@ -1,5 +1,5 @@
-﻿using Gamify.Contracts.Requests;
-using Gamify.Sdk.Components;
+﻿using Gamify.Sdk.Components;
+using Gamify.Sdk.Contracts.Requests;
 using System;
 using System.Collections.Generic;
 using System.Linq;

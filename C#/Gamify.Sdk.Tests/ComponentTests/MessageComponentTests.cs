@@ -1,6 +1,6 @@
-﻿using Gamify.Contracts.Requests;
-using Gamify.Sdk.Components;
+﻿using Gamify.Sdk.Components;
 using Gamify.Sdk.Contracts.Notifications;
+using Gamify.Sdk.Contracts.Requests;
 using Gamify.Sdk.Services;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;

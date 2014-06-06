@@ -1,4 +1,4 @@
-﻿using Gamify.Contracts.Requests;
+﻿using Gamify.Sdk.Contracts.Requests;
 using Gamify.Sdk.Services;
 
 namespace Gamify.Sdk.Components

@@ -1,6 +1,6 @@
 ﻿namespace Gamify.Sdk.Data.Configuration
 {
-    public interface IGameDataConfiguration
+    public interface IGameDataSection
     {
         string ConnectionString { get; }
 

@@ -21,5 +21,7 @@ namespace Gamify.Sdk.Data
         void Delete(T dataEntity);
 
         void Delete(ObjectId id);
+
+        void DeleteAll();
     }
 }

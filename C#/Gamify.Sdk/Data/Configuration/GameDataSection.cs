@@ -2,11 +2,11 @@
 
 namespace Gamify.Sdk.Data.Configuration
 {
-    public class GameDataConfiguration : ConfigurationSection, IGameDataConfiguration
+    public class GameDataSection : ConfigurationSection, IGameDataSection
     {
-        public static GameDataConfiguration GetConfiguration()
+        public static GameDataSection GetConfiguration()
         {
-            return ConfigurationManager.GetSection("gameData") as GameDataConfiguration;
+            return ConfigurationManager.GetSection("gameData") as GameDataSection;
         }
 
         [ConfigurationProperty("connectionString", IsRequired = true, DefaultValue = "")]

@@ -25,9 +25,9 @@ namespace Gamify.WebServer
         {
             var containerBuilder = new ContainerBuilder();
 
-            var gameConfiguration = GameDataConfiguration.GetConfiguration();
+            var gameConfiguration = GameDataSection.GetConfiguration();
 
-            containerBuilder.RegisterInstance(gameConfiguration).As<IGameDataConfiguration>();
+            containerBuilder.RegisterInstance(gameConfiguration).As<IGameDataSection>();
             containerBuilder.RegisterGeneric(typeof(Repository<>)).As(typeof(IRepository<>));
             containerBuilder.RegisterType<JsonSerializer>().As<ISerializer>();
             containerBuilder.RegisterType<NotificationService>().As<INotificationService>();

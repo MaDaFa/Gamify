@@ -1,4 +1,4 @@
-﻿using Gamify.Contracts.Requests;
+﻿using Gamify.Sdk.Contracts.Requests;
 
 namespace Gamify.Sdk.Tests.TestModels
 {

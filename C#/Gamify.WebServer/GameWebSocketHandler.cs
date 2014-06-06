@@ -1,7 +1,7 @@
 ﻿using Autofac;
-using Gamify.Contracts.Requests;
 using Gamify.Sdk;
 using Gamify.Sdk.Contracts.Notifications;
+using Gamify.Sdk.Contracts.Requests;
 using Gamify.Sdk.Services;
 using Gamify.Sdk.Setup;
 using Microsoft.Web.WebSockets;

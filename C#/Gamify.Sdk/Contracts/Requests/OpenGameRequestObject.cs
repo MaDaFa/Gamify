@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Gamify.Contracts.Requests
+namespace Gamify.Sdk.Contracts.Requests
 {
     public class OpenGameRequestObject : IRequestObject
     {

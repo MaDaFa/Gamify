@@ -1,4 +1,4 @@
-﻿namespace Gamify.Contracts.Requests
+﻿namespace Gamify.Sdk.Contracts.Requests
 {
     public class CreateGameRequestObject : IRequestObject
     {

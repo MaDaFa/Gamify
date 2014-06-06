@@ -1,5 +1,5 @@
-﻿using Gamify.Contracts.Requests;
-using Gamify.Sdk.Contracts.Notifications;
+﻿using Gamify.Sdk.Contracts.Notifications;
+using Gamify.Sdk.Contracts.Requests;
 
 namespace Gamify.Sdk.Setup
 {

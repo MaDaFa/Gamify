@@ -18,7 +18,7 @@ namespace Gamify.Sdk.Data
 
         private readonly MongoDatabase database;
 
-        public Repository(IGameDataConfiguration configuration)
+        public Repository(IGameDataSection configuration)
         {
             var databaseClient = new MongoClient(configuration.ConnectionString);
             var databaseServer = databaseClient.GetServer();
@@ -95,7 +95,21 @@ namespace Gamify.Sdk.Data
 
             if (!deleteResult.Ok)
             {
-                var errorMessage = string.Concat("Delete of document {0} with Id {1} failed", collectionName, id);
+                var errorMessage = string.Concat("Deletion of document {0} with Id {1} failed", collectionName, id);
+
+                throw new GameDataException(errorMessage);
+            }
+        }
+
+        ///<exception cref="GameDataException">GameDataException</exception>
+        public void DeleteAll()
+        {
+            var collection = this.database.GetCollection<T>(collectionName);
+            var deleteResult = collection.RemoveAll();
+
+            if (!deleteResult.Ok)
+            {
+                var errorMessage = string.Concat("Deletion of the hole collection {0} failed", collectionName);
 
                 throw new GameDataException(errorMessage);
             }
