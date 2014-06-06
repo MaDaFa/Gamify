@@ -4,28 +4,25 @@ using Gamify.Sdk.Services;
 
 namespace Gamify.Sdk.Components
 {
-    public class ActiveGamesComponent : IGameComponent
+    public class ActiveGamesComponent : GameComponent
     {
         private readonly ISerializer serializer;
         private readonly ISessionService sessionService;
 
-        public INotificationService NotificationService { get; private set; }
-
         public ActiveGamesComponent(ISessionService sessionService, INotificationService notificationService,
             ISerializer serializer)
+            : base(notificationService)
         {
             this.sessionService = sessionService;
             this.serializer = serializer;
-
-            this.NotificationService = notificationService;
         }
 
-        public bool CanHandleRequest(GameRequest request)
+        public override bool CanHandleRequest(GameRequest request)
         {
             return request.Type == (int)GameRequestType.GetActiveGames;
         }
 
-        public void HandleRequest(GameRequest request)
+        public override void HandleRequest(GameRequest request)
         {
             var getActiveGamesObject = this.serializer.Deserialize<GetActiveGamesRequestObject>(request.SerializedRequestObject);
             var activePlayerSessions = this.sessionService.GetAllByPlayer(getActiveGamesObject.PlayerName);

@@ -57,6 +57,7 @@
     <Compile Include="Components\ConnectPlayerComponent.cs" />
     <Compile Include="Components\CreateGameComponent.cs" />
     <Compile Include="Components\DisconnectPlayerComponent.cs" />
+    <Compile Include="Components\GameComponent.cs" />
     <Compile Include="Components\GameMoveComponent.cs" />
     <Compile Include="Components\IGameComponent.cs" />
     <Compile Include="Components\MessageComponent.cs" />

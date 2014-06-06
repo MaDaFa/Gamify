@@ -1,6 +1,7 @@
 ﻿using Gamify.Sdk.Data.Entities;
 using Gamify.Sdk.Services;
 using Gamify.Sdk.Setup;
+using Gamify.Sdk.Tests.TestModels;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System.Linq;
@@ -21,7 +22,7 @@ namespace Gamify.Sdk.Tests.ServiceTests
         public void When_OpenSessionWithBothPlayers_Then_Success()
         {
             var playerService = Mock.Of<IPlayerService>();
-            var sessionHistoryService = Mock.Of<ISessionHistoryService<TestMoveObject, TestResultObject>>();
+            var sessionHistoryService = Mock.Of<ISessionHistoryService<TestMoveObject, TestResponseObject>>();
             var sessionRepository = new TestRepository<GameSession>();
             var sessionPlayerFactory = Mock.Of<ISessionPlayerFactory>();
 
@@ -62,7 +63,7 @@ namespace Gamify.Sdk.Tests.ServiceTests
         [TestMethod]
         public void When_OpenSessionWithOnePlayer_Then_Success()
         {
-            var sessionHistoryService = Mock.Of<ISessionHistoryService<TestMoveObject, TestResultObject>>();
+            var sessionHistoryService = Mock.Of<ISessionHistoryService<TestMoveObject, TestResponseObject>>();
             var gamePlayer = new GamePlayer { UserName = "player2", Name = "Player 2" };
             var sessionPlayer2 = new TestSessionPlayer(sessionHistoryService)
             {
@@ -118,7 +119,7 @@ namespace Gamify.Sdk.Tests.ServiceTests
         public void When_AbandonSession_Then_Success()
         {
             var playerService = Mock.Of<IPlayerService>();
-            var sessionHistoryService = Mock.Of<ISessionHistoryService<TestMoveObject, TestResultObject>>();
+            var sessionHistoryService = Mock.Of<ISessionHistoryService<TestMoveObject, TestResponseObject>>();
             var sessionRepository = new TestRepository<GameSession>();
             var sessionPlayerFactory = Mock.Of<ISessionPlayerFactory>();
 
@@ -164,7 +165,7 @@ namespace Gamify.Sdk.Tests.ServiceTests
         public void When_FinishSession_Then_Success()
         {
             var playerService = Mock.Of<IPlayerService>();
-            var sessionHistoryService = Mock.Of<ISessionHistoryService<TestMoveObject, TestResultObject>>();
+            var sessionHistoryService = Mock.Of<ISessionHistoryService<TestMoveObject, TestResponseObject>>();
             var sessionRepository = new TestRepository<GameSession>();
             var sessionPlayerFactory = Mock.Of<ISessionPlayerFactory>();
 
@@ -210,7 +211,7 @@ namespace Gamify.Sdk.Tests.ServiceTests
         public void When_GetSessionsByPlayer_Then_Success()
         {
             var playerService = Mock.Of<IPlayerService>();
-            var sessionHistoryService = Mock.Of<ISessionHistoryService<TestMoveObject, TestResultObject>>();
+            var sessionHistoryService = Mock.Of<ISessionHistoryService<TestMoveObject, TestResponseObject>>();
             var sessionRepository = new TestRepository<GameSession>();
             var sessionPlayerFactory = Mock.Of<ISessionPlayerFactory>();
 

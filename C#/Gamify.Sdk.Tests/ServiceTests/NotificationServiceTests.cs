@@ -1,4 +1,5 @@
 ﻿using Gamify.Sdk.Services;
+using Gamify.Sdk.Tests.TestModels;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Gamify.Sdk.Tests.ServiceTests

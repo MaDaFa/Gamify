@@ -5,30 +5,27 @@ using Gamify.Sdk.Setup;
 
 namespace Gamify.Sdk.Components
 {
-    public class AcceptGameComponent : IGameComponent
+    public class AcceptGameComponent : GameComponent
     {
         private readonly ISessionService sessionService;
         private readonly ISessionPlayerSetup playerSetup;
         private readonly ISerializer serializer;
 
-        public INotificationService NotificationService { get; private set; }
-
         public AcceptGameComponent(ISessionService sessionService, INotificationService notificationService,
             ISessionPlayerSetup playerSetup, ISerializer serializer)
+            : base(notificationService)
         {
             this.sessionService = sessionService;
             this.playerSetup = playerSetup;
             this.serializer = serializer;
-
-            this.NotificationService = notificationService;
         }
 
-        public bool CanHandleRequest(GameRequest request)
+        public override bool CanHandleRequest(GameRequest request)
         {
             return request.Type == (int)GameRequestType.GameAccepted;
         }
 
-        public void HandleRequest(GameRequest request)
+        public override void HandleRequest(GameRequest request)
         {
             var gameAcceptedObject = this.serializer.Deserialize<GameAcceptedRequestObject>(request.SerializedRequestObject);
             var newSession = this.sessionService.GetByName(gameAcceptedObject.SessionName);

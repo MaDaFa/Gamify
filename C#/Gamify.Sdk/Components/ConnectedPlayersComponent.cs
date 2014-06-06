@@ -5,27 +5,24 @@ using System.Linq;
 
 namespace Gamify.Sdk.Components
 {
-    public class ConnectedPlayersComponent : IGameComponent
+    public class ConnectedPlayersComponent : GameComponent
     {
         private readonly IPlayerService playerService;
         private readonly ISerializer serializer;
 
-        public INotificationService NotificationService { get; private set; }
-
         public ConnectedPlayersComponent(IPlayerService playerService, INotificationService notificationService, ISerializer serializer)
+            : base(notificationService)
         {
             this.playerService = playerService;
             this.serializer = serializer;
-
-            this.NotificationService = notificationService;
         }
 
-        public bool CanHandleRequest(GameRequest request)
+        public override bool CanHandleRequest(GameRequest request)
         {
             return request.Type == (int)GameRequestType.GetConnectedPlayers;
         }
 
-        public void HandleRequest(GameRequest request)
+        public override void HandleRequest(GameRequest request)
         {
             var getConnectedPlayersObject = this.serializer.Deserialize<GetConnectedPlayersRequestObject>(request.SerializedRequestObject);
             var sortedPlayers = this.playerService.GetAll(playerNameToExclude: getConnectedPlayersObject.PlayerName)

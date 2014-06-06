@@ -13,6 +13,11 @@ namespace Gamify.Sdk.Services
 
         public event EventHandler<GameNotificationEventArgs> Notification;
 
+        public IEnumerable<IGameComponentInformation> Components
+        {
+            get { return this.components; }
+        }
+
         public GameService(ISerializer serializer)
         {
             this.serializer = serializer;

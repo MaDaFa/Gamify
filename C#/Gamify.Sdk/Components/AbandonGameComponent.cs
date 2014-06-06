@@ -4,28 +4,25 @@ using Gamify.Sdk.Services;
 
 namespace Gamify.Sdk.Components
 {
-    public class AbandonGameComponent : IGameComponent
+    public class AbandonGameComponent : GameComponent
     {
         private readonly ISessionService sessionService;
         private readonly ISerializer serializer;
 
-        public INotificationService NotificationService { get; private set; }
-
         public AbandonGameComponent(ISessionService sessionService, INotificationService notificationService, 
             ISerializer serializer)
+            : base(notificationService)
         {
             this.sessionService = sessionService;
             this.serializer = serializer;
-
-            this.NotificationService = notificationService;
         }
 
-        public bool CanHandleRequest(GameRequest request)
+        public override bool CanHandleRequest(GameRequest request)
         {
             return request.Type == (int)GameRequestType.AbandonGame;
         }
 
-        public void HandleRequest(GameRequest request)
+        public override void HandleRequest(GameRequest request)
         {
             var abandonGameObject = this.serializer.Deserialize<AbandonGameRequestObject>(request.SerializedRequestObject);
             var currentSession = this.sessionService.GetByName(abandonGameObject.SessionName);

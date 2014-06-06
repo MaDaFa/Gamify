@@ -4,25 +4,22 @@ using Gamify.Sdk.Services;
 
 namespace Gamify.Sdk.Components
 {
-    public class MessageComponent : IGameComponent
+    public class MessageComponent : GameComponent
     {
         private readonly ISerializer serializer;
 
-        public INotificationService NotificationService { get; private set; }
-
         public MessageComponent(INotificationService notificationService, ISerializer serializer)
+            : base(notificationService)
         {
             this.serializer = serializer;
-
-            this.NotificationService = notificationService;
         }
 
-        public bool CanHandleRequest(GameRequest request)
+        public override bool CanHandleRequest(GameRequest request)
         {
             return request.Type == (int)GameRequestType.Message || request.Type == (int)GameRequestType.TypingMessage;
         }
 
-        public void HandleRequest(GameRequest request)
+        public override void HandleRequest(GameRequest request)
         {
             if (request.Type == (int)GameRequestType.Message)
             {

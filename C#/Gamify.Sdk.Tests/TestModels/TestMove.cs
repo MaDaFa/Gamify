@@ -1,4 +1,4 @@
-﻿namespace Gamify.Sdk.Tests
+﻿namespace Gamify.Sdk.Tests.TestModels
 {
     public class TestMove : IGameMove<TestMoveObject>
     {

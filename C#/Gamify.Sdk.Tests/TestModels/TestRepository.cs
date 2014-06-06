@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 
-namespace Gamify.Sdk.Tests
+namespace Gamify.Sdk.Tests.TestModels
 {
     public class TestRepository<T> : IRepository<T>
         where T : MongoEntity

@@ -5,7 +5,7 @@ using Gamify.Sdk.Setup;
 
 namespace Gamify.Sdk.Components
 {
-    public class CreateGameComponent : IGameComponent
+    public class CreateGameComponent : GameComponent
     {
         private readonly IPlayerService playerService;
         private readonly ISessionService sessionService;
@@ -15,12 +15,11 @@ namespace Gamify.Sdk.Components
         private readonly IGameInviteDecorator gameInviteDecorator;
         private readonly ISerializer serializer;
 
-        public INotificationService NotificationService { get; private set; }
-
         public CreateGameComponent(IPlayerService playerService, ISessionService sessionService, 
             ISessionHistoryService sessionHistoryService, INotificationService notificationService, 
             ISessionPlayerFactory sessionPlayerFactory, ISessionPlayerSetup playerSetup, 
             IGameInviteDecorator gameInviteDecorator, ISerializer serializer)
+            : base(notificationService)
         {
             this.playerService = playerService;
             this.sessionService = sessionService;
@@ -29,16 +28,14 @@ namespace Gamify.Sdk.Components
             this.playerSetup = playerSetup;
             this.gameInviteDecorator = gameInviteDecorator;
             this.serializer = serializer;
-
-            this.NotificationService = notificationService;
         }
 
-        public bool CanHandleRequest(GameRequest request)
+        public override bool CanHandleRequest(GameRequest request)
         {
             return request.Type == (int)GameRequestType.CreateGame;
         }
 
-        public void HandleRequest(GameRequest request)
+        public override void HandleRequest(GameRequest request)
         {
             var createGameObject = this.serializer.Deserialize<CreateGameRequestObject>(request.SerializedRequestObject);
             var connectedPlayer1 = this.playerService.GetByName(createGameObject.PlayerName);

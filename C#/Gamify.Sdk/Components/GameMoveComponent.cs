@@ -5,7 +5,7 @@ using Gamify.Sdk.Setup;
 
 namespace Gamify.Sdk.Components
 {
-    public class GameMoveComponent : IGameComponent
+    public class GameMoveComponent : GameComponent
     {
         private readonly IMoveService moveService;
         private readonly ISessionService sessionService;
@@ -13,26 +13,23 @@ namespace Gamify.Sdk.Components
         private readonly IMoveResultNotificationFactory moveResultNotificationFactory;
         private readonly ISerializer serializer;
 
-        public INotificationService NotificationService { get; private set; }
-
         public GameMoveComponent(IMoveService moveService, ISessionService sessionService, INotificationService notificationService,
             IMoveHandler moveHandler, IMoveResultNotificationFactory moveResultNotificationFactory, ISerializer serializer)
+            : base(notificationService)
         {
             this.moveService = moveService;
             this.sessionService = sessionService;
             this.moveHandler = moveHandler;
             this.moveResultNotificationFactory = moveResultNotificationFactory;
             this.serializer = serializer;
-
-            this.NotificationService = notificationService;
         }
 
-        public bool CanHandleRequest(GameRequest request)
+        public override bool CanHandleRequest(GameRequest request)
         {
             return request.Type == (int)GameRequestType.GameMove;
         }
 
-        public void HandleRequest(GameRequest request)
+        public override void HandleRequest(GameRequest request)
         {
             var moveRequestObject = this.serializer.Deserialize<MoveRequestObject>(request.SerializedRequestObject);
             var currentSession = this.sessionService.GetByName(moveRequestObject.SessionName);

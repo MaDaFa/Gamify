@@ -5,28 +5,25 @@ using System.Linq;
 
 namespace Gamify.Sdk.Components
 {
-    public class DisconnectPlayerComponent : IGameComponent
+    public class DisconnectPlayerComponent : GameComponent
     {
         private readonly IPlayerService playerService;
         private readonly ISerializer serializer;
 
-        public INotificationService NotificationService { get; private set; }
-
         public DisconnectPlayerComponent(IPlayerService playerService, INotificationService notificationService,
             ISerializer serializer)
+            : base(notificationService)
         {
             this.playerService = playerService;
             this.serializer = serializer;
-
-            this.NotificationService = notificationService;
         }
 
-        public bool CanHandleRequest(GameRequest request)
+        public override bool CanHandleRequest(GameRequest request)
         {
             return request.Type == (int)GameRequestType.PlayerDisconnect;
         }
 
-        public void HandleRequest(GameRequest request)
+        public override void HandleRequest(GameRequest request)
         {
             var playerDisconnectObject = this.serializer.Deserialize<PlayerDisconnectRequestObject>(request.SerializedRequestObject);
 

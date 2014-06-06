@@ -4,28 +4,25 @@ using Gamify.Sdk.Services;
 
 namespace Gamify.Sdk.Components
 {
-    public class RejectGameComponent : IGameComponent
+    public class RejectGameComponent : GameComponent
     {
         private readonly ISessionService sessionService;
         private readonly ISerializer serializer;
 
-        public INotificationService NotificationService { get; private set; }
-
         public RejectGameComponent(ISessionService sessionService, INotificationService notificationService,
             ISerializer serializer)
+            : base(notificationService)
         {
             this.sessionService = sessionService;
             this.serializer = serializer;
-
-            this.NotificationService = notificationService;
         }
 
-        public bool CanHandleRequest(GameRequest request)
+        public override bool CanHandleRequest(GameRequest request)
         {
             return request.Type == (int)GameRequestType.GameRejected;
         }
 
-        public void HandleRequest(GameRequest request)
+        public override void HandleRequest(GameRequest request)
         {
             var gameRejectedObject = this.serializer.Deserialize<GameRejectedRequestObject>(request.SerializedRequestObject);
             var newSession = this.sessionService.GetByName(gameRejectedObject.SessionName);

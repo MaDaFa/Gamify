@@ -59,21 +59,33 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="ComponentTests\AbandonGameComponentTests.cs" />
+    <Compile Include="ComponentTests\AcceptGameComponentTests.cs" />
+    <Compile Include="ComponentTests\ActiveGamesComponentTests.cs" />
+    <Compile Include="ComponentTests\ConnectedPlayersComponentTests.cs" />
+    <Compile Include="ComponentTests\ConnectPlayerComponentTests.cs" />
+    <Compile Include="ComponentTests\CreateGameComponentTests.cs" />
+    <Compile Include="ComponentTests\DisconnectPlayerComponentTests.cs" />
+    <Compile Include="ComponentTests\GameMoveComponentTests.cs" />
+    <Compile Include="ComponentTests\MessageComponentTests.cs" />
+    <Compile Include="ComponentTests\OpenGameComponentTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServiceTests\GameServiceTests.cs" />
     <Compile Include="ServiceTests\MoveServiceTests.cs" />
     <Compile Include="ServiceTests\NotificationServiceTests.cs" />
     <Compile Include="ServiceTests\PlayerServiceTests.cs" />
+    <Compile Include="ComponentTests\RejectGameComponentTests.cs" />
     <Compile Include="ServiceTests\SessionHistoryServiceTests.cs" />
     <Compile Include="ServiceTests\SessionServiceTests.cs" />
-    <Compile Include="TestMove.cs" />
-    <Compile Include="TestMoveObject.cs" />
-    <Compile Include="TestMoveRequest.cs" />
-    <Compile Include="TestNotificationObject.cs" />
-    <Compile Include="TestRepository.cs" />
-    <Compile Include="TestResponse.cs" />
-    <Compile Include="TestResultObject.cs" />
-    <Compile Include="TestSessionPlayer.cs" />
+    <Compile Include="SetupTests\GameBuilderTests.cs" />
+    <Compile Include="TestModels\TestMove.cs" />
+    <Compile Include="TestModels\TestMoveObject.cs" />
+    <Compile Include="TestModels\TestNotificationObject.cs" />
+    <Compile Include="TestModels\TestRepository.cs" />
+    <Compile Include="TestModels\TestRequestObject.cs" />
+    <Compile Include="TestModels\TestResponse.cs" />
+    <Compile Include="TestModels\TestResponseObject.cs" />
+    <Compile Include="TestModels\TestSessionPlayer.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Gamify.Sdk\Gamify.Sdk.csproj">
@@ -84,6 +96,7 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>

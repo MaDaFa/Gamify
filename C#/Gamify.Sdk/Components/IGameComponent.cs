@@ -3,7 +3,12 @@ using Gamify.Sdk.Services;
 
 namespace Gamify.Sdk.Components
 {
-    public interface IGameComponent
+    public interface IGameComponentInformation
+    {
+        string Name { get; }
+    }
+
+    public interface IGameComponent : IGameComponentInformation
     {
         INotificationService NotificationService { get; }
 
