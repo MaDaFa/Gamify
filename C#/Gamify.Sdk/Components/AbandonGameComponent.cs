@@ -40,7 +40,7 @@ namespace Gamify.Sdk.Components
                 PlayerName = abandonGameObject.PlayerName
             };
 
-            this.NotificationService.SendBroadcast(GameNotificationType.GameAbandoned, notification, currentSession.Player1.Information.UserName, currentSession.Player2.Information.UserName);
+            this.NotificationService.SendBroadcast(GameNotificationType.GameAbandoned, notification, currentSession.Player1Name, currentSession.Player2Name);
         }
     }
 }

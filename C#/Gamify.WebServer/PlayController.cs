@@ -1,4 +1,5 @@
-﻿using Gamify.Sdk.Setup;
+﻿using Gamify.Sdk;
+using Gamify.Sdk.Setup;
 using Microsoft.Web.WebSockets;
 using System.Net;
 using System.Net.Http;
@@ -7,8 +8,17 @@ using System.Web.Http;
 
 namespace Gamify.WebServer.Controllers
 {
-    public abstract class GameApiController : ApiController
+    public class PlayController : ApiController
     {
+        private readonly IGameBuilder gameBuilder;
+        private ISerializer serializer;
+
+        public PlayController(IGameBuilder gameBuilder, ISerializer serializer)
+        {
+            this.gameBuilder = gameBuilder;
+            this.serializer = serializer;
+        }
+
         public HttpResponseMessage Get()
         {
             var responseCode = HttpStatusCode.BadRequest;
@@ -22,12 +32,9 @@ namespace Gamify.WebServer.Controllers
             return new HttpResponseMessage(responseCode);
         }
 
-        protected abstract IGameDefinition GetGameDefinition();
-
         private WebSocketHandler GetWebSocketHandler()
         {
-            var gameDefinition = this.GetGameDefinition();
-            var gameWebSocketHandler = new GameWebSocketHandler(gameDefinition);
+            var gameWebSocketHandler = new GameWebSocketHandler(this.gameBuilder, this.serializer);
 
             return gameWebSocketHandler;
         }

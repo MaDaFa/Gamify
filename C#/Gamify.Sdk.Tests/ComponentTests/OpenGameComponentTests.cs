@@ -37,8 +37,8 @@ namespace Gamify.Sdk.Tests.ComponentTests
                 PendingToMove = false,
                 Information = new GamePlayer
                 {
-                    Name = "Player 1",
-                    UserName = "player1"
+                    DisplayName = "Player 1",
+                    Name = "player1"
                 }
             };
             var player2 = new TestSessionPlayer(sessionHistoryService)
@@ -47,8 +47,8 @@ namespace Gamify.Sdk.Tests.ComponentTests
                 PendingToMove = true,
                 Information = new GamePlayer
                 {
-                    Name = "Player 2",
-                    UserName = "player2"
+                    DisplayName = "Player 2",
+                    Name = "player2"
                 }
             };
 

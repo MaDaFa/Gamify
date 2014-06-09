@@ -17,7 +17,11 @@ namespace Gamify.Sdk
 
         ISessionGamePlayerBase Player1 { get; }
 
+        string Player1Name { get; }
+
         ISessionGamePlayerBase Player2 { get; }
+
+        string Player2Name { get; }
 
         bool HasPlayer(string playerName);
 

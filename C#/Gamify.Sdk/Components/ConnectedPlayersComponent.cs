@@ -26,12 +26,12 @@ namespace Gamify.Sdk.Components
         {
             var getConnectedPlayersObject = this.serializer.Deserialize<GetConnectedPlayersRequestObject>(request.SerializedRequestObject);
             var sortedPlayers = this.playerService.GetAll(playerNameToExclude: getConnectedPlayersObject.PlayerName)
-                .OrderBy(p => p.UserName);
+                .OrderBy(p => p.Name);
             var sortedPlayersPage = sortedPlayers.Take(getConnectedPlayersObject.PageSize);
             var notification = new SendConnectedPlayersNotificationObject
             {
                 PlayerName = getConnectedPlayersObject.PlayerName,
-                ConnectedPlayerNames = sortedPlayersPage.Select(p => p.UserName),
+                ConnectedPlayerNames = sortedPlayersPage.Select(p => p.Name),
                 ConectedPlayersCount = sortedPlayers.Count()
             };
 

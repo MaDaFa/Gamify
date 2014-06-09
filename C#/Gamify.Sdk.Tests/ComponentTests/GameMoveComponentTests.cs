@@ -42,8 +42,8 @@ namespace Gamify.Sdk.Tests.ComponentTests
                 PendingToMove = false,
                 Information = new GamePlayer
                 {
-                    Name = "Player 1",
-                    UserName = "player1"
+                    DisplayName = "Player 1",
+                    Name = "player1"
                 }
             };
             var player2 = new TestSessionPlayer(sessionHistoryService)
@@ -52,8 +52,8 @@ namespace Gamify.Sdk.Tests.ComponentTests
                 PendingToMove = false,
                 Information = new GamePlayer
                 {
-                    Name = "Player 2",
-                    UserName = "player2"
+                    DisplayName = "Player 2",
+                    Name = "player2"
                 }
             };
 
@@ -119,7 +119,7 @@ namespace Gamify.Sdk.Tests.ComponentTests
             this.notificationServiceMock.Verify(s => s.Send(It.Is<GameNotificationType>(t => t == GameNotificationType.GameMove),
                     It.Is<object>(o => ((MoveNotificationObject)o).SessionName == this.session.Name &&
                     ((MoveNotificationObject)o).PlayerName == this.requestPlayer),
-                    It.Is<string>(x => x == this.session.Player1.Information.UserName)));
+                    It.Is<string>(x => x == this.session.Player1Name)));
             this.notificationServiceMock.Verify(s => s.Send(It.Is<GameNotificationType>(t => t == GameNotificationType.GameMoveResult),
                     It.Is<object>(o => ((IMoveResultNotificationObject)o).SessionName == this.session.Name &&
                     ((IMoveResultNotificationObject)o).PlayerName == this.requestPlayer),
@@ -154,8 +154,8 @@ namespace Gamify.Sdk.Tests.ComponentTests
             this.notificationServiceMock.Verify(s => s.SendBroadcast(It.Is<GameNotificationType>(t => t == GameNotificationType.GameFinished),
                     It.Is<object>(o => ((GameFinishedNotificationObject)o).SessionName == this.session.Name &&
                     ((GameFinishedNotificationObject)o).WinnerPlayerName == this.requestPlayer),
-                    It.Is<string>(x => x == this.session.Player2.Information.UserName),
-                    It.Is<string>(x => x == this.session.Player1.Information.UserName)));
+                    It.Is<string>(x => x == this.session.Player2Name),
+                    It.Is<string>(x => x == this.session.Player1Name)));
 
             Assert.IsTrue(canHandle);
         }

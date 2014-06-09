@@ -36,8 +36,8 @@ namespace Gamify.Sdk.Tests.ComponentTests
                 PendingToMove = false,
                 Information = new GamePlayer
                 {
-                    Name = "Player 1",
-                    UserName = "player1"
+                    DisplayName = "Player 1",
+                    Name = "player1"
                 }
             };
             var player2 = new TestSessionPlayer(sessionHistoryService)
@@ -46,8 +46,8 @@ namespace Gamify.Sdk.Tests.ComponentTests
                 PendingToMove = false,
                 Information = new GamePlayer
                 {
-                    Name = "Player 2",
-                    UserName = "player2"
+                    DisplayName = "Player 2",
+                    Name = "player2"
                 }
             };
 
@@ -63,7 +63,7 @@ namespace Gamify.Sdk.Tests.ComponentTests
 
             this.playerSetupMock = new Mock<ISessionPlayerSetup>();
             this.playerSetupMock.Setup(s => s.GetPlayerReady(It.Is<GameAcceptedRequestObject>(x => x.SessionName == this.sessionName),
-                It.Is<TestSessionPlayer>(p => p.Information.UserName == "player2")))
+                It.Is<TestSessionPlayer>(p => p.Information.Name == "player2")))
                 .Verifiable();
 
             this.acceptGameComponent = new AcceptGameComponent(sessionServiceMock.Object, notificationServiceMock.Object, this.playerSetupMock.Object, this.serializer);
@@ -91,8 +91,8 @@ namespace Gamify.Sdk.Tests.ComponentTests
             this.sessionServiceMock.VerifyAll();
             this.notificationServiceMock.Verify(s => s.SendBroadcast(It.Is<GameNotificationType>(t => t == GameNotificationType.GameCreated),
                 It.Is<object>(o => ((GameCreatedNotificationObject)o).SessionName == this.session.Name),
-                It.Is<string>(x => x == this.session.Player1.Information.UserName),
-                It.Is<string>(x => x == this.session.Player2.Information.UserName)));
+                It.Is<string>(x => x == this.session.Player1Name),
+                It.Is<string>(x => x == this.session.Player2Name)));
             this.playerSetupMock.VerifyAll();
 
             Assert.IsTrue(canHandle);

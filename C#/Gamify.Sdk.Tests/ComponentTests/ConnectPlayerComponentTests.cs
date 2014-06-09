@@ -29,13 +29,13 @@ namespace Gamify.Sdk.Tests.ComponentTests
 
             this.player1 = new GamePlayer
             {
-                Name = "Player 1",
-                UserName = "player1"
+                DisplayName = "Player 1",
+                Name = "player1"
             };
             this.player2 = new GamePlayer
             {
-                Name = "Player 2",
-                UserName = "player2"
+                DisplayName = "Player 2",
+                Name = "player2"
             };
 
             this.playerServiceMock = new Mock<IPlayerService>();
@@ -79,7 +79,7 @@ namespace Gamify.Sdk.Tests.ComponentTests
             this.playerServiceMock.VerifyAll();
             this.notificationServiceMock.Verify(s => s.SendBroadcast(It.Is<GameNotificationType>(t => t == GameNotificationType.PlayerConnected),
                     It.Is<object>(o => ((PlayerConnectedNotificationObject)o).PlayerName == this.requestPlayer),
-                    It.Is<string>(x => x == this.player2.UserName)));
+                    It.Is<string>(x => x == this.player2.Name)));
 
             Assert.IsTrue(canHandle);
         }
@@ -110,7 +110,7 @@ namespace Gamify.Sdk.Tests.ComponentTests
             this.playerServiceMock.VerifyAll();
             this.notificationServiceMock.Verify(s => s.SendBroadcast(It.Is<GameNotificationType>(t => t == GameNotificationType.PlayerConnected),
                     It.Is<object>(o => ((PlayerConnectedNotificationObject)o).PlayerName == this.requestPlayer),
-                    It.Is<string>(x => x == this.player2.UserName)));
+                    It.Is<string>(x => x == this.player2.Name)));
 
             Assert.IsTrue(canHandle);
         }

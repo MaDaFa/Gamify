@@ -36,8 +36,8 @@ namespace Gamify.Sdk.Components
                 notification.AddActiveGame(new GameObject
                 {
                     SessionName = activePlayerSession.Name,
-                    Player1Name = activePlayerSession.Player1.Information.UserName,
-                    Player2Name = activePlayerSession.Player2.Information.UserName
+                    Player1Name = activePlayerSession.Player1Name,
+                    Player2Name = activePlayerSession.Player2Name
                 });
             }
 

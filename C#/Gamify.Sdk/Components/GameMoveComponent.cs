@@ -34,7 +34,7 @@ namespace Gamify.Sdk.Components
             var moveRequestObject = this.serializer.Deserialize<MoveRequestObject>(request.SerializedRequestObject);
             var currentSession = this.sessionService.GetByName(moveRequestObject.SessionName);
             var originPlayer = currentSession.GetPlayer(moveRequestObject.PlayerName);
-            var destinationPlayer = currentSession.GetVersusPlayer(originPlayer.Information.UserName);
+            var destinationPlayer = currentSession.GetVersusPlayer(originPlayer.Information.Name);
             var moveResponse = this.moveHandler.Handle(moveRequestObject, this.moveService);
 
             if (moveResponse.IsWin)
@@ -42,8 +42,8 @@ namespace Gamify.Sdk.Components
                 var gameFinishedNotificationObject = new GameFinishedNotificationObject
                 {
                     SessionName = currentSession.Name,
-                    WinnerPlayerName = originPlayer.Information.UserName,
-                    LooserPlayerName = destinationPlayer.Information.UserName
+                    WinnerPlayerName = originPlayer.Information.Name,
+                    LooserPlayerName = destinationPlayer.Information.Name
                 };
 
                 this.NotificationService.SendBroadcast(GameNotificationType.GameFinished, gameFinishedNotificationObject, gameFinishedNotificationObject.WinnerPlayerName, gameFinishedNotificationObject.LooserPlayerName);
@@ -55,8 +55,8 @@ namespace Gamify.Sdk.Components
                 originPlayer.PendingToMove = false;
                 destinationPlayer.PendingToMove = true;
 
-                this.SendMoveNotification(moveRequestObject, destinationPlayer.Information.UserName);
-                this.SendMoveResultNotification(moveRequestObject, moveResponse, destinationPlayer.Information.UserName);
+                this.SendMoveNotification(moveRequestObject, destinationPlayer.Information.Name);
+                this.SendMoveResultNotification(moveRequestObject, moveResponse, destinationPlayer.Information.Name);
             }
         }
 

@@ -55,12 +55,12 @@ namespace Gamify.Sdk.Components
             var gameInviteNotificationObject = new GameInviteNotificationObject
             {
                 SessionName = newSession.Name,
-                Player1Name = newSession.Player1.Information.UserName
+                Player1Name = newSession.Player1Name
             };
 
             this.gameInviteDecorator.Decorate(gameInviteNotificationObject, newSession);
 
-            this.NotificationService.Send(GameNotificationType.GameInvite, gameInviteNotificationObject, newSession.Player2.Information.UserName);
+            this.NotificationService.Send(GameNotificationType.GameInvite, gameInviteNotificationObject, newSession.Player2Name);
         }
     }
 }

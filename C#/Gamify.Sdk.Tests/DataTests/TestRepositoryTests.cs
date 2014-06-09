@@ -10,11 +10,11 @@ namespace Gamify.Sdk.Tests.DataTests
         [TestMethod]
         public void When_CreateTestEntity_Then_Success()
         {
-            var testEntityName = "test1";
+            var testEntityName = GetUniqueName("test");
             var testEntity = new TestMongoEntity
             {
                 Name = testEntityName,
-                DisplayName = "Test 1",
+                DisplayName = GetUniqueName("Test"),
                 IsValid = true
             };
 
@@ -24,18 +24,18 @@ namespace Gamify.Sdk.Tests.DataTests
 
             Assert.IsNotNull(createdTestEntity);
             Assert.AreEqual(testEntity.Id, createdTestEntity.Id);
-            Assert.AreEqual("Test 1", createdTestEntity.DisplayName);
+            Assert.AreEqual(testEntity.DisplayName, createdTestEntity.DisplayName);
             Assert.AreEqual(true, createdTestEntity.IsValid);
         }
 
         [TestMethod]
         public void When_UpdateTestEntity_Then_Success()
         {
-            var testEntityName = "test1";
+            var testEntityName = GetUniqueName("test");
             var testEntity = new TestMongoEntity
             {
                 Name = testEntityName,
-                DisplayName = "Test 1",
+                DisplayName = GetUniqueName("Test"),
                 IsValid = true
             };
 
@@ -44,7 +44,7 @@ namespace Gamify.Sdk.Tests.DataTests
             var createdTestEntity = this.testRepository.Get(e => e.Name == testEntityName);
 
             createdTestEntity.IsValid = false;
-            createdTestEntity.DisplayName = "Updated Test 1";
+            createdTestEntity.DisplayName = GetUniqueName("Updated Test");
 
             this.testRepository.Update(createdTestEntity);
 
@@ -52,18 +52,18 @@ namespace Gamify.Sdk.Tests.DataTests
 
             Assert.IsNotNull(updatedTestEntity);
             Assert.AreEqual(testEntity.Id, updatedTestEntity.Id);
-            Assert.AreEqual("Updated Test 1", updatedTestEntity.DisplayName);
+            Assert.AreEqual(createdTestEntity.DisplayName, updatedTestEntity.DisplayName);
             Assert.AreEqual(false, updatedTestEntity.IsValid);
         }
 
         [TestMethod]
         public void When_DeleteTestEntity_Then_Success()
         {
-            var testEntityName = "test1";
+            var testEntityName = GetUniqueName("test");
             var testEntity = new TestMongoEntity
             {
                 Name = testEntityName,
-                DisplayName = "Test 1",
+                DisplayName = GetUniqueName("Test"),
                 IsValid = true
             };
 
@@ -81,11 +81,11 @@ namespace Gamify.Sdk.Tests.DataTests
         [TestMethod]
         public void When_DeleteTestEntityById_Then_Success()
         {
-            var testEntityName = "test1";
+            var testEntityName = GetUniqueName("test");
             var testEntity = new TestMongoEntity
             {
                 Name = testEntityName,
-                DisplayName = "Test 1",
+                DisplayName = GetUniqueName("Test"),
                 IsValid = true
             };
 
@@ -103,25 +103,25 @@ namespace Gamify.Sdk.Tests.DataTests
         [TestMethod]
         public void When_DeleteAllTestEntities_Then_Success()
         {
-            var testEntityName1 = "test1";
+            var testEntityName1 = GetUniqueName("test");
             var testEntity1 = new TestMongoEntity
             {
                 Name = testEntityName1,
-                DisplayName = "Test 1",
+                DisplayName = GetUniqueName("Test"),
                 IsValid = true
             };
-            var testEntityName2 = "test2";
+            var testEntityName2 = GetUniqueName("test");
             var testEntity2 = new TestMongoEntity
             {
                 Name = testEntityName2,
-                DisplayName = "Test 2",
+                DisplayName = GetUniqueName("Test"),
                 IsValid = false
             };
-            var testEntityName3 = "test3";
+            var testEntityName3 = GetUniqueName("test");
             var testEntity3 = new TestMongoEntity
             {
                 Name = testEntityName3,
-                DisplayName = "Test 3",
+                DisplayName = GetUniqueName("Test"),
                 IsValid = true
             };
 
@@ -142,32 +142,32 @@ namespace Gamify.Sdk.Tests.DataTests
         [TestMethod]
         public void When_GetTestEntitiesWithPredicate_Then_Success()
         {
-            var testEntityName1 = "test1";
+            var testEntityName1 = GetUniqueName("test");
             var testEntity1 = new TestMongoEntity
             {
                 Name = testEntityName1,
-                DisplayName = "Test 1",
+                DisplayName = GetUniqueName("Test"),
                 IsValid = true
             };
-            var testEntityName2 = "test2";
+            var testEntityName2 = GetUniqueName("test");
             var testEntity2 = new TestMongoEntity
             {
                 Name = testEntityName2,
-                DisplayName = "Test 2",
+                DisplayName = GetUniqueName("Test"),
                 IsValid = false
             };
-            var testEntityName3 = "test3";
+            var testEntityName3 = GetUniqueName("test");
             var testEntity3 = new TestMongoEntity
             {
                 Name = testEntityName3,
-                DisplayName = "Test 3",
+                DisplayName = GetUniqueName("Test"),
                 IsValid = true
             };
-            var testEntityName4 = "entity4";
+            var testEntityName4 = GetUniqueName("entity");
             var testEntity4 = new TestMongoEntity
             {
                 Name = testEntityName4,
-                DisplayName = "Entity 4",
+                DisplayName = GetUniqueName("Entity"),
                 IsValid = true
             };
 
@@ -178,7 +178,7 @@ namespace Gamify.Sdk.Tests.DataTests
 
             var validEntities = this.testRepository.GetAll(e => e.IsValid);
             var testEntities = this.testRepository.GetAll(e => e.Name.StartsWith("test"));
-            var entitiesWith4 = this.testRepository.GetAll(e => e.DisplayName.EndsWith("4"));
+            var entitiesWith4 = this.testRepository.GetAll(e => e.DisplayName.Contains("Entity"));
 
             Assert.AreEqual(3, validEntities.Count());
             Assert.AreEqual(3, testEntities.Count());

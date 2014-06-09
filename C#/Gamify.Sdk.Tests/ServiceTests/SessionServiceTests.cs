@@ -32,16 +32,16 @@ namespace Gamify.Sdk.Tests.ServiceTests
             {
                 Information = new GamePlayer
                 {
-                    UserName = "player1",
-                    Name = "Player 1"
+                    Name = "player1",
+                    DisplayName = "Player 1"
                 }
             };
             var sessionPlayer2 = new TestSessionPlayer(sessionHistoryService)
             {
                 Information = new GamePlayer
                 {
-                    UserName = "player2",
-                    Name = "Player 2"
+                    Name = "player2",
+                    DisplayName = "Player 2"
                 }
             };
             var newSession = this.sessionService.Open(sessionPlayer1, sessionPlayer2);
@@ -51,7 +51,7 @@ namespace Gamify.Sdk.Tests.ServiceTests
             Assert.AreEqual(SessionState.Active, newSession.State);
             Assert.IsTrue(newSession.HasPlayer("player1"));
             Assert.IsTrue(newSession.HasPlayer("player2"));
-            Assert.AreEqual("player1", newSession.GetVersusPlayer("player2").Information.UserName);
+            Assert.AreEqual("player1", newSession.GetVersusPlayer("player2").Information.Name);
             Assert.IsTrue(newSession.Player1.IsReady);
             Assert.IsTrue(newSession.Player1.PendingToMove);
             Assert.AreEqual("player1-vs-player2", newSession.Player1.SessionName);
@@ -64,7 +64,7 @@ namespace Gamify.Sdk.Tests.ServiceTests
         public void When_OpenSessionWithOnePlayer_Then_Success()
         {
             var sessionHistoryService = Mock.Of<ISessionHistoryService<TestMoveObject, TestResponseObject>>();
-            var gamePlayer = new GamePlayer { UserName = "player2", Name = "Player 2" };
+            var gamePlayer = new GamePlayer { Name = "player2", DisplayName = "Player 2" };
             var sessionPlayer2 = new TestSessionPlayer(sessionHistoryService)
             {
                 Information = gamePlayer
@@ -81,7 +81,7 @@ namespace Gamify.Sdk.Tests.ServiceTests
             var sessionPlayerFactoryMock = new Mock<ISessionPlayerFactory>();
 
             sessionPlayerFactoryMock
-                .Setup(f => f.Create(It.Is<IGamePlayer>(p => p.UserName == gamePlayer.UserName), It.IsAny<ISessionHistoryService>()))
+                .Setup(f => f.Create(It.Is<IGamePlayer>(p => p.Name == gamePlayer.Name), It.IsAny<ISessionHistoryService>()))
                 .Returns(sessionPlayer2);
 
             var sessionPlayerFactory = sessionPlayerFactoryMock.Object;
@@ -92,8 +92,8 @@ namespace Gamify.Sdk.Tests.ServiceTests
             {
                 Information = new GamePlayer
                 {
-                    UserName = "player1",
-                    Name = "Player 1"
+                    Name = "player1",
+                    DisplayName = "Player 1"
                 }
             };
             var newSession = this.sessionService.Open(sessionPlayer1);
@@ -106,7 +106,7 @@ namespace Gamify.Sdk.Tests.ServiceTests
             Assert.AreEqual(SessionState.Active, newSession.State);
             Assert.IsTrue(newSession.HasPlayer("player1"));
             Assert.IsTrue(newSession.HasPlayer("player2"));
-            Assert.AreEqual("player1", newSession.GetVersusPlayer("player2").Information.UserName);
+            Assert.AreEqual("player1", newSession.GetVersusPlayer("player2").Information.Name);
             Assert.IsTrue(newSession.Player1.IsReady);
             Assert.IsTrue(newSession.Player1.PendingToMove);
             Assert.AreEqual("player1-vs-player2", newSession.Player1.SessionName);
@@ -129,16 +129,16 @@ namespace Gamify.Sdk.Tests.ServiceTests
             {
                 Information = new GamePlayer
                 {
-                    UserName = "player1",
-                    Name = "Player 1"
+                    Name = "player1",
+                    DisplayName = "Player 1"
                 }
             };
             var sessionPlayer2 = new TestSessionPlayer(sessionHistoryService)
             {
                 Information = new GamePlayer
                 {
-                    UserName = "player2",
-                    Name = "Player 2"
+                    Name = "player2",
+                    DisplayName = "Player 2"
                 }
             };
             var newSession = this.sessionService.Open(sessionPlayer1, sessionPlayer2);
@@ -152,7 +152,7 @@ namespace Gamify.Sdk.Tests.ServiceTests
             Assert.AreEqual("player1-vs-player2", abandonedSession.Name);
             Assert.IsTrue(abandonedSession.HasPlayer("player1"));
             Assert.IsTrue(abandonedSession.HasPlayer("player2"));
-            Assert.AreEqual("player1", abandonedSession.GetVersusPlayer("player2").Information.UserName);
+            Assert.AreEqual("player1", abandonedSession.GetVersusPlayer("player2").Information.Name);
             Assert.IsTrue(abandonedSession.Player1.IsReady);
             Assert.IsTrue(abandonedSession.Player1.PendingToMove);
             Assert.AreEqual("player1-vs-player2", abandonedSession.Player1.SessionName);
@@ -175,16 +175,16 @@ namespace Gamify.Sdk.Tests.ServiceTests
             {
                 Information = new GamePlayer
                 {
-                    UserName = "player1",
-                    Name = "Player 1"
+                    Name = "player1",
+                    DisplayName = "Player 1"
                 }
             };
             var sessionPlayer2 = new TestSessionPlayer(sessionHistoryService)
             {
                 Information = new GamePlayer
                 {
-                    UserName = "player2",
-                    Name = "Player 2"
+                    Name = "player2",
+                    DisplayName = "Player 2"
                 }
             };
             var newSession = this.sessionService.Open(sessionPlayer1, sessionPlayer2);
@@ -198,7 +198,7 @@ namespace Gamify.Sdk.Tests.ServiceTests
             Assert.AreEqual("player1-vs-player2", abandonedSession.Name);
             Assert.IsTrue(abandonedSession.HasPlayer("player1"));
             Assert.IsTrue(abandonedSession.HasPlayer("player2"));
-            Assert.AreEqual("player1", abandonedSession.GetVersusPlayer("player2").Information.UserName);
+            Assert.AreEqual("player1", abandonedSession.GetVersusPlayer("player2").Information.Name);
             Assert.IsTrue(abandonedSession.Player1.IsReady);
             Assert.IsTrue(abandonedSession.Player1.PendingToMove);
             Assert.AreEqual("player1-vs-player2", abandonedSession.Player1.SessionName);
@@ -221,48 +221,48 @@ namespace Gamify.Sdk.Tests.ServiceTests
             {
                 Information = new GamePlayer
                 {
-                    UserName = "player1",
-                    Name = "Player 1"
+                    Name = "player1",
+                    DisplayName = "Player 1"
                 }
             };
             var sessionPlayer1_3 = new TestSessionPlayer(sessionHistoryService)
             {
                 Information = new GamePlayer
                 {
-                    UserName = "player1",
-                    Name = "Player 1"
+                    Name = "player1",
+                    DisplayName = "Player 1"
                 }
             };
             var sessionPlayer1_4 = new TestSessionPlayer(sessionHistoryService)
             {
                 Information = new GamePlayer
                 {
-                    UserName = "player1",
-                    Name = "Player 1"
+                    Name = "player1",
+                    DisplayName = "Player 1"
                 }
             };
             var sessionPlayer2 = new TestSessionPlayer(sessionHistoryService)
             {
                 Information = new GamePlayer
                 {
-                    UserName = "player2",
-                    Name = "Player 2"
+                    Name = "player2",
+                    DisplayName = "Player 2"
                 }
             };
             var sessionPlayer3 = new TestSessionPlayer(sessionHistoryService)
             {
                 Information = new GamePlayer
                 {
-                    UserName = "player3",
-                    Name = "Player 3"
+                    Name = "player3",
+                    DisplayName = "Player 3"
                 }
             };
             var sessionPlayer4 = new TestSessionPlayer(sessionHistoryService)
             {
                 Information = new GamePlayer
                 {
-                    UserName = "player4",
-                    Name = "Player 4"
+                    Name = "player4",
+                    DisplayName = "Player 4"
                 }
             };
             var newSession1 = this.sessionService.Open(sessionPlayer1_1, sessionPlayer2);
@@ -279,7 +279,7 @@ namespace Gamify.Sdk.Tests.ServiceTests
             Assert.AreEqual(SessionState.Active, newSession1.State);
             Assert.IsTrue(newSession1.HasPlayer("player1"));
             Assert.IsTrue(newSession1.HasPlayer("player2"));
-            Assert.AreEqual("player1", newSession1.GetVersusPlayer("player2").Information.UserName);
+            Assert.AreEqual("player1", newSession1.GetVersusPlayer("player2").Information.Name);
             Assert.IsTrue(newSession1.Player1.IsReady);
             Assert.IsTrue(newSession1.Player1.PendingToMove);
             Assert.AreEqual("player1-vs-player2", newSession1.Player1.SessionName);
@@ -292,7 +292,7 @@ namespace Gamify.Sdk.Tests.ServiceTests
             Assert.AreEqual(SessionState.Active, newSession2.State);
             Assert.IsTrue(newSession2.HasPlayer("player1"));
             Assert.IsTrue(newSession2.HasPlayer("player3"));
-            Assert.AreEqual("player1", newSession2.GetVersusPlayer("player3").Information.UserName);
+            Assert.AreEqual("player1", newSession2.GetVersusPlayer("player3").Information.Name);
             Assert.IsTrue(newSession2.Player1.IsReady);
             Assert.IsTrue(newSession2.Player1.PendingToMove);
             Assert.AreEqual("player1-vs-player3", newSession2.Player1.SessionName);
@@ -305,7 +305,7 @@ namespace Gamify.Sdk.Tests.ServiceTests
             Assert.AreEqual(SessionState.Active, newSession3.State);
             Assert.IsTrue(newSession3.HasPlayer("player1"));
             Assert.IsTrue(newSession3.HasPlayer("player4"));
-            Assert.AreEqual("player1", newSession3.GetVersusPlayer("player4").Information.UserName);
+            Assert.AreEqual("player1", newSession3.GetVersusPlayer("player4").Information.Name);
             Assert.IsTrue(newSession3.Player1.IsReady);
             Assert.IsTrue(newSession3.Player1.PendingToMove);
             Assert.AreEqual("player1-vs-player4", newSession3.Player1.SessionName);

@@ -17,12 +17,12 @@ namespace Gamify.Sdk.Services
 
         public IEnumerable<IGamePlayer> GetAll(string playerNameToExclude = null)
         {
-            return this.playerRepository.GetAll(p => p.UserName != playerNameToExclude);
+            return this.playerRepository.GetAll(p => p.Name != playerNameToExclude);
         }
 
         public IGamePlayer GetByName(string playerName)
         {
-            return this.playerRepository.Get(p => p.UserName == playerName);
+            return this.playerRepository.Get(p => p.Name == playerName);
         }
 
         public IGamePlayer GetRandom(string playerNameToExclude = null)
@@ -34,12 +34,12 @@ namespace Gamify.Sdk.Services
 
         public bool Exist(string playerName)
         {
-            return this.playerRepository.Exist(p => p.UserName == playerName);
+            return this.playerRepository.Exist(p => p.Name == playerName);
         }
 
         public void Create(string userName, string name)
         {
-            if (this.playerRepository.Exist(p => p.UserName == userName))
+            if (this.playerRepository.Exist(p => p.Name == userName))
             {
                 var errorMessage = string.Format("The player {0} cannot be created because it's already registered", userName);
 
@@ -48,8 +48,8 @@ namespace Gamify.Sdk.Services
 
             var newPlayer = new GamePlayer
             {
-                UserName = userName,
-                Name = name
+                Name = userName,
+                DisplayName = name
             };
 
             this.playerRepository.Create(newPlayer);

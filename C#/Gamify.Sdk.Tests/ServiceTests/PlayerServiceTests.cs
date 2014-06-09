@@ -50,8 +50,8 @@ namespace Gamify.Sdk.Tests.ServiceTests
             var existingPlayer = this.playerService.GetRandom(playerNameToExclude: "player1");
 
             Assert.IsNotNull(existingPlayer);
-            Assert.AreEqual("player2", existingPlayer.UserName);
-            Assert.AreEqual("Player 2", existingPlayer.Name);
+            Assert.AreEqual("player2", existingPlayer.Name);
+            Assert.AreEqual("Player 2", existingPlayer.DisplayName);
         }
 
         [TestMethod]
@@ -64,8 +64,8 @@ namespace Gamify.Sdk.Tests.ServiceTests
             var player2 = this.playerService.GetByName("player2");
 
             Assert.IsNotNull(player2);
-            Assert.AreEqual("player2", player2.UserName);
-            Assert.AreEqual("Player 2", player2.Name);
+            Assert.AreEqual("player2", player2.Name);
+            Assert.AreEqual("Player 2", player2.DisplayName);
         }
 
         [TestMethod]

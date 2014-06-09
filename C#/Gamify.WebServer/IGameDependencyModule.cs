@@ -1,9 +1,13 @@
-﻿using Autofac;
+﻿using System;
 
 namespace Gamify.WebServer
 {
-    public interface IGameDependencyModule
+    public interface IGameDependencyModule : IDisposable
     {
-        IContainer GetContainer();
+        void Setup();
+
+        object Get(Type objectType);
+
+        T Get<T>();
     }
 }

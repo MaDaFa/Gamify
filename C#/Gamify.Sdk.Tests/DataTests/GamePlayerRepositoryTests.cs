@@ -10,65 +10,65 @@ namespace Gamify.Sdk.Tests.DataTests
         [TestMethod]
         public void When_CreateGamePlayer_Then_Success()
         {
-            var playerName = "player1";
+            var playerName = GetUniqueName("player");
             var player = new GamePlayer
             {
-                Name = "Player 1",
-                UserName = playerName
+                DisplayName = GetUniqueName("Player"),
+                Name = playerName
             };
 
             this.testRepository.Create(player);
 
-            var createdPlayer = this.testRepository.Get(e => e.UserName == playerName);
+            var createdPlayer = this.testRepository.Get(e => e.Name == playerName);
 
             Assert.IsNotNull(createdPlayer);
             Assert.AreEqual(player.Id, createdPlayer.Id);
-            Assert.AreEqual("Player 1", createdPlayer.Name);
-            Assert.AreEqual(playerName, createdPlayer.UserName);
+            Assert.AreEqual(player.DisplayName, createdPlayer.DisplayName);
+            Assert.AreEqual(playerName, createdPlayer.Name);
         }
 
         [TestMethod]
         public void When_UpdateGamePlayer_Then_Success()
         {
-            var playerName = "player1";
+            var playerName = GetUniqueName("player");
             var player = new GamePlayer
             {
-                Name = "Player 1",
-                UserName = playerName
+                DisplayName = GetUniqueName("Player"),
+                Name = playerName
             };
 
             this.testRepository.Create(player);
 
-            var createdPlayer = this.testRepository.Get(e => e.UserName == playerName);
+            var createdPlayer = this.testRepository.Get(e => e.Name == playerName);
 
-            createdPlayer.Name = "Updated Player 1";
+            createdPlayer.DisplayName = GetUniqueName("Updated Player");
 
             this.testRepository.Update(createdPlayer);
 
-            var updatedPlayer = this.testRepository.Get(e => e.UserName == playerName);
+            var updatedPlayer = this.testRepository.Get(e => e.Name == playerName);
 
             Assert.IsNotNull(updatedPlayer);
             Assert.AreEqual(player.Id, updatedPlayer.Id);
-            Assert.AreEqual("Updated Player 1", updatedPlayer.Name);
+            Assert.AreEqual(createdPlayer.DisplayName, updatedPlayer.DisplayName);
         }
 
         [TestMethod]
         public void When_DeleteGamePlayer_Then_Success()
         {
-            var playerName = "player1";
+            var playerName = GetUniqueName("player");
             var player = new GamePlayer
             {
-                Name = "Player 1",
-                UserName = playerName
+                DisplayName = GetUniqueName("Player"),
+                Name = playerName
             };
 
             this.testRepository.Create(player);
 
-            var createdPlayer = this.testRepository.Get(e => e.UserName == playerName);
+            var createdPlayer = this.testRepository.Get(e => e.Name == playerName);
 
             this.testRepository.Delete(createdPlayer);
 
-            var deletedPlayer = this.testRepository.Get(e => e.UserName == playerName);
+            var deletedPlayer = this.testRepository.Get(e => e.Name == playerName);
 
             Assert.IsNull(deletedPlayer);
         }
@@ -76,20 +76,20 @@ namespace Gamify.Sdk.Tests.DataTests
         [TestMethod]
         public void When_DeleteGamePlayerById_Then_Success()
         {
-            var playerName = "player1";
+            var playerName = GetUniqueName("player");
             var player = new GamePlayer
             {
-                Name = "Player 1",
-                UserName = playerName
+                DisplayName = GetUniqueName("Player"),
+                Name = playerName
             };
 
             this.testRepository.Create(player);
 
-            var createdPlayer = this.testRepository.Get(e => e.UserName == playerName);
+            var createdPlayer = this.testRepository.Get(e => e.Name == playerName);
 
             this.testRepository.Delete(createdPlayer.Id);
 
-            var deletedPlayer = this.testRepository.Get(e => e.UserName == playerName);
+            var deletedPlayer = this.testRepository.Get(e => e.Name == playerName);
 
             Assert.IsNull(deletedPlayer);
         }
@@ -97,23 +97,23 @@ namespace Gamify.Sdk.Tests.DataTests
         [TestMethod]
         public void When_DeleteAllPlayers_Then_Success()
         {
-            var player1Name = "player1";
+            var player1Name = GetUniqueName("player");
             var player1 = new GamePlayer
             {
-                Name = "Player 1",
-                UserName = player1Name
+                DisplayName = GetUniqueName("Player"),
+                Name = player1Name
             };
-            var player2Name = "player2";
+            var player2Name = GetUniqueName("player");
             var player2 = new GamePlayer
             {
-                Name = "Player 2",
-                UserName = player2Name
+                DisplayName = GetUniqueName("Player"),
+                Name = player2Name
             };
-            var player3Name = "player3";
+            var player3Name = GetUniqueName("player");
             var player3 = new GamePlayer
             {
-                Name = "Player 3",
-                UserName = player3Name
+                DisplayName = GetUniqueName("Player"),
+                Name = player3Name
             };
 
             this.testRepository.Create(player1);
@@ -133,29 +133,29 @@ namespace Gamify.Sdk.Tests.DataTests
         [TestMethod]
         public void When_GetGamePlayersWithPredicate_Then_Success()
         {
-            var player1Name = "player1";
+            var player1Name = GetUniqueName("player");
             var player1 = new GamePlayer
             {
-                Name = "Player 1",
-                UserName = player1Name
+                DisplayName = GetUniqueName("Player"),
+                Name = player1Name
             };
-            var player2Name = "player2";
+            var player2Name = GetUniqueName("player");
             var player2 = new GamePlayer
             {
-                Name = "Player 2",
-                UserName = player2Name
+                DisplayName = GetUniqueName("Player"),
+                Name = player2Name
             };
-            var player3Name = "player3";
+            var player3Name = GetUniqueName("player");
             var player3 = new GamePlayer
             {
-                Name = "Player 3",
-                UserName = player3Name
+                DisplayName = GetUniqueName("Player"),
+                Name = player3Name
             };
-            var player4Name = "test player";
+            var player4Name = GetUniqueName("test player");
             var player4 = new GamePlayer
             {
-                Name = "Test Player",
-                UserName = player4Name
+                DisplayName = GetUniqueName("Test Player"),
+                Name = player4Name
             };
 
             this.testRepository.Create(player1);
@@ -163,7 +163,7 @@ namespace Gamify.Sdk.Tests.DataTests
             this.testRepository.Create(player3);
             this.testRepository.Create(player4);
 
-            var testPlayers = this.testRepository.GetAll(e => e.Name.Contains("Test"));
+            var testPlayers = this.testRepository.GetAll(e => e.DisplayName.Contains("Test"));
 
             Assert.AreEqual(1, testPlayers.Count());
         }

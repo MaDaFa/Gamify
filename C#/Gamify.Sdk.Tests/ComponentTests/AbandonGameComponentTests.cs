@@ -34,8 +34,8 @@ namespace Gamify.Sdk.Tests.ComponentTests
                 PendingToMove = false,
                 Information = new GamePlayer
                 {
-                    Name = "Player 1",
-                    UserName = "player1"
+                    DisplayName = "Player 1",
+                    Name = "player1"
                 }
             };
             var player2 = new TestSessionPlayer(sessionHistoryService)
@@ -44,8 +44,8 @@ namespace Gamify.Sdk.Tests.ComponentTests
                 PendingToMove = true,
                 Information = new GamePlayer
                 {
-                    Name = "Player 2",
-                    UserName = "player2"
+                    DisplayName = "Player 2",
+                    Name = "player2"
                 }
             };
 
@@ -86,8 +86,8 @@ namespace Gamify.Sdk.Tests.ComponentTests
             this.sessionServiceMock.VerifyAll();
             this.notificationServiceMock.Verify(s => s.SendBroadcast(It.Is<GameNotificationType>(t => t == GameNotificationType.GameAbandoned),
                     It.Is<object>(o => ((GameAbandonedNotificationObject)o).SessionName == this.session.Name),
-                    It.Is<string>(x => x == this.session.Player1.Information.UserName),
-                    It.Is<string>(x => x == this.session.Player2.Information.UserName)));
+                    It.Is<string>(x => x == this.session.Player1Name),
+                    It.Is<string>(x => x == this.session.Player2Name)));
 
             Assert.IsTrue(canHandle);
         }

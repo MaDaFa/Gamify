@@ -20,6 +20,8 @@ namespace Gamify.Sdk.Setup
 
         IEnumerable<IGameComponent> GetCustomComponents();
 
+        Type GetSessionHistoryServiceType();
+
         Type GetGameBuilderType();
     }
 

@@ -10,13 +10,19 @@ namespace Gamify.Sdk.Data.Entities
 
         public ISessionGamePlayerBase Player1 { get; set; }
 
+        public string Player1Name { get; set; }
+
         public ISessionGamePlayerBase Player2 { get; set; }
+
+        public string Player2Name { get; set; }
 
         public GameSession(ISessionGamePlayerBase player1, ISessionGamePlayerBase player2)
         {
             this.Player1 = player1;
+            this.Player1Name = player1.Information.Name;
             this.Player2 = player2;
-            this.Name = string.Concat(this.Player1.Information.UserName, "-vs-", this.Player2.Information.UserName);
+            this.Player2Name = player2.Information.Name;
+            this.Name = string.Concat(this.Player1Name, "-vs-", this.Player2Name);
             this.State = SessionState.Active;
 
             this.Player1.SessionName = this.Name;
@@ -26,7 +32,7 @@ namespace Gamify.Sdk.Data.Entities
 
         public bool HasPlayer(string playerName)
         {
-            return this.Player1.Information.UserName == playerName || this.Player2.Information.UserName == playerName;
+            return this.Player1Name == playerName || this.Player2Name == playerName;
         }
 
         public ISessionGamePlayerBase GetPlayer(string playerName)
@@ -35,7 +41,7 @@ namespace Gamify.Sdk.Data.Entities
 
             this.ValidatePlayer(playerName);
 
-            if (this.Player1.Information.UserName == playerName)
+            if (this.Player1Name == playerName)
             {
                 player = this.Player1;
             }
@@ -53,7 +59,7 @@ namespace Gamify.Sdk.Data.Entities
 
             this.ValidatePlayer(playerName);
 
-            if (this.Player1.Information.UserName == playerName)
+            if (this.Player1Name == playerName)
             {
                 player = this.Player2;
             }

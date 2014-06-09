@@ -39,13 +39,13 @@ namespace Gamify.Sdk.Tests.ComponentTests
 
             this.player1 = new GamePlayer
             {
-                Name = "Player 1",
-                UserName = "player1"
+                DisplayName = "Player 1",
+                Name = "player1"
             };
             this.player2 = new GamePlayer
             {
-                Name = "Player 2",
-                UserName = "player2"
+                DisplayName = "Player 2",
+                Name = "player2"
             };
 
             this.sessionHistoryServiceMock = new Mock<ISessionHistoryService<TestMoveObject,TestResponseObject>>();
@@ -65,11 +65,11 @@ namespace Gamify.Sdk.Tests.ComponentTests
 
             this.playerServiceMock = new Mock<IPlayerService>();
             this.playerServiceMock
-               .Setup(s => s.GetByName(It.Is<string>(x => x == this.player1.Name)))
+               .Setup(s => s.GetByName(It.Is<string>(x => x == this.player1.DisplayName)))
                .Returns(this.player1)
                .Verifiable();
             this.playerServiceMock
-               .Setup(s => s.GetByName(It.Is<string>(x => x == this.player2.Name)))
+               .Setup(s => s.GetByName(It.Is<string>(x => x == this.player2.DisplayName)))
                .Returns(this.player2)
                .Verifiable();
 
@@ -86,8 +86,8 @@ namespace Gamify.Sdk.Tests.ComponentTests
                 .Verifiable();
 
             this.playerSetupMock = new Mock<ISessionPlayerSetup>();
-            this.playerSetupMock.Setup(s => s.GetPlayerReady(It.Is<CreateGameRequestObject>(x => x.PlayerName == this.player1.Name 
-                && x.InvitedPlayerName == this.player2.Name),
+            this.playerSetupMock.Setup(s => s.GetPlayerReady(It.Is<CreateGameRequestObject>(x => x.PlayerName == this.player1.DisplayName 
+                && x.InvitedPlayerName == this.player2.DisplayName),
                 It.Is<TestSessionPlayer>(p => p == this.sessionPlayer1)))
                 .Verifiable();
 
@@ -101,7 +101,7 @@ namespace Gamify.Sdk.Tests.ComponentTests
 
             this.inviteDecoratorMock = new Mock<IGameInviteDecorator>();
             this.inviteDecoratorMock
-                .Setup(d => d.Decorate(It.Is<GameInviteNotificationObject>(n => n.SessionName == this.sessionName && n.Player1Name == this.player1.UserName),
+                .Setup(d => d.Decorate(It.Is<GameInviteNotificationObject>(n => n.SessionName == this.sessionName && n.Player1Name == this.player1.Name),
                     It.Is<IGameSession>(s => s == this.session)));
 
 
@@ -115,8 +115,8 @@ namespace Gamify.Sdk.Tests.ComponentTests
         {
             var connectPlayerRequest = new CreateGameRequestObject
             {
-                PlayerName = this.player1.Name,
-                InvitedPlayerName = this.player2.Name,
+                PlayerName = this.player1.DisplayName,
+                InvitedPlayerName = this.player2.DisplayName,
                 AdditionalInformation = "Test"
             };
             var gameRequest = new GameRequest
@@ -136,9 +136,9 @@ namespace Gamify.Sdk.Tests.ComponentTests
             this.playerSetupMock.VerifyAll();
             this.inviteDecoratorMock.VerifyAll();
             this.notificationServiceMock.Verify(s => s.Send(It.Is<GameNotificationType>(t => t == GameNotificationType.GameInvite),
-                    It.Is<object>(o => ((GameInviteNotificationObject)o).Player1Name == this.player1.UserName
+                    It.Is<object>(o => ((GameInviteNotificationObject)o).Player1Name == this.player1.Name
                         && ((GameInviteNotificationObject)o).SessionName == this.sessionName),
-                    It.Is<string>(x => x == this.player2.UserName)));
+                    It.Is<string>(x => x == this.player2.Name)));
 
             Assert.IsTrue(canHandle);
         }

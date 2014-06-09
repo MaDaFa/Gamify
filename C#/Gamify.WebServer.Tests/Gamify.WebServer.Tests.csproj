@@ -3,11 +3,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{D1702DDC-822D-4F11-B550-4261AC177091}</ProjectGuid>
+    <ProjectGuid>{DFCD0921-E68F-43A6-AA2E-CBC09A4A8BC6}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Gamify.Sdk.Tests</RootNamespace>
-    <AssemblyName>Gamify.Sdk.Tests</AssemblyName>
+    <RootNamespace>Gamify.WebServer.Tests</RootNamespace>
+    <AssemblyName>Gamify.WebServer.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -35,17 +35,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="MongoDB.Bson">
-      <HintPath>..\packages\mongocsharpdriver.1.9.1\lib\net35\MongoDB.Bson.dll</HintPath>
-    </Reference>
-    <Reference Include="MongoDB.Driver">
-      <HintPath>..\packages\mongocsharpdriver.1.9.1\lib\net35\MongoDB.Driver.dll</HintPath>
+    <Reference Include="Autofac, Version=3.4.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Autofac.3.4.1\lib\net40\Autofac.dll</HintPath>
     </Reference>
     <Reference Include="Moq">
       <HintPath>..\packages\Moq.4.2.1402.2112\lib\net40\Moq.dll</HintPath>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.configuration" />
   </ItemGroup>
   <Choose>
     <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
@@ -60,51 +57,27 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="ComponentTests\AbandonGameComponentTests.cs" />
-    <Compile Include="ComponentTests\AcceptGameComponentTests.cs" />
-    <Compile Include="ComponentTests\ActiveGamesComponentTests.cs" />
-    <Compile Include="ComponentTests\ConnectedPlayersComponentTests.cs" />
-    <Compile Include="ComponentTests\ConnectPlayerComponentTests.cs" />
-    <Compile Include="ComponentTests\CreateGameComponentTests.cs" />
-    <Compile Include="ComponentTests\DisconnectPlayerComponentTests.cs" />
-    <Compile Include="ComponentTests\GameMoveComponentTests.cs" />
-    <Compile Include="ComponentTests\MessageComponentTests.cs" />
-    <Compile Include="ComponentTests\OpenGameComponentTests.cs" />
-    <Compile Include="DataTests\GamePlayerRepositoryTests.cs" />
-    <Compile Include="DataTests\GameSessionRepositoryTests.cs" />
-    <Compile Include="DataTests\RepositoryTests.cs" />
-    <Compile Include="DataTests\SessionHistoryRepositoryTests.cs" />
-    <Compile Include="DataTests\TestRepositoryTests.cs" />
+    <Compile Include="GameDependencyModuleTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ServiceTests\GameServiceTests.cs" />
-    <Compile Include="ServiceTests\MoveServiceTests.cs" />
-    <Compile Include="ServiceTests\NotificationServiceTests.cs" />
-    <Compile Include="ServiceTests\PlayerServiceTests.cs" />
-    <Compile Include="ComponentTests\RejectGameComponentTests.cs" />
-    <Compile Include="ServiceTests\SessionHistoryServiceTests.cs" />
-    <Compile Include="ServiceTests\SessionServiceTests.cs" />
-    <Compile Include="SetupTests\GameBuilderTests.cs" />
-    <Compile Include="TestModels\TestMongoEntity.cs" />
-    <Compile Include="TestModels\TestMove.cs" />
-    <Compile Include="TestModels\TestMoveObject.cs" />
-    <Compile Include="TestModels\TestNotificationObject.cs" />
-    <Compile Include="TestModels\TestRepository.cs" />
-    <Compile Include="TestModels\TestRequestObject.cs" />
-    <Compile Include="TestModels\TestResponse.cs" />
-    <Compile Include="TestModels\TestResponseObject.cs" />
-    <Compile Include="TestModels\TestSessionPlayer.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Gamify.Sdk.Tests\Gamify.Sdk.Tests.csproj">
+      <Project>{d1702ddc-822d-4f11-b550-4261ac177091}</Project>
+      <Name>Gamify.Sdk.Tests</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Gamify.Sdk\Gamify.Sdk.csproj">
       <Project>{2ad62b4b-9d86-4cdd-abb5-02c1d905ee91}</Project>
       <Name>Gamify.Sdk</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Gamify.WebServer\Gamify.WebServer.csproj">
+      <Project>{608c59f9-17d5-4f3c-8261-9542f3e5b4e8}</Project>
+      <Name>Gamify.WebServer</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>

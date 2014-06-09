@@ -29,11 +29,11 @@ namespace Gamify.Sdk.Components
             var notification = new GameRejectedNotificationObject
             {
                 SessionName = newSession.Name,
-                Player1Name = newSession.Player1.Information.UserName,
-                Player2Name = newSession.Player2.Information.UserName
+                Player1Name = newSession.Player1Name,
+                Player2Name = newSession.Player2Name
             };
 
-            this.NotificationService.Send(GameNotificationType.GameRejected, notification, newSession.Player1.Information.UserName);
+            this.NotificationService.Send(GameNotificationType.GameRejected, notification, newSession.Player1Name);
         }
     }
 }

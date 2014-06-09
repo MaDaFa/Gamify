@@ -12,7 +12,7 @@ namespace Gamify.Sdk.Tests.TestModels
 
         public override ISessionHistory<TestMoveObject, TestResponseObject> GetHistory()
         {
-            return this.sessionHistoryService.GetBySessionPlayer(this.SessionName, this.Information.UserName);
+            return this.sessionHistoryService.GetBySessionPlayer(this.SessionName, this.Information.Name);
         }
 
         public override IGameMoveResponse<TestResponseObject> ProcessMove(IGameMove<TestMoveObject> move)
@@ -21,7 +21,7 @@ namespace Gamify.Sdk.Tests.TestModels
             var result = new TestResponseObject { IsCorrect = false };
             var historyItem = new SessionHistoryItem<TestMoveObject, TestResponseObject>(answer, result);
 
-            this.sessionHistoryService.Add(this.SessionName, this.Information.UserName, historyItem);
+            this.sessionHistoryService.Add(this.SessionName, this.Information.Name, historyItem);
 
             return new TestResponse(result);
         }

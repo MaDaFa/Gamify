@@ -1,11 +1,10 @@
-﻿using Gamify.Sdk;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace Gamify.Sdk.Data.Entities
 {
     public class SessionHistory<TMove, UResponse> : MongoEntity, ISessionHistory<TMove, UResponse>
     {
-        public List<ISessionHistoryItem<TMove, UResponse>> Moves { get; set; }
+        public List<SessionHistoryItem<TMove, UResponse>> Moves { get; set; }
 
         public string SessionName { get; set; }
 
@@ -13,7 +12,7 @@ namespace Gamify.Sdk.Data.Entities
 
         public SessionHistory(string sessionName, string playerName)
         {
-            this.Moves = new List<ISessionHistoryItem<TMove, UResponse>>();
+            this.Moves = new List<SessionHistoryItem<TMove, UResponse>>();
 
             this.SessionName = sessionName;
             this.PlayerName = playerName;

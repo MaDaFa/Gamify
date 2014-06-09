@@ -30,23 +30,23 @@ namespace Gamify.Sdk.Tests.ComponentTests
 
             var player1 = new GamePlayer
             {
-                Name = "Player 1",
-                UserName = "player1"
+                DisplayName = "Player 1",
+                Name = "player1"
             };
             var player2 = new GamePlayer
             {
-                Name = "Player 2",
-                UserName = "player2"
+                DisplayName = "Player 2",
+                Name = "player2"
             };
             var player3 = new GamePlayer
             {
-                Name = "Player 3",
-                UserName = "player3"
+                DisplayName = "Player 3",
+                Name = "player3"
             };
             var player4 = new GamePlayer
             {
-                Name = "Player 4",
-                UserName = "player4"
+                DisplayName = "Player 4",
+                Name = "player4"
             };
 
             this.players = new List<IGamePlayer>();

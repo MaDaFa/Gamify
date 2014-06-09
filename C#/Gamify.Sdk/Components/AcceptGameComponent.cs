@@ -42,11 +42,11 @@ namespace Gamify.Sdk.Components
             var notification = new GameCreatedNotificationObject
             {
                 SessionName = newSession.Name,
-                Player1Name = newSession.Player1.Information.UserName,
-                Player2Name = newSession.Player2.Information.UserName
+                Player1Name = newSession.Player1Name,
+                Player2Name = newSession.Player2Name
             };
 
-            this.NotificationService.SendBroadcast(GameNotificationType.GameCreated, notification, newSession.Player1.Information.UserName, newSession.Player2.Information.UserName);
+            this.NotificationService.SendBroadcast(GameNotificationType.GameCreated, notification, newSession.Player1Name, newSession.Player2Name);
         }
     }
 }

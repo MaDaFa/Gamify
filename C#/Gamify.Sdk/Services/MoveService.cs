@@ -22,7 +22,7 @@ namespace Gamify.Sdk.Services
                 throw new ApplicationException(errorMessage);
             }
 
-            var playerToCall = existingSession.Player1.Information.UserName == playerName ? existingSession.Player2 : existingSession.Player1;
+            var playerToCall = existingSession.Player1Name == playerName ? existingSession.Player2 : existingSession.Player1;
 
             return (playerToCall as ISessionGamePlayer<T, U>).ProcessMove(move);
         }

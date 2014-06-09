@@ -37,7 +37,7 @@ namespace Gamify.Sdk.Components
                 PlayerName = userName
             };
             var players = this.playerService.GetAll(playerNameToExclude: userName)
-                .Select(p => p.UserName);
+                .Select(p => p.Name);
 
             this.NotificationService.SendBroadcast(GameNotificationType.PlayerDisconnected, notification, players.ToArray());
         }

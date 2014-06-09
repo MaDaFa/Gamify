@@ -1,4 +1,5 @@
 ﻿using Gamify.Sdk.Components;
+using Gamify.Sdk.Services;
 using System;
 using System.Collections.Generic;
 
@@ -34,9 +35,14 @@ namespace Gamify.Sdk.Setup
             return new List<IGameComponent>();
         }
 
+        public Type GetSessionHistoryServiceType()
+        {
+            return typeof(ISessionHistoryService<TMove, UResponse>);
+        }
+
         public Type GetGameBuilderType()
         {
-            return typeof(GameBuilder<TMove, UResponse>);
+            return typeof(IGameBuilder<TMove, UResponse>);
         }
     }
 }

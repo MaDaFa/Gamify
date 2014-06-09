@@ -1,5 +1,4 @@
-﻿using Autofac;
-using Gamify.Sdk;
+﻿using Gamify.Sdk;
 using Gamify.Sdk.Contracts.Notifications;
 using Gamify.Sdk.Contracts.Requests;
 using Gamify.Sdk.Services;
@@ -14,10 +13,9 @@ namespace Gamify.WebServer
     {
         private static WebSocketCollection connectedClients;
 
-        private readonly IGameDefinition gameDefinition;
+        private readonly IGameBuilder gameBuilder;
+        private readonly ISerializer serializer;
 
-        private IGameDependencyModule gameDependencyModule;
-        private ISerializer serializer;
         private IGameService gameService;
 
         public string UserName { get; private set; }
@@ -27,9 +25,10 @@ namespace Gamify.WebServer
             connectedClients = new WebSocketCollection();
         }
 
-        public GameWebSocketHandler(IGameDefinition gameDefinition)
+        public GameWebSocketHandler(IGameBuilder gameBuilder, ISerializer serializer)
         {
-            this.gameDefinition = gameDefinition;
+            this.gameBuilder = gameBuilder;
+            this.serializer = serializer;
         }
 
         public override void OnOpen()
@@ -73,16 +72,10 @@ namespace Gamify.WebServer
 
             connectedClients.Remove(this);
             gameService.Disconnect(this.UserName);
-            this.gameDependencyModule.GetContainer().Dispose();
         }
 
         private void Initialize()
         {
-            this.gameDependencyModule = new GameDependencyModule(this.gameDefinition);
-            this.serializer = gameDependencyModule.GetContainer().Resolve<ISerializer>();
-
-            var gameBuilder = (IGameBuilder)gameDependencyModule.GetContainer().Resolve(gameDefinition.GetGameBuilderType());
-
             this.gameService = gameBuilder.Build();
 
             this.gameService.Notification += (sender, args) =>
