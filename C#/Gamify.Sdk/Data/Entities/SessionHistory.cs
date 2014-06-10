@@ -2,7 +2,7 @@
 
 namespace Gamify.Sdk.Data.Entities
 {
-    public class SessionHistory<TMove, UResponse> : MongoEntity, ISessionHistory<TMove, UResponse>
+    public class SessionHistory<TMove, UResponse> : GameEntity, ISessionHistory<TMove, UResponse>
     {
         public List<SessionHistoryItem<TMove, UResponse>> Moves { get; set; }
 

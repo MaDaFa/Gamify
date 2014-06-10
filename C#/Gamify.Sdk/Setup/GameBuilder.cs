@@ -1,20 +1,21 @@
 ﻿using Gamify.Sdk.Components;
 using Gamify.Sdk.Services;
+using Gamify.Sdk.Setup.Definition;
 
 namespace Gamify.Sdk.Setup
 {
-    public class GameBuilder<TMove, UResponse> : IGameBuilder<TMove, UResponse>
+    public class GameBuilder : IGameBuilder
     {
         private readonly IPlayerService playerService;
         private readonly ISessionService sessionService;
-        private readonly ISessionHistoryService<TMove, UResponse> sessionHistoryService;
+        private readonly ISessionHistoryService sessionHistoryService;
         private readonly IMoveService moveService;
         private readonly INotificationService notificationService;
         private readonly IGameService gameService;
         private readonly ISerializer serializer;
 
         public GameBuilder(IPlayerService playerService, ISessionService sessionService, 
-            ISessionHistoryService<TMove, UResponse> sessionHistoryService,
+            ISessionHistoryService sessionHistoryService,
             IMoveService moveService, INotificationService notificationService, ISerializer serializer)
         {
             this.playerService = playerService;
@@ -26,7 +27,7 @@ namespace Gamify.Sdk.Setup
             this.gameService = new GameService(serializer);
         }
 
-        public void SetComponents(IGameDefinition<TMove, UResponse> gameDefinition)
+        public void SetComponents(IGameDefinition gameDefinition)
         {
             this.gameService.RegisterComponent(new AbandonGameComponent(this.sessionService, this.notificationService, this.serializer));
             this.gameService.RegisterComponent(new AcceptGameComponent(this.sessionService, this.notificationService, gameDefinition.GetSessionPlayerSetup(), this.serializer));

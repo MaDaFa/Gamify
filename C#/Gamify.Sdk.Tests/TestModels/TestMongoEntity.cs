@@ -2,7 +2,7 @@
 
 namespace Gamify.Sdk.Tests.TestModels
 {
-    public class TestMongoEntity : MongoEntity
+    public class TestMongoEntity : GameEntity
     {
         public string Name { get; set; }
 

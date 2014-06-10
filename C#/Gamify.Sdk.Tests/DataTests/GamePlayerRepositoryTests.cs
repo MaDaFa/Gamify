@@ -74,27 +74,6 @@ namespace Gamify.Sdk.Tests.DataTests
         }
 
         [TestMethod]
-        public void When_DeleteGamePlayerById_Then_Success()
-        {
-            var playerName = GetUniqueName("player");
-            var player = new GamePlayer
-            {
-                DisplayName = GetUniqueName("Player"),
-                Name = playerName
-            };
-
-            this.testRepository.Create(player);
-
-            var createdPlayer = this.testRepository.Get(e => e.Name == playerName);
-
-            this.testRepository.Delete(createdPlayer.Id);
-
-            var deletedPlayer = this.testRepository.Get(e => e.Name == playerName);
-
-            Assert.IsNull(deletedPlayer);
-        }
-
-        [TestMethod]
         public void When_DeleteAllPlayers_Then_Success()
         {
             var player1Name = GetUniqueName("player");

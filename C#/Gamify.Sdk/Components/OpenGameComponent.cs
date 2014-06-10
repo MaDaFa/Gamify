@@ -1,7 +1,7 @@
 ﻿using Gamify.Sdk.Contracts.Notifications;
 using Gamify.Sdk.Contracts.Requests;
 using Gamify.Sdk.Services;
-using Gamify.Sdk.Setup;
+using Gamify.Sdk.Setup.Definition;
 
 namespace Gamify.Sdk.Components
 {

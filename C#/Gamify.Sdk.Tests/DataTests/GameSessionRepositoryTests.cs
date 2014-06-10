@@ -164,51 +164,6 @@ namespace Gamify.Sdk.Tests.DataTests
         }
 
         [TestMethod]
-        public void When_DeleteGameSessionById_Then_Success()
-        {
-            var sessionHistoryService = Mock.Of<ISessionHistoryService<TestMoveObject, TestResponseObject>>();
-
-            var sessionName = GetUniqueName("Session");
-            var player1 = new GamePlayer
-            {
-                DisplayName = GetUniqueName("Player"),
-                Name = GetUniqueName("player")
-            };
-            var sessionPlayer1 = new TestSessionPlayer(sessionHistoryService)
-            {
-                SessionName = sessionName,
-                PendingToMove = true,
-                Information = player1
-            };
-            var player2 = new GamePlayer
-            {
-                DisplayName = GetUniqueName("Player"),
-                Name = GetUniqueName("player")
-            };
-            var sessionPlayer2 = new TestSessionPlayer(sessionHistoryService)
-            {
-                SessionName = sessionName,
-                PendingToMove = false,
-                Information = player2
-            };
-            var session = new GameSession(sessionPlayer1, sessionPlayer2)
-            {
-                Name = sessionName,
-                State = SessionState.Active
-            };
-
-            this.testRepository.Create(session);
-
-            var createdSession = this.testRepository.Get(s => s.Name == sessionName);
-
-            this.testRepository.Delete(createdSession.Id);
-
-            var deletedSession = this.testRepository.Get(s => s.Name == sessionName);
-
-            Assert.IsNull(deletedSession);
-        }
-
-        [TestMethod]
         public void When_DeleteAllGameSessions_Then_Success()
         {
             var sessionHistoryService = Mock.Of<ISessionHistoryService<TestMoveObject, TestResponseObject>>();

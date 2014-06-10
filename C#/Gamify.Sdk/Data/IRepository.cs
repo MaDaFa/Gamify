@@ -1,12 +1,11 @@
 ﻿using Gamify.Sdk.Data.Entities;
-using MongoDB.Bson;
 using System;
 using System.Linq;
 using System.Linq.Expressions;
 
 namespace Gamify.Sdk.Data
 {
-    public interface IRepository<T> where T : MongoEntity
+    public interface IRepository<T> where T : GameEntity
     {
         IQueryable<T> GetAll(Expression<Func<T, bool>> predicate = null);
 
@@ -19,8 +18,6 @@ namespace Gamify.Sdk.Data
         void Update(T dataEntity);
 
         void Delete(T dataEntity);
-
-        void Delete(ObjectId id);
 
         void DeleteAll();
     }

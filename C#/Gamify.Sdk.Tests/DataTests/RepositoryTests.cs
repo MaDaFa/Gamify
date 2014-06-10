@@ -7,7 +7,7 @@ using System;
 namespace Gamify.Sdk.Tests.DataTests
 {
     [TestClass]
-    public abstract class RepositoryTests<T> where T : MongoEntity
+    public abstract class RepositoryTests<T> where T : GameEntity
     {
         private readonly bool cleanDbWhenFinishes;
 

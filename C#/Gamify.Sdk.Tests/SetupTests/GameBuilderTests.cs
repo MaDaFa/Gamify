@@ -1,6 +1,7 @@
 ﻿using Gamify.Sdk.Components;
 using Gamify.Sdk.Services;
 using Gamify.Sdk.Setup;
+using Gamify.Sdk.Setup.Definition;
 using Gamify.Sdk.Tests.TestModels;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
@@ -12,7 +13,7 @@ namespace Gamify.Sdk.Tests.SetupTests
     [TestClass]
     public class GameBuilderTests
     {
-        private IGameBuilder<TestMoveObject, TestResponseObject> testGameBuilder;
+        private IGameBuilder testGameBuilder;
 
         [TestInitialize]
         public void Initialize()
@@ -24,7 +25,7 @@ namespace Gamify.Sdk.Tests.SetupTests
             var notificationService = Mock.Of<INotificationService>();
             var serializer = new JsonSerializer();
 
-            this.testGameBuilder = new GameBuilder<TestMoveObject, TestResponseObject>(playerService, sessionService,
+            this.testGameBuilder = new GameBuilder(playerService, sessionService,
                 sessionHistoryService, moveService, notificationService, serializer);
         }
 

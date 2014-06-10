@@ -1,6 +1,6 @@
 ﻿using Gamify.Sdk.Contracts.Notifications;
 
-namespace Gamify.Sdk.Setup
+namespace Gamify.Sdk.Setup.Definition
 {
     public interface IGameInformationNotificationFactory
     {

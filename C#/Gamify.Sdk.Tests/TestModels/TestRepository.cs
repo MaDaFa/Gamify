@@ -1,6 +1,5 @@
 ﻿using Gamify.Sdk.Data;
 using Gamify.Sdk.Data.Entities;
-using MongoDB.Bson;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +8,7 @@ using System.Linq.Expressions;
 namespace Gamify.Sdk.Tests.TestModels
 {
     public class TestRepository<T> : IRepository<T>
-        where T : MongoEntity
+        where T : GameEntity
     {
         private IList<T> entityList;
 
@@ -56,18 +55,6 @@ namespace Gamify.Sdk.Tests.TestModels
         public void Delete(T dataEntity)
         {
             var existingEntity = this.entityList.FirstOrDefault(e => e == dataEntity);
-
-            if (existingEntity == null)
-            {
-                throw new GameDataException("The entity doesn't exist");
-            }
-
-            this.entityList.Remove(existingEntity);
-        }
-
-        public void Delete(ObjectId id)
-        {
-            var existingEntity = this.entityList.FirstOrDefault(e => e.Id == id);
 
             if (existingEntity == null)
             {

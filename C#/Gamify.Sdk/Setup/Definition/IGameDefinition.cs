@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Gamify.Sdk.Setup
+namespace Gamify.Sdk.Setup.Definition
 {
     public interface IGameDefinition
     {
@@ -21,8 +21,6 @@ namespace Gamify.Sdk.Setup
         IEnumerable<IGameComponent> GetCustomComponents();
 
         Type GetSessionHistoryServiceType();
-
-        Type GetGameBuilderType();
     }
 
     public interface IGameDefinition<TMove, UResponse> : IGameDefinition

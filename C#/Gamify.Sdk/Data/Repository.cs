@@ -1,6 +1,5 @@
 ﻿using Gamify.Sdk.Data.Configuration;
 using Gamify.Sdk.Data.Entities;
-using MongoDB.Bson;
 using MongoDB.Driver;
 using MongoDB.Driver.Builders;
 using MongoDB.Driver.Linq;
@@ -11,7 +10,7 @@ using System.Linq.Expressions;
 namespace Gamify.Sdk.Data
 {
     public class Repository<T> : IRepository<T>
-        where T : MongoEntity
+        where T : GameEntity
     {
         private static readonly string idName = "_id";
         private static readonly string collectionName = typeof(T).Name;
@@ -83,12 +82,7 @@ namespace Gamify.Sdk.Data
         ///<exception cref="GameDataException">GameDataException</exception>
         public void Delete(T dataEntity)
         {
-            this.Delete(dataEntity.Id);
-        }
-
-        ///<exception cref="GameDataException">GameDataException</exception>
-        public void Delete(ObjectId id)
-        {
+            var id = dataEntity.Id;
             var collection = this.database.GetCollection<T>(collectionName);
             var removeQuery = Query.EQ(idName, id);
             var deleteResult = collection.Remove(removeQuery);

@@ -3,7 +3,7 @@ using Gamify.Sdk.Contracts.Notifications;
 using Gamify.Sdk.Contracts.Requests;
 using Gamify.Sdk.Data.Entities;
 using Gamify.Sdk.Services;
-using Gamify.Sdk.Setup;
+using Gamify.Sdk.Setup.Definition;
 using Gamify.Sdk.Tests.TestModels;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;

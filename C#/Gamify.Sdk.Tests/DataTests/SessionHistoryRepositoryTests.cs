@@ -81,30 +81,6 @@ namespace Gamify.Sdk.Tests.DataTests
         }
 
         [TestMethod]
-        public void When_DeleteSessionHistoryById_Then_Success()
-        {
-            var sessionName = GetUniqueName("Session");
-            var playerName = GetUniqueName("player");
-            var sessionHistory = new SessionHistory<TestMoveObject, TestResponseObject>(sessionName, playerName);
-
-            sessionHistory.Add(new TestMoveObject { Answer = "Answer 1" }, new TestResponseObject { IsCorrect = false });
-            sessionHistory.Add(new TestMoveObject { Answer = "Answer 2" }, new TestResponseObject { IsCorrect = false });
-            sessionHistory.Add(new TestMoveObject { Answer = "Answer 3" }, new TestResponseObject { IsCorrect = true });
-            sessionHistory.Add(new TestMoveObject { Answer = "Answer 4" }, new TestResponseObject { IsCorrect = false });
-            sessionHistory.Add(new TestMoveObject { Answer = "Answer 5" }, new TestResponseObject { IsCorrect = true });
-
-            this.testRepository.Create(sessionHistory);
-
-            var createdSessionHistory = this.testRepository.Get(h => h.SessionName == sessionName && h.PlayerName == playerName);
-
-            this.testRepository.Delete(createdSessionHistory.Id);
-
-            var deletedSessionHistory = this.testRepository.Get(h => h.SessionName == sessionName && h.PlayerName == playerName);
-
-            Assert.IsNull(deletedSessionHistory);
-        }
-
-        [TestMethod]
         public void When_DeleteAllSessionHistories_Then_Success()
         {
             var session1Name = GetUniqueName("Session");

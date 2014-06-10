@@ -30,15 +30,21 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Autofac">
+      <HintPath>..\packages\Autofac.3.4.1\lib\net40\Autofac.dll</HintPath>
+    </Reference>
     <Reference Include="MongoDB.Bson">
       <HintPath>..\packages\mongocsharpdriver.1.9.1\lib\net35\MongoDB.Bson.dll</HintPath>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
     </Reference>
     <Reference Include="MongoDB.Driver">
       <HintPath>..\packages\mongocsharpdriver.1.9.1\lib\net35\MongoDB.Driver.dll</HintPath>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Newtonsoft.Json.6.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
@@ -99,12 +105,11 @@
     <Compile Include="Data\Entities\DataEntity.cs" />
     <Compile Include="Data\Entities\GamePlayer.cs" />
     <Compile Include="Data\Entities\GameSession.cs" />
-    <Compile Include="Data\Entities\MongoEntity.cs" />
+    <Compile Include="Data\Entities\GameEntity.cs" />
     <Compile Include="Data\Entities\SessionHistory.cs" />
     <Compile Include="Data\GameDataException.cs" />
     <Compile Include="Data\IRepository.cs" />
     <Compile Include="Data\Repository.cs" />
-    <Compile Include="Extensions.cs" />
     <Compile Include="GameNotificationEventArgs.cs" />
     <Compile Include="IGameMove.cs" />
     <Compile Include="IGameMoveResponse.cs" />
@@ -128,19 +133,25 @@
     <Compile Include="Services\SessionHistoryService.cs" />
     <Compile Include="Services\SessionService.cs" />
     <Compile Include="SessionGamePlayer.cs" />
+    <Compile Include="Setup\Dependencies\GameDependencyModule.cs" />
+    <Compile Include="Setup\Dependencies\GameDependencyModuleBuilder.cs" />
     <Compile Include="Setup\GameBuilder.cs" />
-    <Compile Include="Setup\GameDefinition.cs" />
+    <Compile Include="Setup\Definition\GameDefinition.cs" />
+    <Compile Include="Setup\GameInitializer.cs" />
     <Compile Include="Setup\IGameBuilder.cs" />
-    <Compile Include="Setup\IGameInformationNotificationFactory.cs" />
-    <Compile Include="Setup\IMoveHandler.cs" />
-    <Compile Include="Setup\IMoveResultNotificationFactory.cs" />
-    <Compile Include="Setup\IPlayerHistoryItemFactory.cs" />
-    <Compile Include="Setup\ISessionPlayerFactory.cs" />
-    <Compile Include="Setup\IGameDefinition.cs" />
-    <Compile Include="Setup\IGameInviteDecorator.cs" />
-    <Compile Include="Setup\IPlayerSetup.cs" />
-    <Compile Include="Setup\NullGameInviteDecorator.cs" />
-    <Compile Include="Setup\NullSessionPlayerSetup.cs" />
+    <Compile Include="Setup\Dependencies\IGameDependencyModule.cs" />
+    <Compile Include="Setup\Dependencies\IGameDependencyModuleBuilder.cs" />
+    <Compile Include="Setup\Definition\IGameInformationNotificationFactory.cs" />
+    <Compile Include="Setup\IGameInitializer.cs" />
+    <Compile Include="Setup\Definition\IMoveHandler.cs" />
+    <Compile Include="Setup\Definition\IMoveResultNotificationFactory.cs" />
+    <Compile Include="Setup\Definition\IPlayerHistoryItemFactory.cs" />
+    <Compile Include="Setup\Definition\ISessionPlayerFactory.cs" />
+    <Compile Include="Setup\Definition\IGameDefinition.cs" />
+    <Compile Include="Setup\Definition\IGameInviteDecorator.cs" />
+    <Compile Include="Setup\Definition\ISessionPlayerSetup.cs" />
+    <Compile Include="Setup\Definition\NullGameInviteDecorator.cs" />
+    <Compile Include="Setup\Definition\NullSessionPlayerSetup.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

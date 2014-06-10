@@ -2,7 +2,7 @@
 
 namespace Gamify.Sdk.Data.Entities
 {
-    public class GameSession : MongoEntity, IGameSession
+    public class GameSession : GameEntity, IGameSession
     {
         public SessionState State { get; set; }
 

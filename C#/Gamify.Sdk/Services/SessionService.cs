@@ -1,6 +1,6 @@
 ﻿using Gamify.Sdk.Data;
 using Gamify.Sdk.Data.Entities;
-using Gamify.Sdk.Setup;
+using Gamify.Sdk.Setup.Definition;
 using System;
 using System.Collections.Generic;
 

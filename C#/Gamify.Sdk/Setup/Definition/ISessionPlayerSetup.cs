@@ -1,6 +1,6 @@
 ﻿using Gamify.Sdk.Contracts.Requests;
 
-namespace Gamify.Sdk.Setup
+namespace Gamify.Sdk.Setup.Definition
 {
     public interface ISessionPlayerSetup
     {

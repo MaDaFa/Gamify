@@ -1,14 +1,15 @@
-﻿using Gamify.Sdk;
-using Gamify.Sdk.Data;
+﻿using Gamify.Sdk.Data;
 using Gamify.Sdk.Data.Configuration;
 using Gamify.Sdk.Data.Entities;
 using Gamify.Sdk.Services;
 using Gamify.Sdk.Setup;
+using Gamify.Sdk.Setup.Definition;
+using Gamify.Sdk.Setup.Dependencies;
 using Gamify.Sdk.Tests.TestModels;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 
-namespace Gamify.WebServer.Tests
+namespace Gamify.Sdk.Tests.SetupTests
 {
     [TestClass]
     public class GameDependencyModuleTests
@@ -29,9 +30,11 @@ namespace Gamify.WebServer.Tests
                 .Returns(testSessionPlayerFactory)
                 .Verifiable();
 
-            var gameDependencyModule = new GameDependencyModule(gameDefinitionMock.Object);
+            var gameDependencyModuleBuilder = new GameDependencyModuleBuilder(gameDefinitionMock.Object);
 
-            gameDependencyModule.Setup();
+            gameDependencyModuleBuilder.SetDefaults();
+            
+            var gameDependencyModule = gameDependencyModuleBuilder.Build();
 
             var gameConfiguration = gameDependencyModule.Get<IGameDataSection>();
             var gamePlayerRepository = gameDependencyModule.Get<IRepository<GamePlayer>>();
@@ -46,7 +49,6 @@ namespace Gamify.WebServer.Tests
             var sessionService = gameDependencyModule.Get<ISessionService>();
             var moveService = gameDependencyModule.Get<IMoveService>();
             var gameBuilder = gameDependencyModule.Get<IGameBuilder>();
-            var typedGameBuilder = gameDependencyModule.Get<IGameBuilder<TestMoveObject, TestResponseObject>>();
 
             gameDefinitionMock.VerifyAll();
 
@@ -65,7 +67,6 @@ namespace Gamify.WebServer.Tests
             Assert.IsNotNull(sessionService);
             Assert.IsNotNull(moveService);
             Assert.IsNotNull(gameBuilder);
-            Assert.IsNotNull(typedGameBuilder);
         }
     }
 }

@@ -79,28 +79,6 @@ namespace Gamify.Sdk.Tests.DataTests
         }
 
         [TestMethod]
-        public void When_DeleteTestEntityById_Then_Success()
-        {
-            var testEntityName = GetUniqueName("test");
-            var testEntity = new TestMongoEntity
-            {
-                Name = testEntityName,
-                DisplayName = GetUniqueName("Test"),
-                IsValid = true
-            };
-
-            this.testRepository.Create(testEntity);
-
-            var createdTestEntity = this.testRepository.Get(e => e.Name == testEntityName);
-
-            this.testRepository.Delete(createdTestEntity.Id);
-
-            var deletedTestEntity = this.testRepository.Get(e => e.Name == testEntityName);
-
-            Assert.IsNull(deletedTestEntity);
-        }
-
-        [TestMethod]
         public void When_DeleteAllTestEntities_Then_Success()
         {
             var testEntityName1 = GetUniqueName("test");

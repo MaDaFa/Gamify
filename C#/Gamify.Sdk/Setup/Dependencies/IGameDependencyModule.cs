@@ -1,11 +1,9 @@
 ﻿using System;
 
-namespace Gamify.WebServer
+namespace Gamify.Sdk.Setup.Dependencies
 {
     public interface IGameDependencyModule : IDisposable
     {
-        void Setup();
-
         object Get(Type objectType);
 
         T Get<T>();

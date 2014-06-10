@@ -1,7 +1,7 @@
 ﻿using Gamify.Sdk.Contracts.Requests;
 using Gamify.Sdk.Services;
 
-namespace Gamify.Sdk.Setup
+namespace Gamify.Sdk.Setup.Definition
 {
     public interface IMoveHandler
     {

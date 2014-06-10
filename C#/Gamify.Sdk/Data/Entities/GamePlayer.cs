@@ -2,7 +2,7 @@
 
 namespace Gamify.Sdk.Data.Entities
 {
-    public class GamePlayer : MongoEntity, IGamePlayer
+    public class GamePlayer : GameEntity, IGamePlayer
     {
         public string Name { get; set; }
 

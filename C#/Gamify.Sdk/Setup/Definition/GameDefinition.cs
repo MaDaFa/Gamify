@@ -3,7 +3,7 @@ using Gamify.Sdk.Services;
 using System;
 using System.Collections.Generic;
 
-namespace Gamify.Sdk.Setup
+namespace Gamify.Sdk.Setup.Definition
 {
     public abstract class GameDefinition<TMove, UResponse> : IGameDefinition<TMove, UResponse>
     {
@@ -37,12 +37,7 @@ namespace Gamify.Sdk.Setup
 
         public Type GetSessionHistoryServiceType()
         {
-            return typeof(ISessionHistoryService<TMove, UResponse>);
-        }
-
-        public Type GetGameBuilderType()
-        {
-            return typeof(IGameBuilder<TMove, UResponse>);
+            return typeof(SessionHistoryService<TMove, UResponse>);
         }
     }
 }
