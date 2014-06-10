@@ -35,9 +35,6 @@ namespace Gamify.Sdk.Tests.ServiceTests
             var connectComponentMock = new Mock<IGameComponent>();
 
             connectComponentMock
-                .Setup(c => c.NotificationService)
-                .Returns(Mock.Of<INotificationService>());
-            connectComponentMock
                 .Setup(c => c.CanHandleRequest(It.Is<GameRequest>(r => r.Type == (int)GameRequestType.PlayerConnect)))
                 .Returns(true);
             connectComponentMock
@@ -69,9 +66,6 @@ namespace Gamify.Sdk.Tests.ServiceTests
             var testComponentMock = new Mock<IGameComponent>();
 
             testComponentMock
-                .Setup(c => c.NotificationService)
-                .Returns(Mock.Of<INotificationService>());
-            testComponentMock
                 .Setup(c => c.CanHandleRequest(It.Is<GameRequest>(r => r.Type == testRequestType)))
                 .Returns(true);
             testComponentMock
@@ -97,9 +91,6 @@ namespace Gamify.Sdk.Tests.ServiceTests
             };
             var disconnectComponentMock = new Mock<IGameComponent>();
 
-            disconnectComponentMock
-                .Setup(c => c.NotificationService)
-                .Returns(Mock.Of<INotificationService>());
             disconnectComponentMock
                 .Setup(c => c.CanHandleRequest(It.Is<GameRequest>(r => r.Type == (int)GameRequestType.PlayerDisconnect)))
                 .Returns(true);

@@ -1,5 +1,6 @@
-﻿using Gamify.Sdk.Contracts.Requests;
-using Gamify.Sdk.Services;
+﻿using Gamify.Sdk.Contracts.Notifications;
+using Gamify.Sdk.Contracts.Requests;
+using System;
 
 namespace Gamify.Sdk.Components
 {
@@ -10,9 +11,11 @@ namespace Gamify.Sdk.Components
 
     public interface IGameComponent : IGameComponentInformation
     {
-        INotificationService NotificationService { get; }
+        event EventHandler<GameNotificationEventArgs> Notification;
 
         bool CanHandleRequest(GameRequest request);
+
+        bool CanHandleNotification(GameNotification notification);
 
         void HandleRequest(GameRequest request);
     }

@@ -22,6 +22,11 @@ namespace Gamify.Sdk.Components
             return request.Type == (int)GameRequestType.GetConnectedPlayers;
         }
 
+        public override bool CanHandleNotification(GameNotification notification)
+        {
+            return notification.Type == (int)GameNotificationType.SendConnectedPlayers;
+        }
+
         public override void HandleRequest(GameRequest request)
         {
             var getConnectedPlayersObject = this.serializer.Deserialize<GetConnectedPlayersRequestObject>(request.SerializedRequestObject);
@@ -35,7 +40,7 @@ namespace Gamify.Sdk.Components
                 ConectedPlayersCount = sortedPlayers.Count()
             };
 
-            this.NotificationService.Send(GameNotificationType.SendConnectedPlayers, notification, getConnectedPlayersObject.PlayerName);
+            this.notificationService.Send(GameNotificationType.SendConnectedPlayers, notification, getConnectedPlayersObject.PlayerName);
         }
     }
 }

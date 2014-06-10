@@ -25,13 +25,18 @@ namespace Gamify.Sdk.Components
             return request.Type == (int)GameRequestType.OpenGame;
         }
 
+        public override bool CanHandleNotification(GameNotification notification)
+        {
+            return notification.Type == (int)GameNotificationType.SendGameInformation;
+        }
+
         public override void HandleRequest(GameRequest request)
         {
             var openGameObject = this.serializer.Deserialize<OpenGameRequestObject>(request.SerializedRequestObject);
             var currentSession = this.sessionService.GetByName(openGameObject.SessionName);
             var gameInformationNotificationObject = this.gameInformationNotificationFactory.Create(currentSession);
 
-            this.NotificationService.Send(GameNotificationType.SendGameInformation, gameInformationNotificationObject, openGameObject.PlayerName);
+            this.notificationService.Send(GameNotificationType.SendGameInformation, gameInformationNotificationObject, openGameObject.PlayerName);
         }
     }
 }

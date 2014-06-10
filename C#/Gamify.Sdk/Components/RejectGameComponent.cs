@@ -22,6 +22,11 @@ namespace Gamify.Sdk.Components
             return request.Type == (int)GameRequestType.GameRejected;
         }
 
+        public override bool CanHandleNotification(GameNotification notification)
+        {
+            return notification.Type == (int)GameNotificationType.GameRejected;
+        }
+
         public override void HandleRequest(GameRequest request)
         {
             var gameRejectedObject = this.serializer.Deserialize<GameRejectedRequestObject>(request.SerializedRequestObject);
@@ -33,7 +38,7 @@ namespace Gamify.Sdk.Components
                 Player2Name = newSession.Player2Name
             };
 
-            this.NotificationService.Send(GameNotificationType.GameRejected, notification, newSession.Player1Name);
+            this.notificationService.Send(GameNotificationType.GameRejected, notification, newSession.Player1Name);
         }
     }
 }

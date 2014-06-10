@@ -22,6 +22,11 @@ namespace Gamify.Sdk.Components
             return request.Type == (int)GameRequestType.AbandonGame;
         }
 
+        public override bool CanHandleNotification(GameNotification notification)
+        {
+            return notification.Type == (int)GameNotificationType.GameAbandoned;
+        }
+
         public override void HandleRequest(GameRequest request)
         {
             var abandonGameObject = this.serializer.Deserialize<AbandonGameRequestObject>(request.SerializedRequestObject);
@@ -40,7 +45,7 @@ namespace Gamify.Sdk.Components
                 PlayerName = abandonGameObject.PlayerName
             };
 
-            this.NotificationService.SendBroadcast(GameNotificationType.GameAbandoned, notification, currentSession.Player1Name, currentSession.Player2Name);
+            this.notificationService.SendBroadcast(GameNotificationType.GameAbandoned, notification, currentSession.Player1Name, currentSession.Player2Name);
         }
     }
 }

@@ -22,6 +22,11 @@ namespace Gamify.Sdk.Components
             return request.Type == (int)GameRequestType.GetActiveGames;
         }
 
+        public override bool CanHandleNotification(GameNotification notification)
+        {
+            return notification.Type == (int)GameNotificationType.SendActiveGames;
+        }
+
         public override void HandleRequest(GameRequest request)
         {
             var getActiveGamesObject = this.serializer.Deserialize<GetActiveGamesRequestObject>(request.SerializedRequestObject);
@@ -41,7 +46,7 @@ namespace Gamify.Sdk.Components
                 });
             }
 
-            this.NotificationService.Send(GameNotificationType.SendActiveGames, notification, getActiveGamesObject.PlayerName);
+            this.notificationService.Send(GameNotificationType.SendActiveGames, notification, getActiveGamesObject.PlayerName);
         }
     }
 }

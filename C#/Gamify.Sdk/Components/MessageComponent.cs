@@ -19,6 +19,11 @@ namespace Gamify.Sdk.Components
             return request.Type == (int)GameRequestType.Message || request.Type == (int)GameRequestType.TypingMessage;
         }
 
+        public override bool CanHandleNotification(GameNotification notification)
+        {
+            return notification.Type == (int)GameNotificationType.Message || notification.Type == (int)GameNotificationType.TypingMessage;
+        }
+
         public override void HandleRequest(GameRequest request)
         {
             if (request.Type == (int)GameRequestType.Message)
@@ -30,7 +35,7 @@ namespace Gamify.Sdk.Components
                     Message = messageObject.Message
                 };
 
-                this.NotificationService.Send(GameNotificationType.Message, notification, messageObject.ToPlayerName);
+                this.notificationService.Send(GameNotificationType.Message, notification, messageObject.ToPlayerName);
             }
             else
             {
@@ -41,7 +46,7 @@ namespace Gamify.Sdk.Components
                     Message = typingMessageObject.TypingMessage
                 };
 
-                this.NotificationService.Send(GameNotificationType.TypingMessage, notification, typingMessageObject.ToPlayerName);
+                this.notificationService.Send(GameNotificationType.TypingMessage, notification, typingMessageObject.ToPlayerName);
             }
         }
     }

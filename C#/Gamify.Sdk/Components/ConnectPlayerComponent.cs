@@ -22,6 +22,11 @@ namespace Gamify.Sdk.Components
             return request.Type == (int)GameRequestType.PlayerConnect;
         }
 
+        public override bool CanHandleNotification(GameNotification notification)
+        {
+            return notification.Type == (int)GameNotificationType.PlayerConnected;
+        }
+
         public override void HandleRequest(GameRequest request)
         {
             var playerConnectObject = this.serializer.Deserialize<PlayerConnectRequestObject>(request.SerializedRequestObject);
@@ -35,7 +40,7 @@ namespace Gamify.Sdk.Components
             var playersToNotify = this.playerService.GetAllConnected(playerNameToExclude: playerConnectObject.PlayerName)
                 .Select(p => p.Name);
 
-            this.NotificationService.SendBroadcast(GameNotificationType.PlayerConnected, notification, playersToNotify.ToArray());
+            this.notificationService.SendBroadcast(GameNotificationType.PlayerConnected, notification, playersToNotify.ToArray());
         }
     }
 }

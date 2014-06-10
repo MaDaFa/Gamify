@@ -48,12 +48,12 @@ namespace Gamify.Sdk.Tests.SetupTests
             var testGameDefinitionMock = new Mock<GameDefinition<TestMoveObject, TestResponseObject>>();
             var customComponents = new List<IGameComponent>();
 
-            customComponents.Add(Mock.Of<IGameComponent>(c => c.NotificationService == notificationServiceMock));
-            customComponents.Add(Mock.Of<IGameComponent>(c => c.NotificationService == notificationServiceMock));
-            customComponents.Add(Mock.Of<IGameComponent>(c => c.NotificationService == notificationServiceMock));
-            customComponents.Add(Mock.Of<IGameComponent>(c => c.NotificationService == notificationServiceMock));
-            customComponents.Add(Mock.Of<IGameComponent>(c => c.NotificationService == notificationServiceMock));
-            customComponents.Add(Mock.Of<IGameComponent>(c => c.NotificationService == notificationServiceMock));
+            customComponents.Add(Mock.Of<IGameComponent>());
+            customComponents.Add(Mock.Of<IGameComponent>());
+            customComponents.Add(Mock.Of<IGameComponent>());
+            customComponents.Add(Mock.Of<IGameComponent>());
+            customComponents.Add(Mock.Of<IGameComponent>());
+            customComponents.Add(Mock.Of<IGameComponent>());
 
             testGameDefinitionMock
                 .Setup(d => d.GetCustomComponents())

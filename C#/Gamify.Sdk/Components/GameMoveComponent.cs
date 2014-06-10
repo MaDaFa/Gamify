@@ -29,6 +29,13 @@ namespace Gamify.Sdk.Components
             return request.Type == (int)GameRequestType.GameMove;
         }
 
+        public override bool CanHandleNotification(GameNotification notification)
+        {
+            return notification.Type == (int)GameNotificationType.GameMove ||
+                notification.Type == (int)GameNotificationType.GameMoveResult ||
+                notification.Type == (int)GameNotificationType.GameFinished;
+        }
+
         public override void HandleRequest(GameRequest request)
         {
             var moveRequestObject = this.serializer.Deserialize<MoveRequestObject>(request.SerializedRequestObject);
@@ -46,7 +53,7 @@ namespace Gamify.Sdk.Components
                     LooserPlayerName = destinationPlayer.Information.Name
                 };
 
-                this.NotificationService.SendBroadcast(GameNotificationType.GameFinished, gameFinishedNotificationObject, gameFinishedNotificationObject.WinnerPlayerName, gameFinishedNotificationObject.LooserPlayerName);
+                this.notificationService.SendBroadcast(GameNotificationType.GameFinished, gameFinishedNotificationObject, gameFinishedNotificationObject.WinnerPlayerName, gameFinishedNotificationObject.LooserPlayerName);
 
                 return;
             }
@@ -69,14 +76,14 @@ namespace Gamify.Sdk.Components
                 MoveInformation = moveRequestObject.MoveInformation
             };
 
-            this.NotificationService.Send(GameNotificationType.GameMove, gameMoveNotificationObject, destinationPlayerName);
+            this.notificationService.Send(GameNotificationType.GameMove, gameMoveNotificationObject, destinationPlayerName);
         }
 
         private void SendMoveResultNotification(MoveRequestObject moveRequestObject, IGameMoveResponse moveResponse, string destinationPlayerName)
         {
             var gameMoveResultNotificationObject = this.moveResultNotificationFactory.Create(moveRequestObject, moveResponse);
 
-            this.NotificationService.Send(GameNotificationType.GameMoveResult, gameMoveResultNotificationObject, moveRequestObject.PlayerName);
+            this.notificationService.Send(GameNotificationType.GameMoveResult, gameMoveResultNotificationObject, moveRequestObject.PlayerName);
         }
     }
 }

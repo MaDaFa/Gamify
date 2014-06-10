@@ -35,6 +35,11 @@ namespace Gamify.Sdk.Components
             return request.Type == (int)GameRequestType.CreateGame;
         }
 
+        public override bool CanHandleNotification(GameNotification notification)
+        {
+            return notification.Type == (int)GameNotificationType.GameCreated;
+        }
+
         public override void HandleRequest(GameRequest request)
         {
             var createGameObject = this.serializer.Deserialize<CreateGameRequestObject>(request.SerializedRequestObject);
@@ -60,7 +65,7 @@ namespace Gamify.Sdk.Components
 
             this.gameInviteDecorator.Decorate(gameInviteNotificationObject, newSession);
 
-            this.NotificationService.Send(GameNotificationType.GameInvite, gameInviteNotificationObject, newSession.Player2Name);
+            this.notificationService.Send(GameNotificationType.GameInvite, gameInviteNotificationObject, newSession.Player2Name);
         }
     }
 }

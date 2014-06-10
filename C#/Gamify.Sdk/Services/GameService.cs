@@ -26,13 +26,13 @@ namespace Gamify.Sdk.Services
 
         public void RegisterComponent(IGameComponent component)
         {
-            component.NotificationService.Notification += (sender, args) =>
+            component.Notification += (sender, e) =>
             {
-                var sendMessageHandler = this.Notification;
+                var notificationHandler = this.Notification;
 
-                if (sendMessageHandler != null)
+                if (notificationHandler != null)
                 {
-                    sendMessageHandler(this, args);
+                    notificationHandler(this, e);
                 }
             };
 
