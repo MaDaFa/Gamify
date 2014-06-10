@@ -27,6 +27,8 @@ namespace Gamify.Sdk.Components
         {
             var playerDisconnectObject = this.serializer.Deserialize<PlayerDisconnectRequestObject>(request.SerializedRequestObject);
 
+            this.playerService.Disconnect(playerDisconnectObject.PlayerName);
+
             this.SendPlayerDisconnectedNotification(playerDisconnectObject.PlayerName);
         }
 
@@ -36,7 +38,7 @@ namespace Gamify.Sdk.Components
             {
                 PlayerName = userName
             };
-            var players = this.playerService.GetAll(playerNameToExclude: userName)
+            var players = this.playerService.GetAllConnected(playerNameToExclude: userName)
                 .Select(p => p.Name);
 
             this.NotificationService.SendBroadcast(GameNotificationType.PlayerDisconnected, notification, players.ToArray());

@@ -26,16 +26,13 @@ namespace Gamify.Sdk.Components
         {
             var playerConnectObject = this.serializer.Deserialize<PlayerConnectRequestObject>(request.SerializedRequestObject);
 
-            if (!this.playerService.Exist(playerConnectObject.PlayerName))
-            {
-                this.playerService.Create(playerConnectObject.PlayerName, playerConnectObject.PlayerName);
-            }
+            this.playerService.Connect(playerConnectObject.PlayerName);
 
             var notification = new PlayerConnectedNotificationObject
             {
                 PlayerName = playerConnectObject.PlayerName
             };
-            var playersToNotify = this.playerService.GetAll(playerNameToExclude: playerConnectObject.PlayerName)
+            var playersToNotify = this.playerService.GetAllConnected(playerNameToExclude: playerConnectObject.PlayerName)
                 .Select(p => p.Name);
 
             this.NotificationService.SendBroadcast(GameNotificationType.PlayerConnected, notification, playersToNotify.ToArray());

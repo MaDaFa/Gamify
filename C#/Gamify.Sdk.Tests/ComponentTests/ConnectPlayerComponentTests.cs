@@ -41,7 +41,7 @@ namespace Gamify.Sdk.Tests.ComponentTests
             this.playerServiceMock = new Mock<IPlayerService>();
 
             this.playerServiceMock
-                .Setup(s => s.GetAll(It.Is<string>(x => x == this.requestPlayer)))
+                .Setup(s => s.GetAllConnected(It.Is<string>(x => x == this.requestPlayer)))
                 .Returns(new List<IGamePlayer> { this.player2 })
                 .Verifiable();
 
@@ -51,7 +51,7 @@ namespace Gamify.Sdk.Tests.ComponentTests
         }
 
         [TestMethod]
-        public void When_HandleConnectNewPlayer_Then_Success()
+        public void When_HandleConnectPlayer_Then_Success()
         {
             var connectPlayerRequest = new PlayerConnectRequestObject
             {
@@ -65,42 +65,7 @@ namespace Gamify.Sdk.Tests.ComponentTests
             };
 
             this.playerServiceMock
-                .Setup(s => s.Exist(It.Is<string>(x => x == this.requestPlayer)))
-                .Returns(false)
-                .Verifiable();
-            this.playerServiceMock
-                .Setup(s => s.Create(It.Is<string>(x => x == this.requestPlayer), It.Is<string>(x => x == this.requestPlayer)))
-                .Verifiable();
-
-            var canHandle = this.connectPlayerComponent.CanHandleRequest(gameRequest);
-
-            this.connectPlayerComponent.HandleRequest(gameRequest);
-
-            this.playerServiceMock.VerifyAll();
-            this.notificationServiceMock.Verify(s => s.SendBroadcast(It.Is<GameNotificationType>(t => t == GameNotificationType.PlayerConnected),
-                    It.Is<object>(o => ((PlayerConnectedNotificationObject)o).PlayerName == this.requestPlayer),
-                    It.Is<string>(x => x == this.player2.Name)));
-
-            Assert.IsTrue(canHandle);
-        }
-
-        [TestMethod]
-        public void When_HandleConnectExistingPlayer_Then_Success()
-        {
-            var connectPlayerRequest = new PlayerConnectRequestObject
-            {
-                PlayerName = this.requestPlayer,
-                AccessToken = Guid.NewGuid().ToString()
-            };
-            var gameRequest = new GameRequest
-            {
-                Type = (int)GameRequestType.PlayerConnect,
-                SerializedRequestObject = this.serializer.Serialize(connectPlayerRequest)
-            };
-
-            this.playerServiceMock
-                .Setup(s => s.Exist(It.Is<string>(x => x == this.requestPlayer)))
-                .Returns(true)
+                .Setup(s => s.Connect(It.Is<string>(x => x == this.requestPlayer), It.IsAny<string>()))
                 .Verifiable();
 
             var canHandle = this.connectPlayerComponent.CanHandleRequest(gameRequest);

@@ -40,7 +40,7 @@ namespace Gamify.Sdk.Tests.ComponentTests
             this.playerServiceMock = new Mock<IPlayerService>();
 
             this.playerServiceMock
-                .Setup(s => s.GetAll(It.Is<string>(x => x == this.requestPlayer)))
+                .Setup(s => s.GetAllConnected(It.Is<string>(x => x == this.requestPlayer)))
                 .Returns(new List<IGamePlayer> { this.player1 })
                 .Verifiable();
 

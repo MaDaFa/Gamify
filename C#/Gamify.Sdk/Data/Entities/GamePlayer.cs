@@ -8,6 +8,8 @@ namespace Gamify.Sdk.Data.Entities
 
         public string DisplayName { get; set; }
 
+        public bool IsConnected { get; set; }
+
         public GamePlayer(string userName)
         {
             this.Name = userName;

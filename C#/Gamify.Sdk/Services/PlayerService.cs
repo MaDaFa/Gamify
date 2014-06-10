@@ -20,6 +20,11 @@ namespace Gamify.Sdk.Services
             return this.playerRepository.GetAll(p => p.Name != playerNameToExclude);
         }
 
+        public IEnumerable<IGamePlayer> GetAllConnected(string playerNameToExclude = null)
+        {
+            return this.playerRepository.GetAll(p => p.IsConnected && p.Name != playerNameToExclude);
+        }
+
         public IGamePlayer GetByName(string playerName)
         {
             return this.playerRepository.Get(p => p.Name == playerName);
@@ -37,22 +42,43 @@ namespace Gamify.Sdk.Services
             return this.playerRepository.Exist(p => p.Name == playerName);
         }
 
-        public void Create(string userName, string name)
+        public void Connect(string playerName, string name = null)
         {
-            if (this.playerRepository.Exist(p => p.Name == userName))
+            var existingPlayer = this.playerRepository.Get(p => p.Name == playerName);
+
+            if (existingPlayer == null)
             {
-                var errorMessage = string.Format("The player {0} cannot be created because it's already registered", userName);
+                var newPlayer = new GamePlayer
+                {
+                    Name = playerName,
+                    DisplayName = name ?? playerName,
+                    IsConnected = true
+                };
+
+                this.playerRepository.Create(newPlayer);
+            }
+            else
+            {
+                existingPlayer.IsConnected = true;
+
+                this.playerRepository.Update(existingPlayer);
+            }
+        }
+
+        public void Disconnect(string playerName)
+        {
+            var existingPlayer = this.playerRepository.Get(p => p.Name == playerName);
+
+            if (existingPlayer == null)
+            {
+                var errorMessage = string.Format("The player to disconnect, {0}, does not exist", playerName);
 
                 throw new GameDataException(errorMessage);
             }
 
-            var newPlayer = new GamePlayer
-            {
-                Name = userName,
-                DisplayName = name
-            };
+            existingPlayer.IsConnected = false;
 
-            this.playerRepository.Create(newPlayer);
+            this.playerRepository.Update(existingPlayer);
         }
     }
 }

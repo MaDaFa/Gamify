@@ -25,7 +25,7 @@ namespace Gamify.Sdk.Components
         public override void HandleRequest(GameRequest request)
         {
             var getConnectedPlayersObject = this.serializer.Deserialize<GetConnectedPlayersRequestObject>(request.SerializedRequestObject);
-            var sortedPlayers = this.playerService.GetAll(playerNameToExclude: getConnectedPlayersObject.PlayerName)
+            var sortedPlayers = this.playerService.GetAllConnected(playerNameToExclude: getConnectedPlayersObject.PlayerName)
                 .OrderBy(p => p.Name);
             var sortedPlayersPage = sortedPlayers.Take(getConnectedPlayersObject.PageSize);
             var notification = new SendConnectedPlayersNotificationObject
