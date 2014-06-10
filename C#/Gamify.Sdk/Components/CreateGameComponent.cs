@@ -37,7 +37,7 @@ namespace Gamify.Sdk.Components
 
         public override bool CanHandleNotification(GameNotification notification)
         {
-            return notification.Type == (int)GameNotificationType.GameCreated;
+            return notification.Type == (int)GameNotificationType.GameInvite;
         }
 
         public override void HandleRequest(GameRequest request)
