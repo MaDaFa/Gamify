@@ -1,0 +1,167 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{2AD62B4B-9D86-4CDD-ABB5-02C1D905EE91}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Gamify.Sdk</RootNamespace>
+    <AssemblyName>Gamify.Sdk</AssemblyName>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Autofac">
+      <HintPath>..\packages\Autofac.3.4.1\lib\net40\Autofac.dll</HintPath>
+    </Reference>
+    <Reference Include="MongoDB.Bson">
+      <HintPath>..\packages\mongocsharpdriver.1.9.1\lib\net35\MongoDB.Bson.dll</HintPath>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="MongoDB.Driver">
+      <HintPath>..\packages\mongocsharpdriver.1.9.1\lib\net35\MongoDB.Driver.dll</HintPath>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.6.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Components\AbandonGameComponent.cs" />
+    <Compile Include="Components\AcceptGameComponent.cs" />
+    <Compile Include="Components\ActiveGamesComponent.cs" />
+    <Compile Include="Components\ConnectedPlayersComponent.cs" />
+    <Compile Include="Components\ConnectPlayerComponent.cs" />
+    <Compile Include="Components\CreateGameComponent.cs" />
+    <Compile Include="Components\DisconnectPlayerComponent.cs" />
+    <Compile Include="Components\GameComponent.cs" />
+    <Compile Include="Components\GameMoveComponent.cs" />
+    <Compile Include="Components\IGameComponent.cs" />
+    <Compile Include="Components\MessageComponent.cs" />
+    <Compile Include="Components\OpenGameComponent.cs" />
+    <Compile Include="Components\RejectGameComponent.cs" />
+    <Compile Include="Contracts\Notifications\ErrorNotificationObject.cs" />
+    <Compile Include="Contracts\Notifications\GameAbandonedNotificationObject.cs" />
+    <Compile Include="Contracts\Notifications\GameCreatedNotificationObject.cs" />
+    <Compile Include="Contracts\Notifications\GameFinishedNotificationObject.cs" />
+    <Compile Include="Contracts\Notifications\GameInformationNotificationObject.cs" />
+    <Compile Include="Contracts\Notifications\GameInviteNotificationObject.cs" />
+    <Compile Include="Contracts\Notifications\GameNotification.cs" />
+    <Compile Include="Contracts\Notifications\GameRejectedNotificationObject.cs" />
+    <Compile Include="Contracts\Notifications\INotificationObject.cs" />
+    <Compile Include="Contracts\Notifications\MessageNotificationObject.cs" />
+    <Compile Include="Contracts\Notifications\MoveNotificationObject.cs" />
+    <Compile Include="Contracts\Notifications\IMoveResultNotificationObject.cs" />
+    <Compile Include="Contracts\Notifications\PlayerConnectedNotificationObject.cs" />
+    <Compile Include="Contracts\Notifications\PlayerDisconnectedNotificationObject.cs" />
+    <Compile Include="Contracts\Notifications\SendActiveGamesNotificationObject.cs" />
+    <Compile Include="Contracts\Notifications\SendConnectedPlayersNotificationObject.cs" />
+    <Compile Include="Contracts\Notifications\TypingMessageNotificationObject.cs" />
+    <Compile Include="Contracts\Requests\AbandonGameRequestObject.cs" />
+    <Compile Include="Contracts\Requests\CreateGameRequestObject.cs" />
+    <Compile Include="Contracts\Requests\GameAcceptedRequestObject.cs" />
+    <Compile Include="Contracts\Requests\GameRejectedRequestObject.cs" />
+    <Compile Include="Contracts\Requests\GameRequest.cs" />
+    <Compile Include="Contracts\Requests\GetActiveGamesRequestObject.cs" />
+    <Compile Include="Contracts\Requests\GetConnectedPlayersRequestObject.cs" />
+    <Compile Include="Contracts\Requests\IRequestObject.cs" />
+    <Compile Include="Contracts\Requests\MessageRequestObject.cs" />
+    <Compile Include="Contracts\Requests\MoveRequestObject.cs" />
+    <Compile Include="Contracts\Requests\OpenGameRequestObject.cs" />
+    <Compile Include="Contracts\Requests\PlayerConnectRequestObject.cs" />
+    <Compile Include="Contracts\Requests\PlayerDisconnectRequestObject.cs" />
+    <Compile Include="Contracts\Requests\TypingMessageRequestObject.cs" />
+    <Compile Include="Data\Configuration\GameDataSection.cs" />
+    <Compile Include="Data\Configuration\IGameDataSection.cs" />
+    <Compile Include="Data\Entities\DataEntity.cs" />
+    <Compile Include="Data\Entities\GamePlayer.cs" />
+    <Compile Include="Data\Entities\GameSession.cs" />
+    <Compile Include="Data\Entities\GameEntity.cs" />
+    <Compile Include="Data\Entities\SessionHistory.cs" />
+    <Compile Include="Data\GameDataException.cs" />
+    <Compile Include="Data\IRepository.cs" />
+    <Compile Include="Data\Repository.cs" />
+    <Compile Include="GameNotificationEventArgs.cs" />
+    <Compile Include="IGameMove.cs" />
+    <Compile Include="IGameMoveResponse.cs" />
+    <Compile Include="IGamePlayer.cs" />
+    <Compile Include="IGameSession.cs" />
+    <Compile Include="ISerializer.cs" />
+    <Compile Include="ISessionGamePlayer.cs" />
+    <Compile Include="ISessionHistory.cs" />
+    <Compile Include="JsonSerializer.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\GameService.cs" />
+    <Compile Include="Services\IGameService.cs" />
+    <Compile Include="Services\IMoveService.cs" />
+    <Compile Include="Services\INotificationService.cs" />
+    <Compile Include="Services\IPlayerService.cs" />
+    <Compile Include="Services\ISessionHistoryService.cs" />
+    <Compile Include="Services\ISessionService.cs" />
+    <Compile Include="Services\MoveService.cs" />
+    <Compile Include="Services\NotificationService.cs" />
+    <Compile Include="Services\PlayerService.cs" />
+    <Compile Include="Services\SessionHistoryService.cs" />
+    <Compile Include="Services\SessionService.cs" />
+    <Compile Include="SessionGamePlayer.cs" />
+    <Compile Include="Setup\Dependencies\GameDependencyModule.cs" />
+    <Compile Include="Setup\Dependencies\GameDependencyModuleBuilder.cs" />
+    <Compile Include="Setup\GameBuilder.cs" />
+    <Compile Include="Setup\Definition\GameDefinition.cs" />
+    <Compile Include="Setup\GameInitializer.cs" />
+    <Compile Include="Setup\IGameBuilder.cs" />
+    <Compile Include="Setup\Dependencies\IGameDependencyModule.cs" />
+    <Compile Include="Setup\Dependencies\IGameDependencyModuleBuilder.cs" />
+    <Compile Include="Setup\Definition\IGameInformationNotificationFactory.cs" />
+    <Compile Include="Setup\IGameInitializer.cs" />
+    <Compile Include="Setup\Definition\IMoveHandler.cs" />
+    <Compile Include="Setup\Definition\IMoveResultNotificationFactory.cs" />
+    <Compile Include="Setup\Definition\IPlayerHistoryItemFactory.cs" />
+    <Compile Include="Setup\Definition\ISessionPlayerFactory.cs" />
+    <Compile Include="Setup\Definition\IGameDefinition.cs" />
+    <Compile Include="Setup\Definition\IGameInviteDecorator.cs" />
+    <Compile Include="Setup\Definition\ISessionPlayerSetup.cs" />
+    <Compile Include="Setup\Definition\NullGameInviteDecorator.cs" />
+    <Compile Include="Setup\Definition\NullSessionPlayerSetup.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

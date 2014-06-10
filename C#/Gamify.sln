@@ -1,15 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gamify.Core", "Gamify.Core\Gamify.Core.csproj", "{CB44312B-0775-404B-A6EC-08EB45B738E7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gamify.Sdk", "Gamify.Sdk\Gamify.Sdk.csproj", "{2AD62B4B-9D86-4CDD-ABB5-02C1D905EE91}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gamify.Service", "Gamify.Service\Gamify.Service.csproj", "{8468540E-22A2-42A1-896D-D6D9C34F4F34}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gamify.WebServer", "Gamify.WebServer\Gamify.WebServer.csproj", "{608C59F9-17D5-4F3C-8261-9542F3E5B4E8}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gamify.Contracts", "Gamify.Contracts\Gamify.Contracts.csproj", "{174E05B6-EFE4-42EB-B4FF-F56FB6B885DB}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gamify.Data", "Gamify.Data\Gamify.Data.csproj", "{B535FD9D-E1C0-42EB-8F95-945C8B745858}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gamify.Sdk.Tests", "Gamify.Sdk.Tests\Gamify.Sdk.Tests.csproj", "{D1702DDC-822D-4F11-B550-4261AC177091}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,26 +11,14 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{CB44312B-0775-404B-A6EC-08EB45B738E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CB44312B-0775-404B-A6EC-08EB45B738E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CB44312B-0775-404B-A6EC-08EB45B738E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CB44312B-0775-404B-A6EC-08EB45B738E7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8468540E-22A2-42A1-896D-D6D9C34F4F34}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8468540E-22A2-42A1-896D-D6D9C34F4F34}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8468540E-22A2-42A1-896D-D6D9C34F4F34}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8468540E-22A2-42A1-896D-D6D9C34F4F34}.Release|Any CPU.Build.0 = Release|Any CPU
-		{608C59F9-17D5-4F3C-8261-9542F3E5B4E8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{608C59F9-17D5-4F3C-8261-9542F3E5B4E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{608C59F9-17D5-4F3C-8261-9542F3E5B4E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{608C59F9-17D5-4F3C-8261-9542F3E5B4E8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{174E05B6-EFE4-42EB-B4FF-F56FB6B885DB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{174E05B6-EFE4-42EB-B4FF-F56FB6B885DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{174E05B6-EFE4-42EB-B4FF-F56FB6B885DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{174E05B6-EFE4-42EB-B4FF-F56FB6B885DB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B535FD9D-E1C0-42EB-8F95-945C8B745858}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B535FD9D-E1C0-42EB-8F95-945C8B745858}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B535FD9D-E1C0-42EB-8F95-945C8B745858}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B535FD9D-E1C0-42EB-8F95-945C8B745858}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2AD62B4B-9D86-4CDD-ABB5-02C1D905EE91}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2AD62B4B-9D86-4CDD-ABB5-02C1D905EE91}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2AD62B4B-9D86-4CDD-ABB5-02C1D905EE91}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2AD62B4B-9D86-4CDD-ABB5-02C1D905EE91}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D1702DDC-822D-4F11-B550-4261AC177091}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D1702DDC-822D-4F11-B550-4261AC177091}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D1702DDC-822D-4F11-B550-4261AC177091}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D1702DDC-822D-4F11-B550-4261AC177091}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
