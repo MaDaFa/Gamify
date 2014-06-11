@@ -4,9 +4,10 @@ namespace Gamify.Sdk
 {
     public enum SessionState : int
     {
-        Active = 1,
-        Finished = 2,
-        Abandoned = 3
+        Pending = 1,
+        Active = 2,
+        Finished = 3,
+        Abandoned = 4
     }
 
     public interface IGameSession

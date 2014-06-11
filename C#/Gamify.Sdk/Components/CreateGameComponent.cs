@@ -50,7 +50,7 @@ namespace Gamify.Sdk.Components
 
             this.playerSetup.GetPlayerReady(createGameObject, sessionPlayer1);
 
-            var newSession = this.sessionService.Open(sessionPlayer1, sessionPlayer2);
+            var newSession = this.sessionService.Create(sessionPlayer1, sessionPlayer2);
 
             this.SendGameInviteNotification(newSession);
         }

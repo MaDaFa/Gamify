@@ -92,7 +92,7 @@ namespace Gamify.Sdk.Tests.ComponentTests
                 .Verifiable();
 
             this.sessionServiceMock = new Mock<ISessionService>();
-            this.sessionServiceMock.Setup(s => s.Open(It.Is<ISessionGamePlayerBase>(p => p == this.sessionPlayer1),
+            this.sessionServiceMock.Setup(s => s.Create(It.Is<ISessionGamePlayerBase>(p => p == this.sessionPlayer1),
                 It.Is<ISessionGamePlayerBase>(p => p == this.sessionPlayer2)))
                 .Returns(this.session)
                 .Verifiable();

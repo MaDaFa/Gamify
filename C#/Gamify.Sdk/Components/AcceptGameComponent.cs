@@ -33,13 +33,15 @@ namespace Gamify.Sdk.Components
         public override void HandleRequest(GameRequest request)
         {
             var gameAcceptedObject = this.serializer.Deserialize<GameAcceptedRequestObject>(request.SerializedRequestObject);
-            var newSession = this.sessionService.GetByName(gameAcceptedObject.SessionName);
+            var pendingSession = this.sessionService.GetByName(gameAcceptedObject.SessionName);
 
-            this.playerSetup.GetPlayerReady(gameAcceptedObject, newSession.Player2);
+            this.playerSetup.GetPlayerReady(gameAcceptedObject, pendingSession.Player2);
 
-            newSession.Player1.PendingToMove = true;
+            pendingSession.Player1.PendingToMove = true;
 
-            this.SendGameCreatedNotification(newSession);
+            this.sessionService.Start(pendingSession);
+
+            this.SendGameCreatedNotification(pendingSession);
         }
 
         private void SendGameCreatedNotification(IGameSession newSession)
