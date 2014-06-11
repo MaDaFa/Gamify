@@ -30,7 +30,7 @@ namespace Gamify.Sdk.Components
         public override void HandleRequest(GameRequest request)
         {
             var getActiveGamesObject = this.serializer.Deserialize<GetActiveGamesRequestObject>(request.SerializedRequestObject);
-            var activePlayerSessions = this.sessionService.GetAllByPlayer(getActiveGamesObject.PlayerName);
+            var activePlayerSessions = this.sessionService.GetActives(getActiveGamesObject.PlayerName);
             var notification = new SendActiveGamesNotificationObject
             {
                 PlayerName = getActiveGamesObject.PlayerName

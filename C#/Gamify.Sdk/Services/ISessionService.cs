@@ -8,9 +8,15 @@ namespace Gamify.Sdk.Services
 
         IEnumerable<IGameSession> GetAllByPlayer(string playerName);
 
+        IEnumerable<IGameSession> GetPendings(string playerName);
+
+        IEnumerable<IGameSession> GetActives(string playerName);
+
         IGameSession GetByName(string sessionName);
 
-        IGameSession Open(ISessionGamePlayerBase sessionPlayer1, ISessionGamePlayerBase sessionPlayer2 = null);
+        IGameSession Create(ISessionGamePlayerBase sessionPlayer1, ISessionGamePlayerBase sessionPlayer2 = null);
+
+        void Start(IGameSession currentSession);
 
         void Abandon(string sessionName);
 

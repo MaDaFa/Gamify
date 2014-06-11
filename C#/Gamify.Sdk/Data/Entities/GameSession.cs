@@ -23,7 +23,7 @@ namespace Gamify.Sdk.Data.Entities
             this.Player2 = player2;
             this.Player2Name = player2.Information.Name;
             this.Name = string.Concat(this.Player1Name, "-vs-", this.Player2Name);
-            this.State = SessionState.Active;
+            this.State = SessionState.Pending;
 
             this.Player1.SessionName = this.Name;
             this.Player1.PendingToMove = true;

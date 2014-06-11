@@ -78,7 +78,7 @@ namespace Gamify.Sdk.Tests.ComponentTests
 
             this.sessionServiceMock = new Mock<ISessionService>();
             this.sessionServiceMock
-                .Setup(s => s.GetAllByPlayer(It.Is<string>(x => x == this.requestPlayer)))
+                .Setup(s => s.GetActives(It.Is<string>(x => x == this.requestPlayer)))
                 .Returns(this.sessions);
 
             this.notificationServiceMock = new Mock<INotificationService>();

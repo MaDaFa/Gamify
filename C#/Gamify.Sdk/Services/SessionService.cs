@@ -32,12 +32,24 @@ namespace Gamify.Sdk.Services
             return this.sessionRepository.GetAll(s => s.Player1Name == playerName || s.Player2Name == playerName);
         }
 
+        public IEnumerable<IGameSession> GetPendings(string playerName)
+        {
+            return this.sessionRepository.GetAll(s => (s.Player1Name == playerName || s.Player2Name == playerName)
+                && s.State == SessionState.Pending);
+        }
+
+        public IEnumerable<IGameSession> GetActives(string playerName)
+        {
+            return this.sessionRepository.GetAll(s => (s.Player1Name == playerName || s.Player2Name == playerName)
+                && s.State == SessionState.Active);
+        }
+
         public IGameSession GetByName(string sessionName)
         {
             return this.sessionRepository.Get(s => s.Name == sessionName);
         }
 
-        public IGameSession Open(ISessionGamePlayerBase sessionPlayer1, ISessionGamePlayerBase sessionPlayer2 = null)
+        public IGameSession Create(ISessionGamePlayerBase sessionPlayer1, ISessionGamePlayerBase sessionPlayer2 = null)
         {
             if (sessionPlayer2 == null)
             {
@@ -57,6 +69,15 @@ namespace Gamify.Sdk.Services
             this.sessionRepository.Create(newSession);
 
             return newSession;
+        }
+
+        public void Start(IGameSession currentSession)
+        {
+            var sessionToUpdate = currentSession as GameSession;
+
+            sessionToUpdate.State = SessionState.Active;
+
+            this.sessionRepository.Update(sessionToUpdate);
         }
 
         public void Abandon(string sessionName)
