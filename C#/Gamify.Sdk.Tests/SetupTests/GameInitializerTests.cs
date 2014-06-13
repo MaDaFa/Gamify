@@ -17,21 +17,28 @@ namespace Gamify.Sdk.Tests.SetupTests
         [TestMethod]
         public void When_InitializeGame_Then_Success()
         {
-            var testSessionPlayerFactory = Mock.Of<ISessionPlayerFactory<TestMoveObject, TestResponseObject>>();
+            var moveProcessor = Mock.Of<IMoveProcessor<TestMoveObject, TestResponseObject>>();
+            var testSessionPlayerFactory = Mock.Of<ISessionPlayerFactory>();
             var gameDefinitionMock = new Mock<GameDefinition<TestMoveObject, TestResponseObject>>();
 
             gameDefinitionMock
                 .Setup(d => d.GetSessionPlayerFactory())
                 .Returns(testSessionPlayerFactory)
                 .Verifiable();
+            gameDefinitionMock
+                .Setup(d => d.GetMoveProcessor())
+                .Returns(moveProcessor)
+                .Verifiable();
 
-            var gameInitializer = new GameInitializer(gameDefinitionMock.Object);
-            var gameBuilder1 = gameInitializer.Initialize();
-            var gameBuilder2 = gameInitializer.Initialize();
+            var gameInitializer = new GameInitializer();
+            var gameService1 = gameInitializer.Initialize(gameDefinitionMock.Object);
+            var gameService2 = gameInitializer.Initialize(gameDefinitionMock.Object);
 
-            Assert.IsNotNull(gameBuilder1);
-            Assert.IsNotNull(gameBuilder2);
-            Assert.AreNotEqual(gameBuilder1, gameBuilder2);
+            gameDefinitionMock.VerifyAll();
+
+            Assert.IsNotNull(gameService1);
+            Assert.IsNotNull(gameService2);
+            Assert.AreNotEqual(gameService1, gameService2);
         }
     }
 }

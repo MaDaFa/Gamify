@@ -22,13 +22,12 @@ namespace Gamify.Sdk.Tests.ServiceTests
         public void When_CreateSessionWithBothPlayers_Then_Success()
         {
             var playerService = Mock.Of<IPlayerService>();
-            var sessionHistoryService = Mock.Of<ISessionHistoryService<TestMoveObject, TestResponseObject>>();
             var sessionRepository = new TestRepository<GameSession>();
             var sessionPlayerFactory = Mock.Of<ISessionPlayerFactory>();
 
-            this.sessionService = new SessionService(playerService, sessionHistoryService, sessionRepository, sessionPlayerFactory);
+            this.sessionService = new SessionService(playerService, sessionRepository, sessionPlayerFactory);
 
-            var sessionPlayer1 = new TestSessionPlayer(sessionHistoryService)
+            var sessionPlayer1 = new TestSessionPlayer()
             {
                 Information = new GamePlayer
                 {
@@ -36,7 +35,7 @@ namespace Gamify.Sdk.Tests.ServiceTests
                     DisplayName = "Player 1"
                 }
             };
-            var sessionPlayer2 = new TestSessionPlayer(sessionHistoryService)
+            var sessionPlayer2 = new TestSessionPlayer()
             {
                 Information = new GamePlayer
                 {
@@ -63,9 +62,8 @@ namespace Gamify.Sdk.Tests.ServiceTests
         [TestMethod]
         public void When_CreateSessionWithOnePlayer_Then_Success()
         {
-            var sessionHistoryService = Mock.Of<ISessionHistoryService<TestMoveObject, TestResponseObject>>();
             var gamePlayer = new GamePlayer { Name = "player2", DisplayName = "Player 2" };
-            var sessionPlayer2 = new TestSessionPlayer(sessionHistoryService)
+            var sessionPlayer2 = new TestSessionPlayer()
             {
                 Information = gamePlayer
             };
@@ -73,7 +71,8 @@ namespace Gamify.Sdk.Tests.ServiceTests
 
             playerServiceMock
                 .Setup(s => s.GetRandom(It.Is<string>(n => n == "player1")))
-                .Returns(gamePlayer);
+                .Returns(gamePlayer)
+                .Verifiable();
 
             var playerService = playerServiceMock.Object;
             var sessionRepository = new TestRepository<GameSession>();
@@ -81,14 +80,15 @@ namespace Gamify.Sdk.Tests.ServiceTests
             var sessionPlayerFactoryMock = new Mock<ISessionPlayerFactory>();
 
             sessionPlayerFactoryMock
-                .Setup(f => f.Create(It.Is<IGamePlayer>(p => p.Name == gamePlayer.Name), It.IsAny<ISessionHistoryService>()))
-                .Returns(sessionPlayer2);
+                .Setup(f => f.Create(It.Is<IGamePlayer>(p => p.Name == gamePlayer.Name)))
+                .Returns(sessionPlayer2)
+                .Verifiable();
 
             var sessionPlayerFactory = sessionPlayerFactoryMock.Object;
 
-            this.sessionService = new SessionService(playerService, sessionHistoryService, sessionRepository, sessionPlayerFactory);
+            this.sessionService = new SessionService(playerService, sessionRepository, sessionPlayerFactory);
 
-            var sessionPlayer1 = new TestSessionPlayer(sessionHistoryService)
+            var sessionPlayer1 = new TestSessionPlayer()
             {
                 Information = new GamePlayer
                 {
@@ -119,13 +119,12 @@ namespace Gamify.Sdk.Tests.ServiceTests
         public void When_StartSession_Then_Success()
         {
             var playerService = Mock.Of<IPlayerService>();
-            var sessionHistoryService = Mock.Of<ISessionHistoryService<TestMoveObject, TestResponseObject>>();
             var sessionRepository = new TestRepository<GameSession>();
             var sessionPlayerFactory = Mock.Of<ISessionPlayerFactory>();
 
-            this.sessionService = new SessionService(playerService, sessionHistoryService, sessionRepository, sessionPlayerFactory);
+            this.sessionService = new SessionService(playerService, sessionRepository, sessionPlayerFactory);
 
-            var sessionPlayer1 = new TestSessionPlayer(sessionHistoryService)
+            var sessionPlayer1 = new TestSessionPlayer()
             {
                 Information = new GamePlayer
                 {
@@ -133,7 +132,7 @@ namespace Gamify.Sdk.Tests.ServiceTests
                     DisplayName = "Player 1"
                 }
             };
-            var sessionPlayer2 = new TestSessionPlayer(sessionHistoryService)
+            var sessionPlayer2 = new TestSessionPlayer()
             {
                 Information = new GamePlayer
                 {
@@ -165,13 +164,12 @@ namespace Gamify.Sdk.Tests.ServiceTests
         public void When_AbandonSession_Then_Success()
         {
             var playerService = Mock.Of<IPlayerService>();
-            var sessionHistoryService = Mock.Of<ISessionHistoryService<TestMoveObject, TestResponseObject>>();
             var sessionRepository = new TestRepository<GameSession>();
             var sessionPlayerFactory = Mock.Of<ISessionPlayerFactory>();
 
-            this.sessionService = new SessionService(playerService, sessionHistoryService, sessionRepository, sessionPlayerFactory);
+            this.sessionService = new SessionService(playerService, sessionRepository, sessionPlayerFactory);
 
-            var sessionPlayer1 = new TestSessionPlayer(sessionHistoryService)
+            var sessionPlayer1 = new TestSessionPlayer()
             {
                 Information = new GamePlayer
                 {
@@ -179,7 +177,7 @@ namespace Gamify.Sdk.Tests.ServiceTests
                     DisplayName = "Player 1"
                 }
             };
-            var sessionPlayer2 = new TestSessionPlayer(sessionHistoryService)
+            var sessionPlayer2 = new TestSessionPlayer()
             {
                 Information = new GamePlayer
                 {
@@ -215,13 +213,12 @@ namespace Gamify.Sdk.Tests.ServiceTests
         public void When_FinishSession_Then_Success()
         {
             var playerService = Mock.Of<IPlayerService>();
-            var sessionHistoryService = Mock.Of<ISessionHistoryService<TestMoveObject, TestResponseObject>>();
             var sessionRepository = new TestRepository<GameSession>();
             var sessionPlayerFactory = Mock.Of<ISessionPlayerFactory>();
 
-            this.sessionService = new SessionService(playerService, sessionHistoryService, sessionRepository, sessionPlayerFactory);
+            this.sessionService = new SessionService(playerService, sessionRepository, sessionPlayerFactory);
 
-            var sessionPlayer1 = new TestSessionPlayer(sessionHistoryService)
+            var sessionPlayer1 = new TestSessionPlayer()
             {
                 Information = new GamePlayer
                 {
@@ -229,7 +226,7 @@ namespace Gamify.Sdk.Tests.ServiceTests
                     DisplayName = "Player 1"
                 }
             };
-            var sessionPlayer2 = new TestSessionPlayer(sessionHistoryService)
+            var sessionPlayer2 = new TestSessionPlayer()
             {
                 Information = new GamePlayer
                 {
@@ -265,13 +262,12 @@ namespace Gamify.Sdk.Tests.ServiceTests
         public void When_GetSessionsByPlayer_Then_Success()
         {
             var playerService = Mock.Of<IPlayerService>();
-            var sessionHistoryService = Mock.Of<ISessionHistoryService<TestMoveObject, TestResponseObject>>();
             var sessionRepository = new TestRepository<GameSession>();
             var sessionPlayerFactory = Mock.Of<ISessionPlayerFactory>();
 
-            this.sessionService = new SessionService(playerService, sessionHistoryService, sessionRepository, sessionPlayerFactory);
+            this.sessionService = new SessionService(playerService, sessionRepository, sessionPlayerFactory);
 
-            var sessionPlayer1_1 = new TestSessionPlayer(sessionHistoryService)
+            var sessionPlayer1_1 = new TestSessionPlayer()
             {
                 Information = new GamePlayer
                 {
@@ -279,7 +275,7 @@ namespace Gamify.Sdk.Tests.ServiceTests
                     DisplayName = "Player 1"
                 }
             };
-            var sessionPlayer1_3 = new TestSessionPlayer(sessionHistoryService)
+            var sessionPlayer1_3 = new TestSessionPlayer()
             {
                 Information = new GamePlayer
                 {
@@ -287,7 +283,7 @@ namespace Gamify.Sdk.Tests.ServiceTests
                     DisplayName = "Player 1"
                 }
             };
-            var sessionPlayer1_4 = new TestSessionPlayer(sessionHistoryService)
+            var sessionPlayer1_4 = new TestSessionPlayer()
             {
                 Information = new GamePlayer
                 {
@@ -295,7 +291,7 @@ namespace Gamify.Sdk.Tests.ServiceTests
                     DisplayName = "Player 1"
                 }
             };
-            var sessionPlayer2 = new TestSessionPlayer(sessionHistoryService)
+            var sessionPlayer2 = new TestSessionPlayer()
             {
                 Information = new GamePlayer
                 {
@@ -303,7 +299,7 @@ namespace Gamify.Sdk.Tests.ServiceTests
                     DisplayName = "Player 2"
                 }
             };
-            var sessionPlayer3 = new TestSessionPlayer(sessionHistoryService)
+            var sessionPlayer3 = new TestSessionPlayer()
             {
                 Information = new GamePlayer
                 {
@@ -311,7 +307,7 @@ namespace Gamify.Sdk.Tests.ServiceTests
                     DisplayName = "Player 3"
                 }
             };
-            var sessionPlayer4 = new TestSessionPlayer(sessionHistoryService)
+            var sessionPlayer4 = new TestSessionPlayer()
             {
                 Information = new GamePlayer
                 {
@@ -372,13 +368,12 @@ namespace Gamify.Sdk.Tests.ServiceTests
         public void When_GetPendingSessions_Then_Success()
         {
             var playerService = Mock.Of<IPlayerService>();
-            var sessionHistoryService = Mock.Of<ISessionHistoryService<TestMoveObject, TestResponseObject>>();
             var sessionRepository = new TestRepository<GameSession>();
             var sessionPlayerFactory = Mock.Of<ISessionPlayerFactory>();
 
-            this.sessionService = new SessionService(playerService, sessionHistoryService, sessionRepository, sessionPlayerFactory);
+            this.sessionService = new SessionService(playerService, sessionRepository, sessionPlayerFactory);
 
-            var sessionPlayer1_1 = new TestSessionPlayer(sessionHistoryService)
+            var sessionPlayer1_1 = new TestSessionPlayer()
             {
                 Information = new GamePlayer
                 {
@@ -386,7 +381,7 @@ namespace Gamify.Sdk.Tests.ServiceTests
                     DisplayName = "Player 1"
                 }
             };
-            var sessionPlayer1_3 = new TestSessionPlayer(sessionHistoryService)
+            var sessionPlayer1_3 = new TestSessionPlayer()
             {
                 Information = new GamePlayer
                 {
@@ -394,7 +389,7 @@ namespace Gamify.Sdk.Tests.ServiceTests
                     DisplayName = "Player 1"
                 }
             };
-            var sessionPlayer1_4 = new TestSessionPlayer(sessionHistoryService)
+            var sessionPlayer1_4 = new TestSessionPlayer()
             {
                 Information = new GamePlayer
                 {
@@ -402,7 +397,7 @@ namespace Gamify.Sdk.Tests.ServiceTests
                     DisplayName = "Player 1"
                 }
             };
-            var sessionPlayer2 = new TestSessionPlayer(sessionHistoryService)
+            var sessionPlayer2 = new TestSessionPlayer()
             {
                 Information = new GamePlayer
                 {
@@ -410,7 +405,7 @@ namespace Gamify.Sdk.Tests.ServiceTests
                     DisplayName = "Player 2"
                 }
             };
-            var sessionPlayer3 = new TestSessionPlayer(sessionHistoryService)
+            var sessionPlayer3 = new TestSessionPlayer()
             {
                 Information = new GamePlayer
                 {
@@ -418,7 +413,7 @@ namespace Gamify.Sdk.Tests.ServiceTests
                     DisplayName = "Player 3"
                 }
             };
-            var sessionPlayer4 = new TestSessionPlayer(sessionHistoryService)
+            var sessionPlayer4 = new TestSessionPlayer()
             {
                 Information = new GamePlayer
                 {
@@ -482,13 +477,12 @@ namespace Gamify.Sdk.Tests.ServiceTests
         public void When_GetActiveSessions_Then_Success()
         {
             var playerService = Mock.Of<IPlayerService>();
-            var sessionHistoryService = Mock.Of<ISessionHistoryService<TestMoveObject, TestResponseObject>>();
             var sessionRepository = new TestRepository<GameSession>();
             var sessionPlayerFactory = Mock.Of<ISessionPlayerFactory>();
 
-            this.sessionService = new SessionService(playerService, sessionHistoryService, sessionRepository, sessionPlayerFactory);
+            this.sessionService = new SessionService(playerService, sessionRepository, sessionPlayerFactory);
 
-            var sessionPlayer1_1 = new TestSessionPlayer(sessionHistoryService)
+            var sessionPlayer1_1 = new TestSessionPlayer()
             {
                 Information = new GamePlayer
                 {
@@ -496,7 +490,7 @@ namespace Gamify.Sdk.Tests.ServiceTests
                     DisplayName = "Player 1"
                 }
             };
-            var sessionPlayer1_3 = new TestSessionPlayer(sessionHistoryService)
+            var sessionPlayer1_3 = new TestSessionPlayer()
             {
                 Information = new GamePlayer
                 {
@@ -504,7 +498,7 @@ namespace Gamify.Sdk.Tests.ServiceTests
                     DisplayName = "Player 1"
                 }
             };
-            var sessionPlayer1_4 = new TestSessionPlayer(sessionHistoryService)
+            var sessionPlayer1_4 = new TestSessionPlayer()
             {
                 Information = new GamePlayer
                 {
@@ -512,7 +506,7 @@ namespace Gamify.Sdk.Tests.ServiceTests
                     DisplayName = "Player 1"
                 }
             };
-            var sessionPlayer2 = new TestSessionPlayer(sessionHistoryService)
+            var sessionPlayer2 = new TestSessionPlayer()
             {
                 Information = new GamePlayer
                 {
@@ -520,7 +514,7 @@ namespace Gamify.Sdk.Tests.ServiceTests
                     DisplayName = "Player 2"
                 }
             };
-            var sessionPlayer3 = new TestSessionPlayer(sessionHistoryService)
+            var sessionPlayer3 = new TestSessionPlayer()
             {
                 Information = new GamePlayer
                 {
@@ -528,7 +522,7 @@ namespace Gamify.Sdk.Tests.ServiceTests
                     DisplayName = "Player 3"
                 }
             };
-            var sessionPlayer4 = new TestSessionPlayer(sessionHistoryService)
+            var sessionPlayer4 = new TestSessionPlayer()
             {
                 Information = new GamePlayer
                 {

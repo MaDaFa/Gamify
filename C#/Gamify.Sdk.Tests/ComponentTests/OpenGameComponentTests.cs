@@ -17,11 +17,9 @@ namespace Gamify.Sdk.Tests.ComponentTests
         private readonly string sessionName = "player1-vs-player2";
 
         private ISerializer serializer;
-        private IGameSession session;
-        private GameInformationNotificationObject gameInformationNotification;
         private Mock<ISessionService> sessionServiceMock;
         private Mock<INotificationService> notificationServiceMock;
-        private Mock<IGameInformationNotificationFactory> gameInformationNotificationFactoryMock;
+        private Mock<IGameInformationNotificationFactory<TestMoveObject, TestResponseObject>> gameInformationNotificationFactoryMock;
         private IGameComponent openGameComponent;
 
         [TestInitialize]
@@ -29,9 +27,7 @@ namespace Gamify.Sdk.Tests.ComponentTests
         {
             this.serializer = new JsonSerializer();
 
-            var sessionHistoryService = Mock.Of<ISessionHistoryService<TestMoveObject, TestResponseObject>>();
-
-            var player1 = new TestSessionPlayer(sessionHistoryService)
+            var player1 = new TestSessionPlayer()
             {
                 SessionName = this.sessionName,
                 PendingToMove = false,
@@ -41,7 +37,7 @@ namespace Gamify.Sdk.Tests.ComponentTests
                     Name = "player1"
                 }
             };
-            var player2 = new TestSessionPlayer(sessionHistoryService)
+            var player2 = new TestSessionPlayer()
             {
                 SessionName = this.sessionName,
                 PendingToMove = true,
@@ -52,26 +48,27 @@ namespace Gamify.Sdk.Tests.ComponentTests
                 }
             };
 
-            this.session = new GameSession(player1, player2);
-
-            this.gameInformationNotification = Mock.Of<GameInformationNotificationObject>(n => n.SessionName == this.sessionName);
+            var session = new GameSession(player1, player2);
+            var gameInformationNotification = Mock.Of<GameInformationNotificationObject>(n => n.SessionName == this.sessionName);
 
             this.sessionServiceMock = new Mock<ISessionService>();
             this.sessionServiceMock
                 .Setup(s => s.GetByName(It.Is<string>(x => x == this.sessionName)))
-                .Returns(this.session)
+                .Returns(session)
                 .Verifiable();
 
             this.notificationServiceMock = new Mock<INotificationService>();
 
-            this.gameInformationNotificationFactoryMock = new Mock<IGameInformationNotificationFactory>();
+            var playerHistoryItemFactory = Mock.Of<IPlayerHistoryItemFactory<TestMoveObject, TestResponseObject>>();
+
+            this.gameInformationNotificationFactoryMock = new Mock<IGameInformationNotificationFactory<TestMoveObject, TestResponseObject>>();
             this.gameInformationNotificationFactoryMock
-                .Setup(f => f.Create(It.Is<IGameSession>(s => s == this.session)))
-                .Returns(this.gameInformationNotification)
+                .Setup(f => f.Create(It.Is<IGameSession>(s => s == session), It.Is<IPlayerHistoryItemFactory<TestMoveObject, TestResponseObject>>(x => x == playerHistoryItemFactory)))
+                .Returns(gameInformationNotification)
                 .Verifiable();
 
-            this.openGameComponent = new OpenGameComponent(sessionServiceMock.Object, notificationServiceMock.Object, 
-                this.gameInformationNotificationFactoryMock.Object, this.serializer);
+            this.openGameComponent = new OpenGameComponent<TestMoveObject, TestResponseObject>(sessionServiceMock.Object, notificationServiceMock.Object,
+                this.gameInformationNotificationFactoryMock.Object, playerHistoryItemFactory, this.serializer);
         }
 
         [TestMethod]

@@ -36,9 +36,11 @@ namespace Gamify.Sdk.Tests.ServiceTests
 
             connectComponentMock
                 .Setup(c => c.CanHandleRequest(It.Is<GameRequest>(r => r.Type == (int)GameRequestType.PlayerConnect)))
-                .Returns(true);
+                .Returns(true)
+                .Verifiable();
             connectComponentMock
-                .Setup(c => c.HandleRequest(It.Is<GameRequest>(r => r.Type == (int)GameRequestType.PlayerConnect)));
+                .Setup(c => c.HandleRequest(It.Is<GameRequest>(r => r.Type == (int)GameRequestType.PlayerConnect)))
+                .Verifiable();
 
             this.gameService.RegisterComponent(connectComponentMock.Object);
             this.gameService.Connect(userName, accessToken);
@@ -67,9 +69,11 @@ namespace Gamify.Sdk.Tests.ServiceTests
 
             testComponentMock
                 .Setup(c => c.CanHandleRequest(It.Is<GameRequest>(r => r.Type == testRequestType)))
-                .Returns(true);
+                .Returns(true)
+                .Verifiable();
             testComponentMock
-                .Setup(c => c.HandleRequest(It.Is<GameRequest>(r => r.Type == testRequestType)));
+                .Setup(c => c.HandleRequest(It.Is<GameRequest>(r => r.Type == testRequestType)))
+                .Verifiable();
 
             this.gameService.RegisterComponent(testComponentMock.Object);
 
@@ -93,9 +97,11 @@ namespace Gamify.Sdk.Tests.ServiceTests
 
             disconnectComponentMock
                 .Setup(c => c.CanHandleRequest(It.Is<GameRequest>(r => r.Type == (int)GameRequestType.PlayerDisconnect)))
-                .Returns(true);
+                .Returns(true)
+                .Verifiable();
             disconnectComponentMock
-                .Setup(c => c.HandleRequest(It.Is<GameRequest>(r => r.Type == (int)GameRequestType.PlayerDisconnect)));
+                .Setup(c => c.HandleRequest(It.Is<GameRequest>(r => r.Type == (int)GameRequestType.PlayerDisconnect)))
+                .Verifiable();
 
             this.gameService.RegisterComponent(disconnectComponentMock.Object);
             this.gameService.Disconnect(userName);
