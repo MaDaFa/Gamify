@@ -57,17 +57,22 @@ namespace Gamify.Sdk.Tests.ComponentTests
                 .Returns(session)
                 .Verifiable();
 
+            var sessionHistoryServiceMock = new Mock<ISessionHistoryService<TestMoveObject, TestResponseObject>>();
+
             this.notificationServiceMock = new Mock<INotificationService>();
 
             var playerHistoryItemFactory = Mock.Of<IPlayerHistoryItemFactory<TestMoveObject, TestResponseObject>>();
 
             this.gameInformationNotificationFactoryMock = new Mock<IGameInformationNotificationFactory<TestMoveObject, TestResponseObject>>();
             this.gameInformationNotificationFactoryMock
-                .Setup(f => f.Create(It.Is<IGameSession>(s => s == session), It.Is<IPlayerHistoryItemFactory<TestMoveObject, TestResponseObject>>(x => x == playerHistoryItemFactory)))
+                .Setup(f => f.Create(It.Is<IGameSession>(s => s == session),
+                    It.Is<ISessionHistoryService<TestMoveObject, TestResponseObject>>(x => x == sessionHistoryServiceMock.Object),
+                    It.Is<IPlayerHistoryItemFactory<TestMoveObject, TestResponseObject>>(x => x == playerHistoryItemFactory)))
                 .Returns(gameInformationNotification)
                 .Verifiable();
 
-            this.openGameComponent = new OpenGameComponent<TestMoveObject, TestResponseObject>(sessionServiceMock.Object, notificationServiceMock.Object,
+            this.openGameComponent = new OpenGameComponent<TestMoveObject, TestResponseObject>(this.sessionServiceMock.Object, 
+                sessionHistoryServiceMock.Object, this.notificationServiceMock.Object,
                 this.gameInformationNotificationFactoryMock.Object, playerHistoryItemFactory, this.serializer);
         }
 
