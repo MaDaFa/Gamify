@@ -98,11 +98,17 @@ namespace Gamify.Sdk.Tests.ComponentTests
             
             this.moveResultNotificationFactoryMock = new Mock<IMoveResultNotificationFactory>();
 
-            if (!toWin)
+            if (toWin)
+            {
+                this.sessionServiceMock
+                    .Setup(s => s.Finish(It.Is<string>(x => x == this.sessionName)))
+                    .Verifiable();
+            }
+            else
             {
                 this.moveResultNotificationFactoryMock
                     .Setup(f => f.Create(It.Is<MoveRequestObject>(o => o.SessionName == this.sessionName
-                    && o.PlayerName == this.requestPlayer), It.Is<IGameMoveResponse>(r => r == moveResponse)))
+                        && o.PlayerName == this.requestPlayer), It.Is<IGameMoveResponse>(r => r == moveResponse)))
                     .Returns(moveResultNotificationObject)
                     .Verifiable();
             }

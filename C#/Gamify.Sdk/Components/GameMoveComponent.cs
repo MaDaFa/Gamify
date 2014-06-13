@@ -55,6 +55,8 @@ namespace Gamify.Sdk.Components
 
             if (moveResponse.IsWin)
             {
+                this.sessionService.Finish(currentSession.Name);
+
                 var gameFinishedNotificationObject = new GameFinishedNotificationObject
                 {
                     SessionName = currentSession.Name,
