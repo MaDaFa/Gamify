@@ -15,15 +15,16 @@ namespace Gamify.Sdk.Tests.ComponentTests
     {
         private readonly string sessionName = "player1-vs-player2";
         private readonly string requestPlayer = "player2";
+        private readonly string moveInformation = "Test";
 
         private ISerializer serializer;
         private IGameSession session;
-        private Mock<IMoveService> moveServiceMock;
+        private Mock<IMoveService<TestMoveObject, TestResponseObject>> moveServiceMock;
         private Mock<ISessionService> sessionServiceMock;
+        private Mock<ISessionHistoryService<TestMoveObject, TestResponseObject>> sessionHistoryServiceMock;
+        private Mock<IMoveFactory<TestMoveObject>> moveFactoryMock;
         private Mock<INotificationService> notificationServiceMock;
-        private Mock<IMoveHandler> moveHandlerMock;
         private Mock<IMoveResultNotificationFactory> moveResultNotificationFactoryMock;
-        private IMoveResultNotificationObject moveResultNotificationObject;
 
         [TestInitialize]
         public void Initialize()
@@ -34,9 +35,7 @@ namespace Gamify.Sdk.Tests.ComponentTests
         {
             this.serializer = new JsonSerializer();
 
-            var sessionHistoryService = Mock.Of<ISessionHistoryService<TestMoveObject, TestResponseObject>>();
-
-            var player1 = new TestSessionPlayer(sessionHistoryService)
+            var player1 = new TestSessionPlayer()
             {
                 SessionName = this.sessionName,
                 PendingToMove = false,
@@ -46,7 +45,7 @@ namespace Gamify.Sdk.Tests.ComponentTests
                     Name = "player1"
                 }
             };
-            var player2 = new TestSessionPlayer(sessionHistoryService)
+            var player2 = new TestSessionPlayer()
             {
                 SessionName = this.sessionName,
                 PendingToMove = false,
@@ -59,7 +58,17 @@ namespace Gamify.Sdk.Tests.ComponentTests
 
             this.session = new GameSession(player1, player2);
 
-            this.moveServiceMock = new Mock<IMoveService>();
+            var testMoveObject = new TestMoveObject { Answer = "Test Answer" };
+            var testMove = new TestMove(testMoveObject);
+
+            var moveResponse = new TestResponse(new TestResponseObject { IsCorrect = true }) { IsWin = toWin };
+
+            this.moveServiceMock = new Mock<IMoveService<TestMoveObject, TestResponseObject>>();
+            this.moveServiceMock
+                .Setup(s => s.Handle(It.Is<string>(x => x == this.session.Name), It.Is<string>(x => x == this.requestPlayer),
+                    It.Is<IGameMove<TestMoveObject>>(m => m == testMove)))
+                .Returns(moveResponse)
+                .Verifiable();
 
             this.sessionServiceMock = new Mock<ISessionService>();
             this.sessionServiceMock
@@ -67,18 +76,26 @@ namespace Gamify.Sdk.Tests.ComponentTests
                 .Returns(this.session)
                 .Verifiable();
 
-            this.notificationServiceMock = new Mock<INotificationService>();
+            var destinationPlayer = "player1";
 
-            var moveResponse = new TestResponse(new TestResponseObject { IsCorrect = true }) { IsWin = toWin };
-
-            this.moveHandlerMock = new Mock<IMoveHandler>();
-            this.moveHandlerMock
-                .Setup(h => h.Handle(It.Is<MoveRequestObject>(o => o.SessionName == this.sessionName
-                    && o.PlayerName == this.requestPlayer), It.Is<IMoveService>(s => s == this.moveServiceMock.Object)))
-                .Returns(moveResponse)
+            this.sessionHistoryServiceMock = new Mock<ISessionHistoryService<TestMoveObject, TestResponseObject>>();
+            this.sessionHistoryServiceMock
+                .Setup(x => x.Add(It.Is<string>(s => s == this.sessionName),
+                    It.Is<string>(s => s == destinationPlayer),
+                    It.Is<ISessionHistoryItem<TestMoveObject, TestResponseObject>>(i => i.Move == testMove.MoveObject 
+                        && i.Response == moveResponse.MoveResponseObject)))
                 .Verifiable();
 
-            this.moveResultNotificationObject = Mock.Of<IMoveResultNotificationObject>(o => o.SessionName == this.sessionName && o.PlayerName == this.requestPlayer);
+            this.notificationServiceMock = new Mock<INotificationService>();
+
+            this.moveFactoryMock = new Mock<IMoveFactory<TestMoveObject>>();
+            this.moveFactoryMock
+                .Setup(f => f.Create(It.Is<string>(s => s == this.moveInformation)))
+                .Returns(testMove)
+                .Verifiable();
+
+            var moveResultNotificationObject = Mock.Of<IMoveResultNotificationObject>(o => o.SessionName == this.sessionName && o.PlayerName == this.requestPlayer);
+            
             this.moveResultNotificationFactoryMock = new Mock<IMoveResultNotificationFactory>();
 
             if (!toWin)
@@ -86,11 +103,12 @@ namespace Gamify.Sdk.Tests.ComponentTests
                 this.moveResultNotificationFactoryMock
                     .Setup(f => f.Create(It.Is<MoveRequestObject>(o => o.SessionName == this.sessionName
                     && o.PlayerName == this.requestPlayer), It.Is<IGameMoveResponse>(r => r == moveResponse)))
-                    .Returns(this.moveResultNotificationObject);
+                    .Returns(moveResultNotificationObject)
+                    .Verifiable();
             }
 
-            return new GameMoveComponent(this.moveServiceMock.Object, this.sessionServiceMock.Object, this.notificationServiceMock.Object,
-                this.moveHandlerMock.Object, this.moveResultNotificationFactoryMock.Object, this.serializer);
+            return new GameMoveComponent<TestMoveObject, TestResponseObject>(moveServiceMock.Object, this.sessionServiceMock.Object,
+                sessionHistoryServiceMock.Object, this.notificationServiceMock.Object, moveFactoryMock.Object, this.moveResultNotificationFactoryMock.Object, this.serializer);
         }
 
         [TestMethod]
@@ -102,7 +120,7 @@ namespace Gamify.Sdk.Tests.ComponentTests
             {
                 SessionName = this.sessionName,
                 PlayerName = this.requestPlayer,
-                MoveInformation = "Test"
+                MoveInformation = this.moveInformation
             };
             var gameRequest = new GameRequest
             {
@@ -114,8 +132,11 @@ namespace Gamify.Sdk.Tests.ComponentTests
 
             moveComponent.HandleRequest(gameRequest);
 
+            this.moveServiceMock.VerifyAll();
             this.sessionServiceMock.VerifyAll();
-            this.moveHandlerMock.VerifyAll();
+            this.sessionHistoryServiceMock.VerifyAll();
+            this.moveFactoryMock.VerifyAll();
+            this.moveResultNotificationFactoryMock.VerifyAll();
             this.notificationServiceMock.Verify(s => s.Send(It.Is<GameNotificationType>(t => t == GameNotificationType.GameMove),
                     It.Is<object>(o => ((MoveNotificationObject)o).SessionName == this.session.Name &&
                     ((MoveNotificationObject)o).PlayerName == this.requestPlayer),
@@ -149,8 +170,10 @@ namespace Gamify.Sdk.Tests.ComponentTests
 
             moveComponent.HandleRequest(gameRequest);
 
+            this.moveServiceMock.VerifyAll();
             this.sessionServiceMock.VerifyAll();
-            this.moveHandlerMock.VerifyAll();
+            this.sessionHistoryServiceMock.VerifyAll();
+            this.moveFactoryMock.VerifyAll();
             this.notificationServiceMock.Verify(s => s.SendBroadcast(It.Is<GameNotificationType>(t => t == GameNotificationType.GameFinished),
                     It.Is<object>(o => ((GameFinishedNotificationObject)o).SessionName == this.session.Name &&
                     ((GameFinishedNotificationObject)o).WinnerPlayerName == this.requestPlayer),

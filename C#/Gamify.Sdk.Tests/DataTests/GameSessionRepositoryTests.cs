@@ -1,8 +1,6 @@
 ﻿using Gamify.Sdk.Data.Entities;
-using Gamify.Sdk.Services;
 using Gamify.Sdk.Tests.TestModels;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Moq;
 using System.Linq;
 
 namespace Gamify.Sdk.Tests.DataTests
@@ -13,15 +11,13 @@ namespace Gamify.Sdk.Tests.DataTests
         [TestMethod]
         public void When_CreateGameSession_Then_Success()
         {
-            var sessionHistoryService = Mock.Of<ISessionHistoryService<TestMoveObject, TestResponseObject>>();
-
             var sessionName = GetUniqueName("Session");
             var player1 = new GamePlayer
             {
                 DisplayName = GetUniqueName("Player"),
                 Name = GetUniqueName("player")
             };
-            var sessionPlayer1 = new TestSessionPlayer(sessionHistoryService)
+            var sessionPlayer1 = new TestSessionPlayer()
             {
                 SessionName = sessionName,
                 PendingToMove = true,
@@ -32,7 +28,7 @@ namespace Gamify.Sdk.Tests.DataTests
                 DisplayName = GetUniqueName("Player"),
                 Name = GetUniqueName("player")
             };
-            var sessionPlayer2 = new TestSessionPlayer(sessionHistoryService)
+            var sessionPlayer2 = new TestSessionPlayer()
             {
                 SessionName = sessionName,
                 PendingToMove = false,
@@ -63,15 +59,13 @@ namespace Gamify.Sdk.Tests.DataTests
         [TestMethod]
         public void When_UpdateGameSession_Then_Success()
         {
-            var sessionHistoryService = Mock.Of<ISessionHistoryService<TestMoveObject, TestResponseObject>>();
-
             var sessionName = GetUniqueName("Session");
             var player1 = new GamePlayer
             {
                 DisplayName = GetUniqueName("Player"),
                 Name = GetUniqueName("player")
             };
-            var sessionPlayer1 = new TestSessionPlayer(sessionHistoryService)
+            var sessionPlayer1 = new TestSessionPlayer()
             {
                 SessionName = sessionName,
                 PendingToMove = true,
@@ -82,7 +76,7 @@ namespace Gamify.Sdk.Tests.DataTests
                 DisplayName = GetUniqueName("Player"),
                 Name = GetUniqueName("player")
             };
-            var sessionPlayer2 = new TestSessionPlayer(sessionHistoryService)
+            var sessionPlayer2 = new TestSessionPlayer()
             {
                 SessionName = sessionName,
                 PendingToMove = false,
@@ -121,15 +115,13 @@ namespace Gamify.Sdk.Tests.DataTests
         [TestMethod]
         public void When_DeleteGameSession_Then_Success()
         {
-            var sessionHistoryService = Mock.Of<ISessionHistoryService<TestMoveObject, TestResponseObject>>();
-
             var sessionName = GetUniqueName("Session");
             var player1 = new GamePlayer
             {
                 DisplayName = GetUniqueName("Player"),
                 Name = GetUniqueName("player")
             };
-            var sessionPlayer1 = new TestSessionPlayer(sessionHistoryService)
+            var sessionPlayer1 = new TestSessionPlayer()
             {
                 SessionName = sessionName,
                 PendingToMove = true,
@@ -140,7 +132,7 @@ namespace Gamify.Sdk.Tests.DataTests
                 DisplayName = GetUniqueName("Player"),
                 Name = GetUniqueName("player")
             };
-            var sessionPlayer2 = new TestSessionPlayer(sessionHistoryService)
+            var sessionPlayer2 = new TestSessionPlayer()
             {
                 SessionName = sessionName,
                 PendingToMove = false,
@@ -166,15 +158,13 @@ namespace Gamify.Sdk.Tests.DataTests
         [TestMethod]
         public void When_DeleteAllGameSessions_Then_Success()
         {
-            var sessionHistoryService = Mock.Of<ISessionHistoryService<TestMoveObject, TestResponseObject>>();
-
             var session1Name = GetUniqueName("Session");
             var player1 = new GamePlayer
             {
                 DisplayName = GetUniqueName("Player"),
                 Name = GetUniqueName("player")
             };
-            var sessionPlayer1 = new TestSessionPlayer(sessionHistoryService)
+            var sessionPlayer1 = new TestSessionPlayer()
             {
                 SessionName = session1Name,
                 PendingToMove = true,
@@ -185,7 +175,7 @@ namespace Gamify.Sdk.Tests.DataTests
                 DisplayName = GetUniqueName("Player"),
                 Name = GetUniqueName("player")
             };
-            var sessionPlayer2 = new TestSessionPlayer(sessionHistoryService)
+            var sessionPlayer2 = new TestSessionPlayer()
             {
                 SessionName = session1Name,
                 PendingToMove = false,
@@ -203,7 +193,7 @@ namespace Gamify.Sdk.Tests.DataTests
                 DisplayName = GetUniqueName("Player"),
                 Name = GetUniqueName("player")
             };
-            var sessionPlayer3 = new TestSessionPlayer(sessionHistoryService)
+            var sessionPlayer3 = new TestSessionPlayer()
             {
                 SessionName = session2Name,
                 PendingToMove = true,
@@ -214,7 +204,7 @@ namespace Gamify.Sdk.Tests.DataTests
                 DisplayName = GetUniqueName("Player"),
                 Name = GetUniqueName("player")
             };
-            var sessionPlayer4 = new TestSessionPlayer(sessionHistoryService)
+            var sessionPlayer4 = new TestSessionPlayer()
             {
                 SessionName = session2Name,
                 PendingToMove = false,
@@ -242,15 +232,13 @@ namespace Gamify.Sdk.Tests.DataTests
         [TestMethod]
         public void When_GetGameSessionsWithPredicate_Then_Success()
         {
-            var sessionHistoryService = Mock.Of<ISessionHistoryService<TestMoveObject, TestResponseObject>>();
-
             var session1Name = GetUniqueName("Session x");
             var player1 = new GamePlayer
             {
                 DisplayName = GetUniqueName("Player"),
                 Name = GetUniqueName("player")
             };
-            var sessionPlayer1 = new TestSessionPlayer(sessionHistoryService)
+            var sessionPlayer1 = new TestSessionPlayer()
             {
                 SessionName = session1Name,
                 PendingToMove = true,
@@ -261,7 +249,7 @@ namespace Gamify.Sdk.Tests.DataTests
                 DisplayName = GetUniqueName("Player"),
                 Name = GetUniqueName("player")
             };
-            var sessionPlayer2 = new TestSessionPlayer(sessionHistoryService)
+            var sessionPlayer2 = new TestSessionPlayer()
             {
                 SessionName = session1Name,
                 PendingToMove = false,
@@ -279,7 +267,7 @@ namespace Gamify.Sdk.Tests.DataTests
                 DisplayName = GetUniqueName("User"),
                 Name = GetUniqueName("user")
             };
-            var sessionPlayer3 = new TestSessionPlayer(sessionHistoryService)
+            var sessionPlayer3 = new TestSessionPlayer()
             {
                 SessionName = session2Name,
                 PendingToMove = true,
@@ -290,7 +278,7 @@ namespace Gamify.Sdk.Tests.DataTests
                 DisplayName = GetUniqueName("User"),
                 Name = GetUniqueName("userx")
             };
-            var sessionPlayer4 = new TestSessionPlayer(sessionHistoryService)
+            var sessionPlayer4 = new TestSessionPlayer()
             {
                 SessionName = session2Name,
                 PendingToMove = false,

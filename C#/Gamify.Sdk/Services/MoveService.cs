@@ -1,17 +1,20 @@
-﻿using System;
+﻿using Gamify.Sdk.Setup.Definition;
+using System;
 
 namespace Gamify.Sdk.Services
 {
-    public class MoveService : IMoveService
+    public class MoveService<TMove, UResponse> : IMoveService<TMove, UResponse>
     {
         private readonly ISessionService sessionService;
+        private readonly IMoveProcessor<TMove, UResponse> moveProcessor;
 
-        public MoveService(ISessionService sessionService)
+        public MoveService(ISessionService sessionService, IMoveProcessor<TMove, UResponse> moveProcessor)
         {
             this.sessionService = sessionService;
+            this.moveProcessor = moveProcessor;
         }
 
-        public IGameMoveResponse<U> Handle<T, U>(string playerName, string sessionName, IGameMove<T> move)
+        public IGameMoveResponse<UResponse> Handle(string sessionName, string playerName, IGameMove<TMove> move)
         {
             var existingSession = this.sessionService.GetByName(sessionName);
 
@@ -22,9 +25,9 @@ namespace Gamify.Sdk.Services
                 throw new ApplicationException(errorMessage);
             }
 
-            var playerToCall = existingSession.Player1Name == playerName ? existingSession.Player2 : existingSession.Player1;
+            var playerToCall = existingSession.GetVersusPlayer(playerName);
 
-            return (playerToCall as ISessionGamePlayer<T, U>).ProcessMove(move);
+            return this.moveProcessor.Process(playerToCall, move);
         }
     }
 }

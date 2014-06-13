@@ -80,7 +80,9 @@
     <Compile Include="SetupTests\GameBuilderTests.cs" />
     <Compile Include="SetupTests\GameDependencyModuleTests.cs" />
     <Compile Include="SetupTests\GameInitializerTests.cs" />
-    <Compile Include="TestModels\TestMongoEntity.cs" />
+    <Compile Include="TestModels\ITestService.cs" />
+    <Compile Include="TestModels\ITestServiceBar.cs" />
+    <Compile Include="TestModels\TestGameEntity.cs" />
     <Compile Include="TestModels\TestMove.cs" />
     <Compile Include="TestModels\TestMoveObject.cs" />
     <Compile Include="TestModels\TestNotificationObject.cs" />
@@ -88,6 +90,8 @@
     <Compile Include="TestModels\TestRequestObject.cs" />
     <Compile Include="TestModels\TestResponse.cs" />
     <Compile Include="TestModels\TestResponseObject.cs" />
+    <Compile Include="TestModels\TestServiceBar.cs" />
+    <Compile Include="TestModels\TestServiceFoo.cs" />
     <Compile Include="TestModels\TestSessionPlayer.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -1,12 +1,8 @@
-﻿using Gamify.Sdk.Services;
-
-namespace Gamify.Sdk
+﻿namespace Gamify.Sdk
 {
-    public abstract class SessionGamePlayer<TMove, UResponse> : ISessionGamePlayer<TMove, UResponse>
+    public class SessionGamePlayer
     {
         private string sessionName;
-
-        protected ISessionHistoryService<TMove, UResponse> sessionHistoryService;
 
         public bool IsReady { get; private set; }
 
@@ -26,14 +22,5 @@ namespace Gamify.Sdk
         }
 
         public bool PendingToMove { get; set; }
-
-        protected SessionGamePlayer(ISessionHistoryService<TMove, UResponse> sessionHistoryService)
-        {
-            this.sessionHistoryService = sessionHistoryService;
-        }
-
-        public abstract ISessionHistory<TMove, UResponse> GetHistory();
-
-        public abstract IGameMoveResponse<UResponse> ProcessMove(IGameMove<TMove> move);
     }
 }

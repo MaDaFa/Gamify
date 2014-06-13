@@ -13,7 +13,7 @@ namespace Gamify.Sdk.Tests.SetupTests
     [TestClass]
     public class GameBuilderTests
     {
-        private IGameBuilder testGameBuilder;
+        private IGameBuilder<TestMoveObject, TestResponseObject> testGameBuilder;
 
         [TestInitialize]
         public void Initialize()
@@ -21,11 +21,11 @@ namespace Gamify.Sdk.Tests.SetupTests
             var playerService = Mock.Of<IPlayerService>();
             var sessionService = Mock.Of<ISessionService>();
             var sessionHistoryService = Mock.Of<ISessionHistoryService<TestMoveObject, TestResponseObject>>();
-            var moveService = Mock.Of<IMoveService>();
+            var moveService = Mock.Of<IMoveService<TestMoveObject, TestResponseObject>>();
             var notificationService = Mock.Of<INotificationService>();
             var serializer = new JsonSerializer();
 
-            this.testGameBuilder = new GameBuilder(playerService, sessionService,
+            this.testGameBuilder = new GameBuilder<TestMoveObject, TestResponseObject>(playerService, sessionService,
                 sessionHistoryService, moveService, notificationService, serializer);
         }
 

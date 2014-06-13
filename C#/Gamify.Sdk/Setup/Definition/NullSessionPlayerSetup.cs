@@ -4,12 +4,12 @@ namespace Gamify.Sdk.Setup.Definition
 {
     public class NullSessionPlayerSetup : ISessionPlayerSetup
     {
-        public void GetPlayerReady(CreateGameRequestObject createGameRequest, ISessionGamePlayerBase gamePlayer)
+        public void GetPlayerReady(CreateGameRequestObject createGameRequest, SessionGamePlayer gamePlayer)
         {
             return;
         }
 
-        public void GetPlayerReady(GameAcceptedRequestObject gameAcceptedRequest, ISessionGamePlayerBase gamePlayer)
+        public void GetPlayerReady(GameAcceptedRequestObject gameAcceptedRequest, SessionGamePlayer gamePlayer)
         {
             return;
         }

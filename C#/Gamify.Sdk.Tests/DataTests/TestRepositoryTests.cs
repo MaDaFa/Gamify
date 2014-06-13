@@ -5,13 +5,13 @@ using System.Linq;
 namespace Gamify.Sdk.Tests.DataTests
 {
     [TestClass]
-    public class TestRepositoryTests : RepositoryTests<TestMongoEntity>
+    public class TestRepositoryTests : RepositoryTests<TestGameEntity>
     {
         [TestMethod]
         public void When_CreateTestEntity_Then_Success()
         {
             var testEntityName = GetUniqueName("test");
-            var testEntity = new TestMongoEntity
+            var testEntity = new TestGameEntity
             {
                 Name = testEntityName,
                 DisplayName = GetUniqueName("Test"),
@@ -32,7 +32,7 @@ namespace Gamify.Sdk.Tests.DataTests
         public void When_UpdateTestEntity_Then_Success()
         {
             var testEntityName = GetUniqueName("test");
-            var testEntity = new TestMongoEntity
+            var testEntity = new TestGameEntity
             {
                 Name = testEntityName,
                 DisplayName = GetUniqueName("Test"),
@@ -60,7 +60,7 @@ namespace Gamify.Sdk.Tests.DataTests
         public void When_DeleteTestEntity_Then_Success()
         {
             var testEntityName = GetUniqueName("test");
-            var testEntity = new TestMongoEntity
+            var testEntity = new TestGameEntity
             {
                 Name = testEntityName,
                 DisplayName = GetUniqueName("Test"),
@@ -82,21 +82,21 @@ namespace Gamify.Sdk.Tests.DataTests
         public void When_DeleteAllTestEntities_Then_Success()
         {
             var testEntityName1 = GetUniqueName("test");
-            var testEntity1 = new TestMongoEntity
+            var testEntity1 = new TestGameEntity
             {
                 Name = testEntityName1,
                 DisplayName = GetUniqueName("Test"),
                 IsValid = true
             };
             var testEntityName2 = GetUniqueName("test");
-            var testEntity2 = new TestMongoEntity
+            var testEntity2 = new TestGameEntity
             {
                 Name = testEntityName2,
                 DisplayName = GetUniqueName("Test"),
                 IsValid = false
             };
             var testEntityName3 = GetUniqueName("test");
-            var testEntity3 = new TestMongoEntity
+            var testEntity3 = new TestGameEntity
             {
                 Name = testEntityName3,
                 DisplayName = GetUniqueName("Test"),
@@ -121,28 +121,28 @@ namespace Gamify.Sdk.Tests.DataTests
         public void When_GetTestEntitiesWithPredicate_Then_Success()
         {
             var testEntityName1 = GetUniqueName("test");
-            var testEntity1 = new TestMongoEntity
+            var testEntity1 = new TestGameEntity
             {
                 Name = testEntityName1,
                 DisplayName = GetUniqueName("Test"),
                 IsValid = true
             };
             var testEntityName2 = GetUniqueName("test");
-            var testEntity2 = new TestMongoEntity
+            var testEntity2 = new TestGameEntity
             {
                 Name = testEntityName2,
                 DisplayName = GetUniqueName("Test"),
                 IsValid = false
             };
             var testEntityName3 = GetUniqueName("test");
-            var testEntity3 = new TestMongoEntity
+            var testEntity3 = new TestGameEntity
             {
                 Name = testEntityName3,
                 DisplayName = GetUniqueName("Test"),
                 IsValid = true
             };
             var testEntityName4 = GetUniqueName("entity");
-            var testEntity4 = new TestMongoEntity
+            var testEntity4 = new TestGameEntity
             {
                 Name = testEntityName4,
                 DisplayName = GetUniqueName("Entity"),

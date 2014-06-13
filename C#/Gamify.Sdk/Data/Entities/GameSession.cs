@@ -8,15 +8,15 @@ namespace Gamify.Sdk.Data.Entities
 
         public string Name { get; set; }
 
-        public ISessionGamePlayerBase Player1 { get; set; }
+        public SessionGamePlayer Player1 { get; set; }
 
         public string Player1Name { get; set; }
 
-        public ISessionGamePlayerBase Player2 { get; set; }
+        public SessionGamePlayer Player2 { get; set; }
 
         public string Player2Name { get; set; }
 
-        public GameSession(ISessionGamePlayerBase player1, ISessionGamePlayerBase player2)
+        public GameSession(SessionGamePlayer player1, SessionGamePlayer player2)
         {
             this.Player1 = player1;
             this.Player1Name = player1.Information.Name;
@@ -35,9 +35,9 @@ namespace Gamify.Sdk.Data.Entities
             return this.Player1Name == playerName || this.Player2Name == playerName;
         }
 
-        public ISessionGamePlayerBase GetPlayer(string playerName)
+        public SessionGamePlayer GetPlayer(string playerName)
         {
-            var player = default(ISessionGamePlayerBase);
+            var player = default(SessionGamePlayer);
 
             this.ValidatePlayer(playerName);
 
@@ -53,9 +53,9 @@ namespace Gamify.Sdk.Data.Entities
             return player;
         }
 
-        public ISessionGamePlayerBase GetVersusPlayer(string playerName)
+        public SessionGamePlayer GetVersusPlayer(string playerName)
         {
-            var player = default(ISessionGamePlayerBase);
+            var player = default(SessionGamePlayer);
 
             this.ValidatePlayer(playerName);
 

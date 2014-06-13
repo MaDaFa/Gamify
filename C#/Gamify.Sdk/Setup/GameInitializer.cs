@@ -1,4 +1,6 @@
-﻿using Gamify.Sdk.Services;
+﻿using Gamify.Sdk.Data;
+using Gamify.Sdk.Data.Configuration;
+using Gamify.Sdk.Services;
 using Gamify.Sdk.Setup.Definition;
 using Gamify.Sdk.Setup.Dependencies;
 
@@ -6,25 +8,27 @@ namespace Gamify.Sdk.Setup
 {
     public class GameInitializer : IGameInitializer
     {
-        private readonly IGameDefinition gameDefinition;
-        private readonly IGameDependencyModule gameDependencyModule;
-
-        public GameInitializer(IGameDefinition gameDefinition)
+        public IGameService Initialize<TMove, UResponse>(IGameDefinition<TMove, UResponse> gameDefinition)
         {
-            this.gameDefinition = gameDefinition;
+            var gameDependencyModuleBuilder = new GameDependencyModuleBuilder();
+            var gameConfiguration = GameDataSection.GetConfiguration();
 
-            var gameDependencyModuleBuilder = new GameDependencyModuleBuilder(this.gameDefinition);
+            gameDependencyModuleBuilder.SetDependency<IGameDataSection, GameDataSection>(gameConfiguration);
+            gameDependencyModuleBuilder.SetOpenGenericDependency(typeof(IRepository<>), typeof(Repository<>));
+            gameDependencyModuleBuilder.SetDependency<ISerializer, JsonSerializer>();
+            gameDependencyModuleBuilder.SetDependency<INotificationService, NotificationService>();
+            gameDependencyModuleBuilder.SetDependency<IPlayerService, PlayerService>();
+            gameDependencyModuleBuilder.SetDependency<ISessionHistoryService<TMove, UResponse>, SessionHistoryService<TMove, UResponse>>();
+            gameDependencyModuleBuilder.SetDependency<ISessionPlayerFactory>(gameDefinition.GetSessionPlayerFactory());
+            gameDependencyModuleBuilder.SetDependency<ISessionService, SessionService>();
+            gameDependencyModuleBuilder.SetDependency<IMoveProcessor<TMove, UResponse>>(gameDefinition.GetMoveProcessor());
+            gameDependencyModuleBuilder.SetDependency<IMoveService<TMove, UResponse>, MoveService<TMove, UResponse>>();
+            gameDependencyModuleBuilder.SetDependency<IGameBuilder<TMove, UResponse>, GameBuilder<TMove, UResponse>>();
 
-            gameDependencyModuleBuilder.SetDefaults();
+            var gameDependencyModule = gameDependencyModuleBuilder.Build();
+            var gameBuilder = gameDependencyModule.Get<IGameBuilder<TMove, UResponse>>();
 
-            this.gameDependencyModule = gameDependencyModuleBuilder.Build();
-        }
-
-        public IGameService Initialize()
-        {
-            var gameBuilder = this.gameDependencyModule.Get<IGameBuilder>();
-
-            gameBuilder.SetComponents(this.gameDefinition);
+            gameBuilder.SetComponents(gameDefinition);
 
             var gameService = gameBuilder.Build();
 

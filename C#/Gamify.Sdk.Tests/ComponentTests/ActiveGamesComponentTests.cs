@@ -26,9 +26,7 @@ namespace Gamify.Sdk.Tests.ComponentTests
         {
             this.serializer = new JsonSerializer();
 
-            var sessionHistoryService = Mock.Of<ISessionHistoryService<TestMoveObject, TestResponseObject>>();
-
-            var player1s1 = new TestSessionPlayer(sessionHistoryService)
+            var player1s1 = new TestSessionPlayer()
             {
                 SessionName = "player1-vs-player2",
                 PendingToMove = false,
@@ -38,7 +36,7 @@ namespace Gamify.Sdk.Tests.ComponentTests
                     Name = "player1"
                 }
             };
-            var player2s1 = new TestSessionPlayer(sessionHistoryService)
+            var player2s1 = new TestSessionPlayer()
             {
                 SessionName = "player1-vs-player2",
                 PendingToMove = false,
@@ -48,7 +46,7 @@ namespace Gamify.Sdk.Tests.ComponentTests
                     Name = "player2"
                 }
             };
-            var player1s2 = new TestSessionPlayer(sessionHistoryService)
+            var player1s2 = new TestSessionPlayer()
             {
                 SessionName = "player1-vs-player3",
                 PendingToMove = false,
@@ -58,7 +56,7 @@ namespace Gamify.Sdk.Tests.ComponentTests
                     Name = "player1"
                 }
             };
-            var player3s2 = new TestSessionPlayer(sessionHistoryService)
+            var player3s2 = new TestSessionPlayer()
             {
                 SessionName = "player1-vs-player3",
                 PendingToMove = false,

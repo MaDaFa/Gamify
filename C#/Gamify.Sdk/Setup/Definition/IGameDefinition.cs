@@ -1,30 +1,26 @@
 ﻿using Gamify.Sdk.Components;
-using System;
 using System.Collections.Generic;
 
 namespace Gamify.Sdk.Setup.Definition
 {
-    public interface IGameDefinition
+    public interface IGameDefinition<TMove, UResponse>
     {
         ISessionPlayerFactory GetSessionPlayerFactory();
 
         ISessionPlayerSetup GetSessionPlayerSetup();
 
-        IGameInviteDecorator GetGameInviteDecorator();
+        IMoveFactory<TMove> GetMoveFactory();
 
-        IMoveHandler GetMoveHandler();
+        IMoveProcessor<TMove, UResponse> GetMoveProcessor();
 
         IMoveResultNotificationFactory GetMoveResultNotificationFactory();
 
-        IGameInformationNotificationFactory GetGameInformationNotificationFactory();
+        IGameInviteDecorator GetGameInviteDecorator();
+
+        IGameInformationNotificationFactory<TMove, UResponse> GetGameInformationNotificationFactory();
+
+        IPlayerHistoryItemFactory<TMove, UResponse> GetPlayerHistoryItemfactory();
 
         IEnumerable<IGameComponent> GetCustomComponents();
-
-        Type GetSessionHistoryServiceType();
-    }
-
-    public interface IGameDefinition<TMove, UResponse> : IGameDefinition
-    {
-        new ISessionPlayerFactory<TMove, UResponse> GetSessionPlayerFactory();
     }
 }

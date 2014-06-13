@@ -26,9 +26,7 @@ namespace Gamify.Sdk.Tests.ComponentTests
         {
             this.serializer = new JsonSerializer();
 
-            var sessionHistoryService = Mock.Of<ISessionHistoryService<TestMoveObject, TestResponseObject>>();
-
-            var player1 = new TestSessionPlayer(sessionHistoryService)
+            var player1 = new TestSessionPlayer()
             {
                 SessionName = this.sessionName,
                 PendingToMove = false,
@@ -38,7 +36,7 @@ namespace Gamify.Sdk.Tests.ComponentTests
                     Name = "player1"
                 }
             };
-            var player2 = new TestSessionPlayer(sessionHistoryService)
+            var player2 = new TestSessionPlayer()
             {
                 SessionName = this.sessionName,
                 PendingToMove = false,
