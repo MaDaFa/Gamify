@@ -9,21 +9,18 @@ namespace Gamify.Sdk.Components
     {
         private readonly IPlayerService playerService;
         private readonly ISessionService sessionService;
-        private readonly ISessionHistoryService sessionHistoryService;
         private readonly ISessionPlayerFactory sessionPlayerFactory;
         private readonly ISessionPlayerSetup playerSetup;
         private readonly IGameInviteDecorator gameInviteDecorator;
         private readonly ISerializer serializer;
 
         public CreateGameComponent(IPlayerService playerService, ISessionService sessionService, 
-            ISessionHistoryService sessionHistoryService, INotificationService notificationService, 
-            ISessionPlayerFactory sessionPlayerFactory, ISessionPlayerSetup playerSetup, 
-            IGameInviteDecorator gameInviteDecorator, ISerializer serializer)
+            INotificationService notificationService, ISessionPlayerFactory sessionPlayerFactory, 
+            ISessionPlayerSetup playerSetup, IGameInviteDecorator gameInviteDecorator, ISerializer serializer)
             : base(notificationService)
         {
             this.playerService = playerService;
             this.sessionService = sessionService;
-            this.sessionHistoryService = sessionHistoryService;
             this.sessionPlayerFactory = sessionPlayerFactory;
             this.playerSetup = playerSetup;
             this.gameInviteDecorator = gameInviteDecorator;
@@ -44,9 +41,9 @@ namespace Gamify.Sdk.Components
         {
             var createGameObject = this.serializer.Deserialize<CreateGameRequestObject>(request.SerializedRequestObject);
             var connectedPlayer1 = this.playerService.GetByName(createGameObject.PlayerName);
-            var sessionPlayer1 = this.sessionPlayerFactory.Create(connectedPlayer1, sessionHistoryService);
+            var sessionPlayer1 = this.sessionPlayerFactory.Create(connectedPlayer1);
             var connectedPlayer2 = this.playerService.GetByName(createGameObject.InvitedPlayerName);
-            var sessionPlayer2 = this.sessionPlayerFactory.Create(connectedPlayer2, sessionHistoryService);
+            var sessionPlayer2 = this.sessionPlayerFactory.Create(connectedPlayer2);
 
             this.playerSetup.GetPlayerReady(createGameObject, sessionPlayer1);
 

@@ -4,8 +4,8 @@ namespace Gamify.Sdk.Setup.Definition
 {
     public interface ISessionPlayerSetup
     {
-        void GetPlayerReady(CreateGameRequestObject createGameRequest, ISessionGamePlayerBase gamePlayer);
+        void GetPlayerReady(CreateGameRequestObject createGameRequest, SessionGamePlayer gamePlayer);
 
-        void GetPlayerReady(GameAcceptedRequestObject gameAcceptedRequest, ISessionGamePlayerBase gamePlayer);
+        void GetPlayerReady(GameAcceptedRequestObject gameAcceptedRequest, SessionGamePlayer gamePlayer);
     }
 }

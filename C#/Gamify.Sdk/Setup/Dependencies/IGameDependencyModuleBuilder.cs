@@ -4,23 +4,21 @@ namespace Gamify.Sdk.Setup.Dependencies
 {
     public interface IGameDependencyModuleBuilder
     {
-        void SetDefaults();
+        void SetDependency<T>();
 
-        void Set<T>();
+        void SetDependency(Type type);
 
-        void Set(Type type);
+        void SetDependency<T, U>() where U : T;
 
-        void Set<T, U>() where U : T;
+        void SetDependency(Type interfaceType, Type instanceType);
 
-        void Set(Type interfaceType, Type instanceType);
+        void SetDependency<T>(Type instanceType);
 
-        void Set<T>(Type instanceType);
+        void SetDependency<T>(T instance) where T : class;
 
-        void Set<T>(T instance) where T : class;
+        void SetDependency<T, U>(U instance) where U : class, T;
 
-        void Set<T, U>(U instance) where U : class, T;
-
-        void SetOpenGeneric(Type openGenericInterfaceType, Type openGenericType);
+        void SetOpenGenericDependency(Type openGenericInterfaceType, Type openGenericType);
 
         IGameDependencyModule Build();
     }

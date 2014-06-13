@@ -2,8 +2,8 @@
 
 namespace Gamify.Sdk.Setup.Definition
 {
-    public interface IGameInformationNotificationFactory
+    public interface IGameInformationNotificationFactory<TMove, UResponse>
     {
-        GameInformationNotificationObject Create(IGameSession session);
+        GameInformationNotificationObject Create(IGameSession session, IPlayerHistoryItemFactory<TMove, UResponse> playerHistoryItemFactory);
     }
 }

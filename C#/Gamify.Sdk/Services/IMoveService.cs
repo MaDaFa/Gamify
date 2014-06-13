@@ -1,7 +1,7 @@
 ﻿namespace Gamify.Sdk.Services
 {
-    public interface IMoveService
+    public interface IMoveService<TMove, UResponse>
     {
-        IGameMoveResponse<U> Handle<T, U>(string sessionName, string playerName, IGameMove<T> move);
+        IGameMoveResponse<UResponse> Handle(string sessionName, string playerName, IGameMove<TMove> move);
     }
 }

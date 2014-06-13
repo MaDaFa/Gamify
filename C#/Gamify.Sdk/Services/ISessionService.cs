@@ -14,7 +14,7 @@ namespace Gamify.Sdk.Services
 
         IGameSession GetByName(string sessionName);
 
-        IGameSession Create(ISessionGamePlayerBase sessionPlayer1, ISessionGamePlayerBase sessionPlayer2 = null);
+        IGameSession Create(SessionGamePlayer sessionPlayer1, SessionGamePlayer sessionPlayer2 = null);
 
         void Start(IGameSession currentSession);
 

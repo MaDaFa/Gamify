@@ -9,15 +9,13 @@ namespace Gamify.Sdk.Services
     public class SessionService : ISessionService
     {
         private readonly IPlayerService playerService;
-        private readonly ISessionHistoryService sessionHistoryService;
         private readonly IRepository<GameSession> sessionRepository;
         private readonly ISessionPlayerFactory sessionPlayerFactory;
 
-        public SessionService(IPlayerService playerService, ISessionHistoryService sessionHistoryService, 
-            IRepository<GameSession> sessionRepository, ISessionPlayerFactory sessionPlayerFactory)
+        public SessionService(IPlayerService playerService, IRepository<GameSession> sessionRepository, 
+            ISessionPlayerFactory sessionPlayerFactory)
         {
             this.playerService = playerService;
-            this.sessionHistoryService = sessionHistoryService;
             this.sessionRepository = sessionRepository;
             this.sessionPlayerFactory = sessionPlayerFactory;
         }
@@ -49,7 +47,7 @@ namespace Gamify.Sdk.Services
             return this.sessionRepository.Get(s => s.Name == sessionName);
         }
 
-        public IGameSession Create(ISessionGamePlayerBase sessionPlayer1, ISessionGamePlayerBase sessionPlayer2 = null)
+        public IGameSession Create(SessionGamePlayer sessionPlayer1, SessionGamePlayer sessionPlayer2 = null)
         {
             if (sessionPlayer2 == null)
             {
@@ -112,7 +110,7 @@ namespace Gamify.Sdk.Services
             this.sessionRepository.Update(existingSession);
         }
 
-        private ISessionGamePlayerBase GetRandomSessionPlayer2(ISessionGamePlayerBase sessionPlayer1)
+        private SessionGamePlayer GetRandomSessionPlayer2(SessionGamePlayer sessionPlayer1)
         {
             var randomPlayer2 = this.playerService.GetRandom(playerNameToExclude: sessionPlayer1.Information.Name);
 
@@ -123,7 +121,7 @@ namespace Gamify.Sdk.Services
                 throw new ApplicationException(errorMessage);
             }
 
-            return this.sessionPlayerFactory.Create(randomPlayer2, this.sessionHistoryService);
+            return this.sessionPlayerFactory.Create(randomPlayer2);
         }
     }
 }

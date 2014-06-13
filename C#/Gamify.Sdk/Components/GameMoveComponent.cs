@@ -1,25 +1,29 @@
 ﻿using Gamify.Sdk.Contracts.Notifications;
 using Gamify.Sdk.Contracts.Requests;
+using Gamify.Sdk.Data.Entities;
 using Gamify.Sdk.Services;
 using Gamify.Sdk.Setup.Definition;
 
 namespace Gamify.Sdk.Components
 {
-    public class GameMoveComponent : GameComponent
+    public class GameMoveComponent<TMove, UResponse> : GameComponent
     {
-        private readonly IMoveService moveService;
+        private readonly IMoveService<TMove, UResponse> moveService;
         private readonly ISessionService sessionService;
-        private readonly IMoveHandler moveHandler;
+        private readonly ISessionHistoryService<TMove, UResponse> sessionHistoryService;
+        private readonly IMoveFactory<TMove> moveFactory;
         private readonly IMoveResultNotificationFactory moveResultNotificationFactory;
         private readonly ISerializer serializer;
 
-        public GameMoveComponent(IMoveService moveService, ISessionService sessionService, INotificationService notificationService,
-            IMoveHandler moveHandler, IMoveResultNotificationFactory moveResultNotificationFactory, ISerializer serializer)
+        public GameMoveComponent(IMoveService<TMove, UResponse> moveService, ISessionService sessionService,
+            ISessionHistoryService<TMove, UResponse> sessionHistoryService, INotificationService notificationService,
+            IMoveFactory<TMove> moveFactory, IMoveResultNotificationFactory moveResultNotificationFactory, ISerializer serializer)
             : base(notificationService)
         {
             this.moveService = moveService;
             this.sessionService = sessionService;
-            this.moveHandler = moveHandler;
+            this.sessionHistoryService = sessionHistoryService;
+            this.moveFactory = moveFactory;
             this.moveResultNotificationFactory = moveResultNotificationFactory;
             this.serializer = serializer;
         }
@@ -42,7 +46,12 @@ namespace Gamify.Sdk.Components
             var currentSession = this.sessionService.GetByName(moveRequestObject.SessionName);
             var originPlayer = currentSession.GetPlayer(moveRequestObject.PlayerName);
             var destinationPlayer = currentSession.GetVersusPlayer(originPlayer.Information.Name);
-            var moveResponse = this.moveHandler.Handle(moveRequestObject, this.moveService);
+            var move = this.moveFactory.Create(moveRequestObject.MoveInformation);
+            var moveResponse = this.moveService.Handle(currentSession.Name, originPlayer.Information.Name, move);
+
+            var sessionHistoryItem = new SessionHistoryItem<TMove, UResponse>(move.MoveObject, moveResponse.MoveResponseObject);
+
+            this.sessionHistoryService.Add(currentSession.Name, destinationPlayer.Information.Name, sessionHistoryItem);
 
             if (moveResponse.IsWin)
             {
@@ -54,8 +63,6 @@ namespace Gamify.Sdk.Components
                 };
 
                 this.notificationService.SendBroadcast(GameNotificationType.GameFinished, gameFinishedNotificationObject, gameFinishedNotificationObject.WinnerPlayerName, gameFinishedNotificationObject.LooserPlayerName);
-
-                return;
             }
             else
             {

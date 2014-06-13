@@ -1,5 +1,4 @@
 ﻿using Autofac;
-using Gamify.Sdk.Setup.Definition;
 using System;
 
 namespace Gamify.Sdk.Setup.Dependencies
@@ -7,12 +6,10 @@ namespace Gamify.Sdk.Setup.Dependencies
     public class GameDependencyModule : IGameDependencyModule
     {
         private readonly IContainer gameContainer;
-        private readonly IGameDefinition gameDefinition;
 
-        public GameDependencyModule(IContainer gameContainer, IGameDefinition gameDefinition)
+        public GameDependencyModule(IContainer gameContainer)
         {
             this.gameContainer = gameContainer;
-            this.gameDefinition = gameDefinition;
         }
 
         public object Get(Type objectType)

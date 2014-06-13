@@ -116,7 +116,6 @@
     <Compile Include="IGamePlayer.cs" />
     <Compile Include="IGameSession.cs" />
     <Compile Include="ISerializer.cs" />
-    <Compile Include="ISessionGamePlayer.cs" />
     <Compile Include="ISessionHistory.cs" />
     <Compile Include="JsonSerializer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -133,6 +132,9 @@
     <Compile Include="Services\SessionHistoryService.cs" />
     <Compile Include="Services\SessionService.cs" />
     <Compile Include="SessionGamePlayer.cs" />
+    <Compile Include="Setup\Definition\DefaultSessionPlayerFactory.cs" />
+    <Compile Include="Setup\Definition\IMoveFactory.cs" />
+    <Compile Include="Setup\Definition\IMoveProcessor.cs" />
     <Compile Include="Setup\Dependencies\GameDependencyModule.cs" />
     <Compile Include="Setup\Dependencies\GameDependencyModuleBuilder.cs" />
     <Compile Include="Setup\GameBuilder.cs" />
@@ -143,7 +145,6 @@
     <Compile Include="Setup\Dependencies\IGameDependencyModuleBuilder.cs" />
     <Compile Include="Setup\Definition\IGameInformationNotificationFactory.cs" />
     <Compile Include="Setup\IGameInitializer.cs" />
-    <Compile Include="Setup\Definition\IMoveHandler.cs" />
     <Compile Include="Setup\Definition\IMoveResultNotificationFactory.cs" />
     <Compile Include="Setup\Definition\IPlayerHistoryItemFactory.cs" />
     <Compile Include="Setup\Definition\ISessionPlayerFactory.cs" />

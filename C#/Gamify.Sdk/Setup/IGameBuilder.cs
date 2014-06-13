@@ -3,10 +3,10 @@ using Gamify.Sdk.Setup.Definition;
 
 namespace Gamify.Sdk.Setup
 {
-    public interface IGameBuilder
+    public interface IGameBuilder<TMove, UResponse>
     {
         IGameService Build();
 
-        void SetComponents(IGameDefinition gameDefinition);
+        void SetComponents(IGameDefinition<TMove, UResponse> gameDefinition);
     }
 }
