@@ -4,6 +4,6 @@ namespace Gamify.Sdk.Setup.Definition
 {
     public interface IPlayerHistoryItemFactory<TMove, UResponse>
     {
-        IPlayerHistoryItem Create();
+        IPlayerHistoryItem Create(UResponse gameResponseObject);
     }
 }
