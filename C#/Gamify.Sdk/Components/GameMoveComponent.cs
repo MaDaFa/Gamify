@@ -51,7 +51,7 @@ namespace Gamify.Sdk.Components
 
             var sessionHistoryItem = new SessionHistoryItem<TMove, UResponse>(move.MoveObject, moveResponse.MoveResponseObject);
 
-            this.sessionHistoryService.Add(currentSession.Name, destinationPlayer.Information.Name, sessionHistoryItem);
+            this.sessionHistoryService.Add(currentSession.Name, originPlayer.Information.Name, sessionHistoryItem);
 
             if (moveResponse.IsWin)
             {
