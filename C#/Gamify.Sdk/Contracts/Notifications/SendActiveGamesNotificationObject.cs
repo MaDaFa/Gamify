@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
 namespace Gamify.Sdk.Contracts.Notifications
@@ -43,14 +42,5 @@ namespace Gamify.Sdk.Contracts.Notifications
         {
             this.activeGames.Add(activeGame);
         }
-    }
-
-    public class GameObject
-    {
-        public string SessionName { get; set; }
-
-        public string Player1Name { get; set; }
-
-        public string Player2Name { get; set; }
     }
 }

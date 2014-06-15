@@ -42,6 +42,12 @@ namespace Gamify.Sdk.Services
                 && s.State == SessionState.Active);
         }
 
+        public IEnumerable<IGameSession> GetFinished(string playerName)
+        {
+            return this.sessionRepository.GetAll(s => (s.Player1Name == playerName || s.Player2Name == playerName)
+                && s.State == SessionState.Finished);
+        }
+
         public IGameSession GetByName(string sessionName)
         {
             return this.sessionRepository.Get(s => s.Name == sessionName);

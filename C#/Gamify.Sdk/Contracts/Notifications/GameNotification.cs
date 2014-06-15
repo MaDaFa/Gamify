@@ -11,11 +11,13 @@
         GameAbandoned = 7,
         SendConnectedPlayers = 8,
         SendActiveGames = 9,
-        SendGameInformation = 10,
-        GameFinished = 11,
-        Message = 12,
-        TypingMessage = 13,
-        PlayerDisconnected = 14,
+        SendPendingGames = 10,
+        SendFinishedGames = 11,
+        SendGameInformation = 12,
+        GameFinished = 13,
+        Message = 14,
+        TypingMessage = 15,
+        PlayerDisconnected = 16,
         Error = 255
     }
 

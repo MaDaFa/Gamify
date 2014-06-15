@@ -581,5 +581,120 @@ namespace Gamify.Sdk.Tests.ServiceTests
             Assert.IsFalse(newSession3.Player2.PendingToMove);
             Assert.AreEqual("player1-vs-player4", newSession3.Player2.SessionName);
         }
+
+        [TestMethod]
+        public void When_GetFinishedSessions_Then_Success()
+        {
+            var playerService = Mock.Of<IPlayerService>();
+            var sessionRepository = new TestRepository<GameSession>();
+            var sessionPlayerFactory = Mock.Of<ISessionPlayerFactory>();
+
+            this.sessionService = new SessionService(playerService, sessionRepository, sessionPlayerFactory);
+
+            var sessionPlayer1_1 = new TestSessionPlayer()
+            {
+                Information = new GamePlayer
+                {
+                    Name = "player1",
+                    DisplayName = "Player 1"
+                }
+            };
+            var sessionPlayer1_3 = new TestSessionPlayer()
+            {
+                Information = new GamePlayer
+                {
+                    Name = "player1",
+                    DisplayName = "Player 1"
+                }
+            };
+            var sessionPlayer1_4 = new TestSessionPlayer()
+            {
+                Information = new GamePlayer
+                {
+                    Name = "player1",
+                    DisplayName = "Player 1"
+                }
+            };
+            var sessionPlayer2 = new TestSessionPlayer()
+            {
+                Information = new GamePlayer
+                {
+                    Name = "player2",
+                    DisplayName = "Player 2"
+                }
+            };
+            var sessionPlayer3 = new TestSessionPlayer()
+            {
+                Information = new GamePlayer
+                {
+                    Name = "player3",
+                    DisplayName = "Player 3"
+                }
+            };
+            var sessionPlayer4 = new TestSessionPlayer()
+            {
+                Information = new GamePlayer
+                {
+                    Name = "player4",
+                    DisplayName = "Player 4"
+                }
+            };
+            var newSession1 = this.sessionService.Create(sessionPlayer1_1, sessionPlayer2);
+            var newSession2 = this.sessionService.Create(sessionPlayer1_3, sessionPlayer3);
+            var newSession3 = this.sessionService.Create(sessionPlayer1_4, sessionPlayer4);
+
+            this.sessionService.Start(newSession2);
+            this.sessionService.Start(newSession3);
+
+            var startedSession2 = this.sessionService.GetByName(newSession2.Name);
+            var startedSession3 = this.sessionService.GetByName(newSession3.Name);
+
+            this.sessionService.Finish(startedSession3.Name);
+
+            var finishedSession3 = this.sessionService.GetByName(newSession3.Name);
+            var finishedSessions = this.sessionService.GetFinished("player1");
+
+            Assert.IsNotNull(finishedSessions);
+            Assert.AreEqual(1, finishedSessions.Count());
+
+            Assert.IsNotNull(newSession1);
+            Assert.AreEqual("player1-vs-player2", newSession1.Name);
+            Assert.AreEqual(SessionState.Pending, newSession1.State);
+            Assert.IsTrue(newSession1.HasPlayer("player1"));
+            Assert.IsTrue(newSession1.HasPlayer("player2"));
+            Assert.AreEqual("player1", newSession1.GetVersusPlayer("player2").Information.Name);
+            Assert.IsTrue(newSession1.Player1.IsReady);
+            Assert.IsTrue(newSession1.Player1.PendingToMove);
+            Assert.AreEqual("player1-vs-player2", newSession1.Player1.SessionName);
+            Assert.IsTrue(newSession1.Player2.IsReady);
+            Assert.IsFalse(newSession1.Player2.PendingToMove);
+            Assert.AreEqual("player1-vs-player2", newSession1.Player2.SessionName);
+
+            Assert.IsNotNull(startedSession2);
+            Assert.AreEqual("player1-vs-player3", startedSession2.Name);
+            Assert.AreEqual(SessionState.Active, startedSession2.State);
+            Assert.IsTrue(startedSession2.HasPlayer("player1"));
+            Assert.IsTrue(startedSession2.HasPlayer("player3"));
+            Assert.AreEqual("player1", startedSession2.GetVersusPlayer("player3").Information.Name);
+            Assert.IsTrue(startedSession2.Player1.IsReady);
+            Assert.IsTrue(startedSession2.Player1.PendingToMove);
+            Assert.AreEqual("player1-vs-player3", startedSession2.Player1.SessionName);
+            Assert.IsTrue(startedSession2.Player2.IsReady);
+            Assert.IsFalse(startedSession2.Player2.PendingToMove);
+            Assert.AreEqual("player1-vs-player3", startedSession2.Player2.SessionName);
+
+            Assert.IsNotNull(finishedSession3);
+            Assert.AreEqual("player1-vs-player4", finishedSession3.Name);
+            Assert.AreEqual(SessionState.Finished, finishedSession3.State);
+            Assert.IsTrue(finishedSession3.HasPlayer("player1"));
+            Assert.IsTrue(finishedSession3.HasPlayer("player4"));
+            Assert.AreEqual("player1", finishedSession3.GetVersusPlayer("player4").Information.Name);
+            Assert.IsTrue(finishedSession3.Player1.IsReady);
+            Assert.IsTrue(finishedSession3.Player1.PendingToMove);
+            Assert.AreEqual("player1-vs-player4", finishedSession3.Player1.SessionName);
+            Assert.IsTrue(finishedSession3.Player2.IsReady);
+            Assert.IsFalse(finishedSession3.Player2.PendingToMove);
+            Assert.AreEqual("player1-vs-player4", finishedSession3.Player2.SessionName);
+        }
     }
 }

@@ -38,7 +38,7 @@ namespace Gamify.Sdk.Tests.SetupTests
             
             var testGameService = this.testGameBuilder.Build();
 
-            Assert.AreEqual(11, testGameService.Components.Count());
+            Assert.AreEqual(13, testGameService.Components.Count());
         }
 
         [TestMethod]
@@ -66,7 +66,7 @@ namespace Gamify.Sdk.Tests.SetupTests
 
             testGameDefinitionMock.VerifyAll();
 
-            Assert.AreEqual(17, testGameService.Components.Count());
+            Assert.AreEqual(19, testGameService.Components.Count());
         }
     }
 }

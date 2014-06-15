@@ -12,6 +12,8 @@ namespace Gamify.Sdk.Services
 
         IEnumerable<IGameSession> GetActives(string playerName);
 
+        IEnumerable<IGameSession> GetFinished(string playerName);
+
         IGameSession GetByName(string sessionName);
 
         IGameSession Create(SessionGamePlayer sessionPlayer1, SessionGamePlayer sessionPlayer2 = null);

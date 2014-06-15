@@ -32,6 +32,8 @@ namespace Gamify.Sdk.Setup
             this.gameService.RegisterComponent(new AbandonGameComponent(this.sessionService, this.notificationService, this.serializer));
             this.gameService.RegisterComponent(new AcceptGameComponent(this.sessionService, this.notificationService, gameDefinition.GetSessionPlayerSetup(), this.serializer));
             this.gameService.RegisterComponent(new ActiveGamesComponent(this.sessionService, this.notificationService, this.serializer));
+            this.gameService.RegisterComponent(new PendingGamesComponent(this.sessionService, this.notificationService, this.serializer));
+            this.gameService.RegisterComponent(new FinishedGamesComponent(this.sessionService, this.notificationService, this.serializer));
             this.gameService.RegisterComponent(new ConnectedPlayersComponent(this.playerService, this.notificationService, this.serializer));
             this.gameService.RegisterComponent(new ConnectPlayerComponent(this.playerService, this.notificationService, this.serializer));
             this.gameService.RegisterComponent(new CreateGameComponent(this.playerService, this.sessionService, this.notificationService, 
