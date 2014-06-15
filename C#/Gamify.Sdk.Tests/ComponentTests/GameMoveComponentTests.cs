@@ -76,12 +76,10 @@ namespace Gamify.Sdk.Tests.ComponentTests
                 .Returns(this.session)
                 .Verifiable();
 
-            var destinationPlayer = "player1";
-
             this.sessionHistoryServiceMock = new Mock<ISessionHistoryService<TestMoveObject, TestResponseObject>>();
             this.sessionHistoryServiceMock
                 .Setup(x => x.Add(It.Is<string>(s => s == this.sessionName),
-                    It.Is<string>(s => s == destinationPlayer),
+                    It.Is<string>(s => s == this.requestPlayer),
                     It.Is<ISessionHistoryItem<TestMoveObject, TestResponseObject>>(i => i.Move == testMove.MoveObject 
                         && i.Response == moveResponse.MoveResponseObject)))
                 .Verifiable();

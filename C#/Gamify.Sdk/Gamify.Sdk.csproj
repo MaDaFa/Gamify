@@ -63,11 +63,13 @@
     <Compile Include="Components\ConnectPlayerComponent.cs" />
     <Compile Include="Components\CreateGameComponent.cs" />
     <Compile Include="Components\DisconnectPlayerComponent.cs" />
+    <Compile Include="Components\FinishedGamesComponent.cs" />
     <Compile Include="Components\GameComponent.cs" />
     <Compile Include="Components\GameMoveComponent.cs" />
     <Compile Include="Components\IGameComponent.cs" />
     <Compile Include="Components\MessageComponent.cs" />
     <Compile Include="Components\OpenGameComponent.cs" />
+    <Compile Include="Components\PendingGamesComponent.cs" />
     <Compile Include="Components\RejectGameComponent.cs" />
     <Compile Include="Contracts\Notifications\ErrorNotificationObject.cs" />
     <Compile Include="Contracts\Notifications\GameAbandonedNotificationObject.cs" />
@@ -76,6 +78,7 @@
     <Compile Include="Contracts\Notifications\GameInformationNotificationObject.cs" />
     <Compile Include="Contracts\Notifications\GameInviteNotificationObject.cs" />
     <Compile Include="Contracts\Notifications\GameNotification.cs" />
+    <Compile Include="Contracts\Notifications\GameObject.cs" />
     <Compile Include="Contracts\Notifications\GameRejectedNotificationObject.cs" />
     <Compile Include="Contracts\Notifications\INotificationObject.cs" />
     <Compile Include="Contracts\Notifications\MessageNotificationObject.cs" />
@@ -85,6 +88,8 @@
     <Compile Include="Contracts\Notifications\PlayerDisconnectedNotificationObject.cs" />
     <Compile Include="Contracts\Notifications\SendActiveGamesNotificationObject.cs" />
     <Compile Include="Contracts\Notifications\SendConnectedPlayersNotificationObject.cs" />
+    <Compile Include="Contracts\Notifications\SendFinishedGamesNotificationObject.cs" />
+    <Compile Include="Contracts\Notifications\SendPendingGamesNotificationObject.cs" />
     <Compile Include="Contracts\Notifications\TypingMessageNotificationObject.cs" />
     <Compile Include="Contracts\Requests\AbandonGameRequestObject.cs" />
     <Compile Include="Contracts\Requests\CreateGameRequestObject.cs" />
@@ -93,6 +98,8 @@
     <Compile Include="Contracts\Requests\GameRequest.cs" />
     <Compile Include="Contracts\Requests\GetActiveGamesRequestObject.cs" />
     <Compile Include="Contracts\Requests\GetConnectedPlayersRequestObject.cs" />
+    <Compile Include="Contracts\Requests\GetFinishedGamesRequestObject.cs" />
+    <Compile Include="Contracts\Requests\GetPendingGamesRequestObject.cs" />
     <Compile Include="Contracts\Requests\IRequestObject.cs" />
     <Compile Include="Contracts\Requests\MessageRequestObject.cs" />
     <Compile Include="Contracts\Requests\MoveRequestObject.cs" />

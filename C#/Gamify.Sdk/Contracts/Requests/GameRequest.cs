@@ -10,9 +10,11 @@
         AbandonGame = 6,
         GetConnectedPlayers = 7,
         GetActiveGames = 8,
-        OpenGame = 9,
-        Message = 10,
-        TypingMessage = 11,
+        GetPendingGames = 9,
+        GetFinishedGames = 10,
+        OpenGame = 11,
+        Message = 12,
+        TypingMessage = 13,
         PlayerDisconnect = 255
     }
 

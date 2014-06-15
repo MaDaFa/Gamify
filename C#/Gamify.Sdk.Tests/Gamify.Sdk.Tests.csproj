@@ -61,9 +61,11 @@
     <Compile Include="ComponentTests\ConnectPlayerComponentTests.cs" />
     <Compile Include="ComponentTests\CreateGameComponentTests.cs" />
     <Compile Include="ComponentTests\DisconnectPlayerComponentTests.cs" />
+    <Compile Include="ComponentTests\FinishedGamesComponentTests.cs" />
     <Compile Include="ComponentTests\GameMoveComponentTests.cs" />
     <Compile Include="ComponentTests\MessageComponentTests.cs" />
     <Compile Include="ComponentTests\OpenGameComponentTests.cs" />
+    <Compile Include="ComponentTests\PendingGamesComponentTests.cs" />
     <Compile Include="DataTests\GamePlayerRepositoryTests.cs" />
     <Compile Include="DataTests\GameSessionRepositoryTests.cs" />
     <Compile Include="DataTests\RepositoryTests.cs" />

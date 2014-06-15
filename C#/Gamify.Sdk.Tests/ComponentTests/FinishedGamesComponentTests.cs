@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Gamify.Sdk.Tests.ComponentTests
 {
     [TestClass]
-    public class ActiveGamesComponentTests
+    public class FinishedGamesComponentTests
     {
         private readonly string requestPlayer = "player1";
 
@@ -19,7 +19,7 @@ namespace Gamify.Sdk.Tests.ComponentTests
         private IList<IGameSession> sessions;
         private Mock<ISessionService> sessionServiceMock;
         private Mock<INotificationService> notificationServiceMock;
-        private IGameComponent activeGamesComponent;
+        private IGameComponent finishedGamesComponent;
 
         [TestInitialize]
         public void Initialize()
@@ -76,36 +76,36 @@ namespace Gamify.Sdk.Tests.ComponentTests
 
             this.sessionServiceMock = new Mock<ISessionService>();
             this.sessionServiceMock
-                .Setup(s => s.GetActives(It.Is<string>(x => x == this.requestPlayer)))
+                .Setup(s => s.GetFinished(It.Is<string>(x => x == this.requestPlayer)))
                 .Returns(this.sessions)
                 .Verifiable();
 
             this.notificationServiceMock = new Mock<INotificationService>();
 
-            this.activeGamesComponent = new ActiveGamesComponent(sessionServiceMock.Object, notificationServiceMock.Object, this.serializer);
+            this.finishedGamesComponent = new FinishedGamesComponent(sessionServiceMock.Object, notificationServiceMock.Object, this.serializer);
         }
 
         [TestMethod]
-        public void When_HandleGetActiveGames_Then_Success()
+        public void When_HandleGetFinishedGames_Then_Success()
         {
-            var getActiveGamesRequest = new GetActiveGamesRequestObject
+            var getFinishedGamesRequest = new GetFinishedGamesRequestObject
             {
                 PlayerName = this.requestPlayer
             };
             var gameRequest = new GameRequest
             {
-                Type = (int)GameRequestType.GetActiveGames,
-                SerializedRequestObject = this.serializer.Serialize(getActiveGamesRequest)
+                Type = (int)GameRequestType.GetFinishedGames,
+                SerializedRequestObject = this.serializer.Serialize(getFinishedGamesRequest)
             };
 
-            var canHandle = this.activeGamesComponent.CanHandleRequest(gameRequest);
+            var canHandle = this.finishedGamesComponent.CanHandleRequest(gameRequest);
 
-            this.activeGamesComponent.HandleRequest(gameRequest);
+            this.finishedGamesComponent.HandleRequest(gameRequest);
 
             this.sessionServiceMock.VerifyAll();
-            this.notificationServiceMock.Verify(s => s.Send(It.Is<GameNotificationType>(t => t == GameNotificationType.SendActiveGames),
-                It.Is<object>(o => (((SendActiveGamesNotificationObject)o).ActiveGamesCount == 2) 
-                    && ((SendActiveGamesNotificationObject)o).PlayerName == this.requestPlayer),
+            this.notificationServiceMock.Verify(s => s.Send(It.Is<GameNotificationType>(t => t == GameNotificationType.SendFinishedGames),
+                It.Is<object>(o => (((SendFinishedGamesNotificationObject)o).FinishedGamesCount == 2)
+                    && ((SendFinishedGamesNotificationObject)o).PlayerName == this.requestPlayer),
                 It.Is<string>(x => x == this.requestPlayer)));
 
             Assert.IsTrue(canHandle);
