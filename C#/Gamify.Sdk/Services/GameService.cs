@@ -78,6 +78,12 @@ namespace Gamify.Sdk.Services
             {
                 this.SendErrorNotification(gameEx, receiver: gameRequest.Sender);
             }
+            catch (Exception ex)
+            {
+                var errorMessage = string.Format("An unhandled error occurred. Details: {0}", ex.Message);
+
+                this.SendErrorNotification(errorMessage, receiver: gameRequest.Sender);
+            }
         }
 
         public void Disconnect(string userName)
