@@ -21,7 +21,7 @@ namespace Gamify.Sdk.Tests.DataTests
         [TestInitialize]
         public void Initialize()
         {
-            var configuration = GameDataSection.GetConfiguration();
+            var configuration = GameDataSection.Instance();
 
             this.testRepository = new Repository<T>(configuration);
         }

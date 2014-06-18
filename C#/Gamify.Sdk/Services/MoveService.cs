@@ -14,6 +14,7 @@ namespace Gamify.Sdk.Services
             this.moveProcessor = moveProcessor;
         }
 
+        ///<exception cref="GameServiceException">GameServiceException</exception>
         public IGameMoveResponse<UResponse> Handle(string sessionName, string playerName, IGameMove<TMove> move)
         {
             var existingSession = this.sessionService.GetByName(sessionName);
@@ -22,7 +23,7 @@ namespace Gamify.Sdk.Services
             {
                 var errorMessage = string.Format("Player {0} does not belong to the session {1}", playerName, sessionName);
 
-                throw new ApplicationException(errorMessage);
+                throw new GameServiceException(errorMessage);
             }
 
             var playerToCall = existingSession.GetVersusPlayer(playerName);

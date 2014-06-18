@@ -7,6 +7,7 @@
 
     public interface ISessionHistoryService<TMove, UResponse> : ISessionHistoryService
     {
+        ///<exception cref="GameServiceException">GameServiceException</exception>
         void Add(string sessionName, string playerName, ISessionHistoryItem<TMove, UResponse> historyItem);
 
         ISessionHistory<TMove, UResponse> GetBySessionPlayer(string sessionName, string playerName);

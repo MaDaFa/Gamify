@@ -22,6 +22,8 @@
     {
         public int Type { get; set; }
 
+        public string Sender { get; set; }
+
         public string SerializedRequestObject { get; set; }
 
         public GameRequest(GameRequestType type)

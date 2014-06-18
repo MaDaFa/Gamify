@@ -26,8 +26,10 @@ namespace Gamify.Sdk
 
         bool HasPlayer(string playerName);
 
+        ///<exception cref="GameException">GameException</exception>
         SessionGamePlayer GetPlayer(string playerName);
 
+        ///<exception cref="GameException">GameException</exception>
         SessionGamePlayer GetVersusPlayer(string playerName);
     }   
 }

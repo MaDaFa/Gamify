@@ -13,12 +13,16 @@ namespace Gamify.Sdk.Data
 
         bool Exist(Expression<Func<T, bool>> predicate = null);
 
+        ///<exception cref="GameDataException">GameDataException</exception>
         void Create(T dataEntity);
 
+        ///<exception cref="GameDataException">GameDataException</exception>
         void Update(T dataEntity);
 
+        ///<exception cref="GameDataException">GameDataException</exception>
         void Delete(T dataEntity);
 
+        ///<exception cref="GameDataException">GameDataException</exception>
         void DeleteAll();
     }
 }

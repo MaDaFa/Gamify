@@ -17,6 +17,8 @@ namespace Gamify.Sdk.Components
 
         bool CanHandleNotification(GameNotification notification);
 
+        ///<exception cref="GameException">GameException</exception>
+        ///<exception cref="GameServiceException">GameServiceException</exception>
         void HandleRequest(GameRequest request);
     }
 }

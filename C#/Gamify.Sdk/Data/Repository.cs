@@ -15,14 +15,29 @@ namespace Gamify.Sdk.Data
         private static readonly string idName = "_id";
         private static readonly string collectionName = typeof(T).Name;
 
-        private readonly MongoDatabase database;
+        private MongoDatabase database;
 
+        ///<exception cref="GameDataException">GameDataException</exception>
         public Repository(IGameDataSection configuration)
         {
-            var databaseClient = new MongoClient(configuration.ConnectionString);
-            var databaseServer = databaseClient.GetServer();
+            this.InitializeDatabase(configuration);
+        }
 
-            this.database = databaseServer.GetDatabase(configuration.DatabaseName);
+        private void InitializeDatabase(IGameDataSection configuration)
+        {
+            try
+            {
+                var databaseClient = new MongoClient(configuration.ConnectionString);
+                var databaseServer = databaseClient.GetServer();
+
+                this.database = databaseServer.GetDatabase(configuration.DatabaseName);
+            }
+            catch (MongoException mongoEx)
+            {
+                var errorMessage = string.Concat("An unexpected error occured when initializing DB connection. Details: {0}", mongoEx.Message);
+
+                throw new GameDataException(errorMessage, mongoEx);
+            }
         }
 
         public IQueryable<T> GetAll(Expression<Func<T, bool>> predicate = null)

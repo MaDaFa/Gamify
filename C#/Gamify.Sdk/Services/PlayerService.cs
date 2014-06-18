@@ -42,29 +42,41 @@ namespace Gamify.Sdk.Services
             return this.playerRepository.Exist(p => p.Name == playerName);
         }
 
+        ///<exception cref="GameServiceException">GameServiceException</exception>
         public void Connect(string playerName, string name = null)
         {
             var existingPlayer = this.playerRepository.Get(p => p.Name == playerName);
 
-            if (existingPlayer == null)
+            try
             {
-                var newPlayer = new GamePlayer
+                if (existingPlayer == null)
                 {
-                    Name = playerName,
-                    DisplayName = name ?? playerName,
-                    IsConnected = true
-                };
+                    var newPlayer = new GamePlayer
+                    {
+                        Name = playerName,
+                        DisplayName = name ?? playerName,
+                        IsConnected = true
+                    };
 
-                this.playerRepository.Create(newPlayer);
+                    this.playerRepository.Create(newPlayer);
+                }
+                else
+                {
+                    existingPlayer.IsConnected = true;
+
+                    this.playerRepository.Update(existingPlayer);
+                }
             }
-            else
+            catch (GameDataException gameDataEx)
             {
-                existingPlayer.IsConnected = true;
+                var actionKeyword = existingPlayer == null ? "creating" : "updating";
+                var errorMessage = string.Format("An error occured when {0} the player {1} to connect", actionKeyword, playerName);
 
-                this.playerRepository.Update(existingPlayer);
+                throw new GameServiceException(errorMessage, gameDataEx);
             }
         }
 
+        ///<exception cref="GameServiceException">GameServiceException</exception>
         public void Disconnect(string playerName)
         {
             var existingPlayer = this.playerRepository.Get(p => p.Name == playerName);
@@ -73,12 +85,21 @@ namespace Gamify.Sdk.Services
             {
                 var errorMessage = string.Format("The player to disconnect, {0}, does not exist", playerName);
 
-                throw new GameDataException(errorMessage);
+                throw new GameServiceException(errorMessage);
             }
 
             existingPlayer.IsConnected = false;
 
-            this.playerRepository.Update(existingPlayer);
+            try
+            {
+                this.playerRepository.Update(existingPlayer);
+            }
+            catch (GameDataException gameDataEx)
+            {
+                var errorMessage = string.Format("An error occured when trying to disconnect the player {0}", playerName);
+
+                throw new GameServiceException(errorMessage, gameDataEx);
+            }
         }
     }
 }

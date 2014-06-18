@@ -14,8 +14,10 @@ namespace Gamify.Sdk.Services
 
         bool Exist(string playerName);
 
+        ///<exception cref="GameServiceException">GameServiceException</exception>
         void Connect(string playerName, string name = null);
 
+        ///<exception cref="GameServiceException">GameServiceException</exception>
         void Disconnect(string playerName);
     }
 }

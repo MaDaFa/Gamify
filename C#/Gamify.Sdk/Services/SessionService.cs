@@ -1,7 +1,6 @@
 ﻿using Gamify.Sdk.Data;
 using Gamify.Sdk.Data.Entities;
 using Gamify.Sdk.Setup.Definition;
-using System;
 using System.Collections.Generic;
 
 namespace Gamify.Sdk.Services
@@ -53,6 +52,7 @@ namespace Gamify.Sdk.Services
             return this.sessionRepository.Get(s => s.Name == sessionName);
         }
 
+        ///<exception cref="GameServiceException">GameServiceException</exception>
         public IGameSession Create(SessionGamePlayer sessionPlayer1, SessionGamePlayer sessionPlayer2 = null)
         {
             if (sessionPlayer2 == null)
@@ -67,53 +67,92 @@ namespace Gamify.Sdk.Services
             {
                 var errorMessage = string.Format("There is already an active session for players {0} and {1}", sessionPlayer1.Information.Name, sessionPlayer2.Information.Name);
 
-                throw new ApplicationException(errorMessage);
+                throw new GameServiceException(errorMessage);
             }
 
-            this.sessionRepository.Create(newSession);
+            try
+            {
+                this.sessionRepository.Create(newSession);
+            }
+            catch (GameDataException gameDataEx)
+            {
+                var errorMessage = string.Format("An error occured when creating the session {0}", newSession.Name);
+
+                throw new GameServiceException(errorMessage, gameDataEx);
+            }
 
             return newSession;
         }
 
+        ///<exception cref="GameServiceException">GameServiceException</exception>
         public void Start(IGameSession currentSession)
         {
             var sessionToUpdate = currentSession as GameSession;
 
             sessionToUpdate.State = SessionState.Active;
 
-            this.sessionRepository.Update(sessionToUpdate);
+            try
+            {
+                this.sessionRepository.Update(sessionToUpdate);
+            }
+            catch (GameDataException gameDataEx)
+            {
+                var errorMessage = string.Format("An error occured when starting the session {0}", sessionToUpdate.Name);
+
+                throw new GameServiceException(errorMessage, gameDataEx);
+            }
         }
 
+        ///<exception cref="GameServiceException">GameServiceException</exception>
         public void Abandon(string sessionName)
         {
             var existingSession = this.sessionRepository.Get(s => s.State == SessionState.Active && s.Name == sessionName);
 
             if (existingSession == null)
             {
-                var errorMessage = string.Format("There is no active session {0}", sessionName);
+                var errorMessage = string.Format("There is no active session {0} to abandon", sessionName);
 
-                throw new ApplicationException(errorMessage);
+                throw new GameServiceException(errorMessage);
             }
 
             existingSession.State = SessionState.Abandoned;
 
-            this.sessionRepository.Update(existingSession);
+            try
+            {
+                this.sessionRepository.Update(existingSession);
+            }
+            catch (GameDataException gameDataEx)
+            {
+                var errorMessage = string.Format("An error occured when trying to abandon the session {0}", existingSession.Name);
+
+                throw new GameServiceException(errorMessage, gameDataEx);
+            }
         }
 
+        ///<exception cref="GameServiceException">GameServiceException</exception>
         public void Finish(string sessionName)
         {
             var existingSession = this.sessionRepository.Get(s => s.State == SessionState.Active && s.Name == sessionName);
 
             if (existingSession == null)
             {
-                var errorMessage = string.Format("There is no active session {0}", sessionName);
+                var errorMessage = string.Format("There is no active session {0} to finish", sessionName);
 
-                throw new ApplicationException(errorMessage);
+                throw new GameServiceException(errorMessage);
             }
 
             existingSession.State = SessionState.Finished;
 
-            this.sessionRepository.Update(existingSession);
+            try
+            {
+                this.sessionRepository.Update(existingSession);
+            }
+            catch (GameDataException gameDataEx)
+            {
+                var errorMessage = string.Format("An error occured when trying to finish the session {0}", existingSession.Name);
+
+                throw new GameServiceException(errorMessage, gameDataEx);
+            }
         }
 
         private SessionGamePlayer GetRandomSessionPlayer2(SessionGamePlayer sessionPlayer1)
@@ -124,7 +163,7 @@ namespace Gamify.Sdk.Services
             {
                 var errorMessage = "There are no users available to play";
 
-                throw new ApplicationException(errorMessage);
+                throw new GameServiceException(errorMessage);
             }
 
             return this.sessionPlayerFactory.Create(randomPlayer2);

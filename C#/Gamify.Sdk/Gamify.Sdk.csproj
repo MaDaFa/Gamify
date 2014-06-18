@@ -117,6 +117,7 @@
     <Compile Include="Data\GameDataException.cs" />
     <Compile Include="Data\IRepository.cs" />
     <Compile Include="Data\Repository.cs" />
+    <Compile Include="GameException.cs" />
     <Compile Include="GameNotificationEventArgs.cs" />
     <Compile Include="IGameMove.cs" />
     <Compile Include="IGameMoveResponse.cs" />
@@ -127,6 +128,7 @@
     <Compile Include="JsonSerializer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\GameService.cs" />
+    <Compile Include="Services\GameServiceException.cs" />
     <Compile Include="Services\IGameService.cs" />
     <Compile Include="Services\IMoveService.cs" />
     <Compile Include="Services\INotificationService.cs" />
