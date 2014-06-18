@@ -1,4 +1,5 @@
 ﻿using Gamify.Sdk.Components;
+using Gamify.Sdk.Contracts.Notifications;
 using Gamify.Sdk.Contracts.Requests;
 using System;
 using System.Collections.Generic;
@@ -56,6 +57,7 @@ namespace Gamify.Sdk.Services
             this.Send(message);
         }
 
+        ///<exception cref="GameServiceException">GameServiceException</exception>
         public void Send(string message)
         {
             var gameRequest = this.serializer.Deserialize<GameRequest>(message);
@@ -65,10 +67,17 @@ namespace Gamify.Sdk.Services
             {
                 var errorMessage = string.Format("There is no component registered to handle request type {0}", gameRequest.Type);
 
-                throw new ApplicationException(errorMessage);
+                this.SendErrorNotification(errorMessage, receiver: gameRequest.Sender);
             }
 
-            component.HandleRequest(gameRequest);
+            try
+            {
+                component.HandleRequest(gameRequest);
+            }
+            catch (GameException gameEx)
+            {
+                this.SendErrorNotification(gameEx, receiver: gameRequest.Sender);
+            }
         }
 
         public void Disconnect(string userName)
@@ -85,6 +94,31 @@ namespace Gamify.Sdk.Services
             var message = this.serializer.Serialize(gameRequest);
 
             this.Send(message);
+        }
+
+        private void SendErrorNotification(GameException gameException, string receiver)
+        {
+            this.SendErrorNotification(gameException.Message, receiver);
+        }
+
+        private void SendErrorNotification(string exceptionMessage, string receiver)
+        {
+            var errorNotificationObject = new ErrorNotificationObject
+            {
+                Message = exceptionMessage
+            };
+            var notification = new GameNotification
+            {
+                Type = (int)GameNotificationType.Error,
+                SerializedNotificationObject = this.serializer.Serialize(errorNotificationObject)
+            };
+
+            var notificationHandler = this.Notification;
+
+            if (notificationHandler != null)
+            {
+                notificationHandler(this, new GameNotificationEventArgs(receiver, notification));
+            }
         }
     }
 }

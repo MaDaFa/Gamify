@@ -35,6 +35,7 @@ namespace Gamify.Sdk.Data.Entities
             return this.Player1Name == playerName || this.Player2Name == playerName;
         }
 
+        ///<exception cref="GameException">GameException</exception>
         public SessionGamePlayer GetPlayer(string playerName)
         {
             var player = default(SessionGamePlayer);
@@ -53,6 +54,7 @@ namespace Gamify.Sdk.Data.Entities
             return player;
         }
 
+        ///<exception cref="GameException">GameException</exception>
         public SessionGamePlayer GetVersusPlayer(string playerName)
         {
             var player = default(SessionGamePlayer);
@@ -75,9 +77,9 @@ namespace Gamify.Sdk.Data.Entities
         {
             if(!this.HasPlayer(playerName))
             {
-                var message = string.Format("Player {0} is not part of this session", playerName);
+                var message = string.Format("Player {0} is not part session {1}", playerName, this.Name);
 
-                throw new ApplicationException(message);
+                throw new GameException(message);
             }
         }
     }

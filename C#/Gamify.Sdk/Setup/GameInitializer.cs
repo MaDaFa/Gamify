@@ -11,7 +11,7 @@ namespace Gamify.Sdk.Setup
         public IGameService Initialize<TMove, UResponse>(IGameDefinition<TMove, UResponse> gameDefinition)
         {
             var gameDependencyModuleBuilder = new GameDependencyModuleBuilder();
-            var gameConfiguration = GameDataSection.GetConfiguration();
+            var gameConfiguration = GameDataSection.Instance() as GameDataSection;
 
             gameDependencyModuleBuilder.SetDependency<IGameDataSection, GameDataSection>(gameConfiguration);
             gameDependencyModuleBuilder.SetOpenGenericDependency(typeof(IRepository<>), typeof(Repository<>));

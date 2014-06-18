@@ -34,7 +34,7 @@ namespace Gamify.Sdk.Tests.ServiceTests
 
             this.notificationService.Notification += (sender, e) =>
             {
-                notifiedUserName = e.UserName;
+                notifiedUserName = e.Receiver;
                 notifiedType = e.Notification.Type;
                 notifiedObject = this.serializer.Deserialize<TestNotificationObject>(e.Notification.SerializedNotificationObject);
             };

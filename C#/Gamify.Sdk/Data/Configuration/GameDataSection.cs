@@ -1,12 +1,23 @@
-﻿using System.Configuration;
+﻿using System;
+using System.Configuration;
 
 namespace Gamify.Sdk.Data.Configuration
 {
     public class GameDataSection : ConfigurationSection, IGameDataSection
     {
-        public static GameDataSection GetConfiguration()
+        private static readonly Lazy<IGameDataSection> instance;
+
+        static GameDataSection()
         {
-            return ConfigurationManager.GetSection("gameData") as GameDataSection;
+            instance = new Lazy<IGameDataSection>(() =>
+            {
+                return ConfigurationManager.GetSection("gameData") as IGameDataSection;
+            });
+        }
+
+        public static IGameDataSection Instance()
+        {
+            return instance.Value;
         }
 
         [ConfigurationProperty("connectionString", IsRequired = true, DefaultValue = "")]

@@ -5,13 +5,13 @@ namespace Gamify.Sdk
 {
     public class GameNotificationEventArgs : EventArgs
     {
-        public string UserName { get; set; }
+        public string Receiver { get; set; }
 
         public GameNotification Notification { get; set; }
 
-        public GameNotificationEventArgs(string userName, GameNotification notification)
+        public GameNotificationEventArgs(string receiver, GameNotification notification)
         {
-            this.UserName = userName;
+            this.Receiver = receiver;
             this.Notification = notification;
         }
 

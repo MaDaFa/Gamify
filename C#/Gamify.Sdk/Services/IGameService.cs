@@ -17,6 +17,7 @@ namespace Gamify.Sdk.Services
 
         void Connect(string userName, string accessToken);
 
+        ///<exception cref="GameServiceException">GameServiceException</exception>
         void Send(string message);
 
         void Disconnect(string userName);

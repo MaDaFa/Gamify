@@ -2,7 +2,7 @@
 
 namespace Gamify.Sdk.Data
 {
-    public class GameDataException : ApplicationException
+    public class GameDataException : GameException
     {
         public GameDataException()
         {
