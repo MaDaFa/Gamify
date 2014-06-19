@@ -7,7 +7,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System.Collections.Generic;
 
-namespace Gamify.Sdk.Tests.ComponentTests
+namespace Gamify.Sdk.UnitTests.ComponentTests
 {
     [TestClass]
     public class DisconnectPlayerComponentTests

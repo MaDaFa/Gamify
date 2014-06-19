@@ -1,10 +1,10 @@
 ﻿using Gamify.Sdk.Data.Entities;
 using Gamify.Sdk.Services;
-using Gamify.Sdk.Tests.TestModels;
+using Gamify.Sdk.UnitTests.TestModels;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
 
-namespace Gamify.Sdk.Tests.ServiceTests
+namespace Gamify.Sdk.UnitTests.ServiceTests
 {
     [TestClass]
     public class PlayerServiceTests

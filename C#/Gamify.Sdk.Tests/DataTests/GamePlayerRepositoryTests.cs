@@ -2,7 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
 
-namespace Gamify.Sdk.Tests.DataTests
+namespace Gamify.Sdk.UnitTests.DataTests
 {
     [TestClass]
     public class GamePlayerRepositoryTests : RepositoryTests<GamePlayer>

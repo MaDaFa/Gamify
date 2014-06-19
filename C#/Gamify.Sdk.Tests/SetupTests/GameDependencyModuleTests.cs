@@ -2,10 +2,10 @@
 using Gamify.Sdk.Data.Configuration;
 using Gamify.Sdk.Services;
 using Gamify.Sdk.Setup.Dependencies;
-using Gamify.Sdk.Tests.TestModels;
+using Gamify.Sdk.UnitTests.TestModels;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Gamify.Sdk.Tests.SetupTests
+namespace Gamify.Sdk.UnitTests.SetupTests
 {
     [TestClass]
     public class GameDependencyModuleTests

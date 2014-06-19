@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 
-namespace Gamify.Sdk.Tests.TestModels
+namespace Gamify.Sdk.UnitTests.TestModels
 {
     public class TestRepository<T> : IRepository<T>
         where T : GameEntity

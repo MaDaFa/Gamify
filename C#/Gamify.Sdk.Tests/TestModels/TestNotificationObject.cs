@@ -1,6 +1,6 @@
 ﻿using Gamify.Sdk.Contracts.Notifications;
 
-namespace Gamify.Sdk.Tests.TestModels
+namespace Gamify.Sdk.UnitTests.TestModels
 {
     public class TestNotificationObject : INotificationObject
     {

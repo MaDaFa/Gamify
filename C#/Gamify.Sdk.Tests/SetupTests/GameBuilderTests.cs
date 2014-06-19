@@ -2,13 +2,13 @@
 using Gamify.Sdk.Services;
 using Gamify.Sdk.Setup;
 using Gamify.Sdk.Setup.Definition;
-using Gamify.Sdk.Tests.TestModels;
+using Gamify.Sdk.UnitTests.TestModels;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Gamify.Sdk.Tests.SetupTests
+namespace Gamify.Sdk.UnitTests.SetupTests
 {
     [TestClass]
     public class GameBuilderTests
