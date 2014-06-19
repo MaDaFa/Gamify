@@ -8,6 +8,7 @@ namespace Gamify.Sdk.Setup
 {
     public class GameInitializer : IGameInitializer
     {
+        ///<exception cref="GameSetupException">GameSetupException</exception>
         public IGameService Initialize<TMove, UResponse>(IGameDefinition<TMove, UResponse> gameDefinition)
         {
             var gameDependencyModuleBuilder = new GameDependencyModuleBuilder();

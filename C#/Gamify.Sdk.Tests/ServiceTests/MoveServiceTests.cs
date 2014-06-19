@@ -1,11 +1,11 @@
 ﻿using Gamify.Sdk.Data.Entities;
 using Gamify.Sdk.Services;
 using Gamify.Sdk.Setup.Definition;
-using Gamify.Sdk.Tests.TestModels;
+using Gamify.Sdk.UnitTests.TestModels;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 
-namespace Gamify.Sdk.Tests.ServiceTests
+namespace Gamify.Sdk.UnitTests.ServiceTests
 {
     [TestClass]
     public class MoveServiceTests

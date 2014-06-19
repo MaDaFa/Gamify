@@ -1,4 +1,4 @@
-﻿namespace Gamify.Sdk.Tests.TestModels
+﻿namespace Gamify.Sdk.UnitTests.TestModels
 {
     public class TestSessionPlayer : SessionGamePlayer
     {

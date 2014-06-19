@@ -1,6 +1,6 @@
 ﻿using Gamify.Sdk.Data.Entities;
 
-namespace Gamify.Sdk.Tests.TestModels
+namespace Gamify.Sdk.UnitTests.TestModels
 {
     public class TestGameEntity : GameEntity
     {

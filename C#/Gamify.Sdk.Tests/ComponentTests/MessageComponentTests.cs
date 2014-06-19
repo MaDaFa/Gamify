@@ -5,7 +5,7 @@ using Gamify.Sdk.Services;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 
-namespace Gamify.Sdk.Tests.ComponentTests
+namespace Gamify.Sdk.UnitTests.ComponentTests
 {
     [TestClass]
     public class MessageComponentTests

@@ -2,12 +2,12 @@
 using Gamify.Sdk.Contracts.Notifications;
 using Gamify.Sdk.Contracts.Requests;
 using Gamify.Sdk.Services;
-using Gamify.Sdk.Tests.TestModels;
+using Gamify.Sdk.UnitTests.TestModels;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System;
 
-namespace Gamify.Sdk.Tests.ServiceTests
+namespace Gamify.Sdk.UnitTests.ServiceTests
 {
     [TestClass]
     public class GameServiceTests

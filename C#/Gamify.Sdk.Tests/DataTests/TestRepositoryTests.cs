@@ -1,8 +1,8 @@
-﻿using Gamify.Sdk.Tests.TestModels;
+﻿using Gamify.Sdk.UnitTests.TestModels;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
 
-namespace Gamify.Sdk.Tests.DataTests
+namespace Gamify.Sdk.UnitTests.DataTests
 {
     [TestClass]
     public class TestRepositoryTests : RepositoryTests<TestGameEntity>

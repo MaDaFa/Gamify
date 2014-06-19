@@ -4,7 +4,7 @@ using Gamify.Sdk.Data.Entities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 
-namespace Gamify.Sdk.Tests.DataTests
+namespace Gamify.Sdk.UnitTests.DataTests
 {
     [TestClass]
     public abstract class RepositoryTests<T> where T : GameEntity

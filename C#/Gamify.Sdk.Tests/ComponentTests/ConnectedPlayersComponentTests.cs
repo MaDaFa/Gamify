@@ -3,12 +3,12 @@ using Gamify.Sdk.Contracts.Notifications;
 using Gamify.Sdk.Contracts.Requests;
 using Gamify.Sdk.Data.Entities;
 using Gamify.Sdk.Services;
-using Gamify.Sdk.Tests.TestModels;
+using Gamify.Sdk.UnitTests.TestModels;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System.Collections.Generic;
 
-namespace Gamify.Sdk.Tests.ComponentTests
+namespace Gamify.Sdk.UnitTests.ComponentTests
 {
     [TestClass]
     public class ConnectedPlayersComponentTests
