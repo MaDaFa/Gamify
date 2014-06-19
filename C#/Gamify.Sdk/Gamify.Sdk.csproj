@@ -149,6 +149,7 @@
     <Compile Include="Setup\GameBuilder.cs" />
     <Compile Include="Setup\Definition\GameDefinition.cs" />
     <Compile Include="Setup\GameInitializer.cs" />
+    <Compile Include="Setup\GameSetupException.cs" />
     <Compile Include="Setup\IGameBuilder.cs" />
     <Compile Include="Setup\Dependencies\IGameDependencyModule.cs" />
     <Compile Include="Setup\Dependencies\IGameDependencyModuleBuilder.cs" />
