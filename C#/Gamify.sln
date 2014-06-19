@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gamify.Sdk", "Gamify.Sdk\Gamify.Sdk.csproj", "{2AD62B4B-9D86-4CDD-ABB5-02C1D905EE91}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gamify.Sdk.Tests", "Gamify.Sdk.Tests\Gamify.Sdk.Tests.csproj", "{D1702DDC-822D-4F11-B550-4261AC177091}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gamify.Sdk.UnitTests", "Gamify.Sdk.Tests\Gamify.Sdk.UnitTests.csproj", "{D1702DDC-822D-4F11-B550-4261AC177091}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gamify.Sdk.IntegrationTests", "Gamify.Sdk.IntegrationTests\Gamify.Sdk.IntegrationTests.csproj", "{2219D01F-491A-4C70-9F5B-4DEEE39DCAC0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,6 +21,10 @@ Global
 		{D1702DDC-822D-4F11-B550-4261AC177091}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D1702DDC-822D-4F11-B550-4261AC177091}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D1702DDC-822D-4F11-B550-4261AC177091}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2219D01F-491A-4C70-9F5B-4DEEE39DCAC0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2219D01F-491A-4C70-9F5B-4DEEE39DCAC0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2219D01F-491A-4C70-9F5B-4DEEE39DCAC0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2219D01F-491A-4C70-9F5B-4DEEE39DCAC0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
