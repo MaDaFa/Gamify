@@ -26,8 +26,6 @@ namespace Gamify.Sdk.Setup.Definition
             return new NullGameInviteDecorator();
         }
 
-        public abstract IGameInformationNotificationFactory<TMove, UResponse> GetGameInformationNotificationFactory();
-
         public abstract IPlayerHistoryItemFactory<TMove, UResponse> GetPlayerHistoryItemfactory();
 
         public virtual IEnumerable<IGameComponent> GetCustomComponents()

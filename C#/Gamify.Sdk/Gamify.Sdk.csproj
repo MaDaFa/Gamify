@@ -153,7 +153,6 @@
     <Compile Include="Setup\IGameBuilder.cs" />
     <Compile Include="Setup\Dependencies\IGameDependencyModule.cs" />
     <Compile Include="Setup\Dependencies\IGameDependencyModuleBuilder.cs" />
-    <Compile Include="Setup\Definition\IGameInformationNotificationFactory.cs" />
     <Compile Include="Setup\IGameInitializer.cs" />
     <Compile Include="Setup\Definition\IMoveResultNotificationFactory.cs" />
     <Compile Include="Setup\Definition\IPlayerHistoryItemFactory.cs" />

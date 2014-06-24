@@ -43,7 +43,7 @@ namespace Gamify.Sdk.Setup
                 this.notificationService, gameDefinition.GetMoveFactory(), gameDefinition.GetMoveResultNotificationFactory(), this.serializer));
             this.gameService.RegisterComponent(new MessageComponent(this.notificationService, this.serializer));
             this.gameService.RegisterComponent(new OpenGameComponent<TMove, UResponse>(this.sessionService, this.sessionHistoryService, 
-                this.notificationService, gameDefinition.GetGameInformationNotificationFactory(), gameDefinition.GetPlayerHistoryItemfactory(), this.serializer));
+                this.notificationService, gameDefinition.GetPlayerHistoryItemfactory(), this.serializer));
             this.gameService.RegisterComponent(new RejectGameComponent(this.sessionService, this.notificationService, this.serializer));
 
             foreach (var component in gameDefinition.GetCustomComponents())
