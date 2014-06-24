@@ -1,5 +1,5 @@
-﻿using Gamify.Contracts.Notifications;
-using Gamify.Contracts.Requests;
+﻿using Gamify.Client.Net.Contracts.Notifications;
+using Gamify.Client.Net.Contracts.Requests;
 using System;
 using System.Threading;
 using Windows.Networking.Sockets;
@@ -10,8 +10,7 @@ namespace Gamify.Client.Net.Client
     public class GameClient : IGameClient
     {
         private readonly Uri gameServerUri;
-        private readonly ISerializer<GameRequest> requestSerializer;
-        private readonly ISerializer<GameNotification> notificationSerializer;
+        private readonly ISerializer serializer;
         private MessageWebSocket gameWebSocketClient;
         private DataWriter gameMessageWriter;
 
@@ -28,8 +27,7 @@ namespace Gamify.Client.Net.Client
         public GameClient(string gameServerUri)
         {
             this.gameServerUri = new Uri(gameServerUri);
-            this.requestSerializer = new JsonSerializer<GameRequest>();
-            this.notificationSerializer = new JsonSerializer<GameNotification>();
+            this.serializer = new JsonSerializer();
         }
 
         public async void Initialize()
@@ -66,7 +64,7 @@ namespace Gamify.Client.Net.Client
                 throw new GameClientException("The client is not initialized");
             }
 
-            var serializedGameRequest = this.requestSerializer.Serialize(gameRequest);
+            var serializedGameRequest = this.serializer.Serialize(gameRequest);
 
             this.gameMessageWriter.WriteString(serializedGameRequest);
         }
@@ -80,7 +78,7 @@ namespace Gamify.Client.Net.Client
                     reader.UnicodeEncoding = UnicodeEncoding.Utf8;
 
                     var message = reader.ReadString(reader.UnconsumedBufferLength);
-                    var gameNotification = this.notificationSerializer.Deserialize(message);
+                    var gameNotification = this.serializer.Deserialize<GameNotification>(message);
 
                     if (this.MessageReceived != null)
                     {

@@ -1,5 +1,5 @@
 ﻿using Gamify.Client.Net.Client;
-using Gamify.Contracts.Notifications;
+using Gamify.Client.Net.Contracts.Notifications;
 using System;
 
 namespace Gamify.Client.Net.Services
@@ -7,7 +7,7 @@ namespace Gamify.Client.Net.Services
     public class GameListener<TNotification> : IGameListener<TNotification>
         where TNotification : INotificationObject
     {
-        private readonly ISerializer<TNotification> notificationSerializer;
+        private readonly ISerializer serializer;
         private readonly GameNotificationType notificationType;
         protected readonly IGameClient gameClient;
 
@@ -15,7 +15,7 @@ namespace Gamify.Client.Net.Services
 
         public GameListener(GameNotificationType notificationType, IGameClient gameClient)
         {
-            this.notificationSerializer = new JsonSerializer<TNotification>();
+            this.serializer = new JsonSerializer();
 
             this.notificationType = notificationType;
             this.gameClient = gameClient;
@@ -37,7 +37,7 @@ namespace Gamify.Client.Net.Services
 
         private TNotification ParseNotification(GameNotification notification)
         {
-            var notificationObject = this.notificationSerializer.Deserialize(notification.SerializedNotificationObject);
+            var notificationObject = this.serializer.Deserialize<TNotification>(notification.SerializedNotificationObject);
 
             return notificationObject;
         }

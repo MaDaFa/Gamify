@@ -1,18 +1,10 @@
-﻿using System.Collections.Concurrent;
-using System.Text;
+﻿using System.Text;
 
 namespace Gamify.Client.Net.Client
 {
     public class GameClientFactory : IGameClientFactory
     {
         private readonly string gameServerUri;
-
-        private static ConcurrentDictionary<string, IGameClient> gameClients;
-
-        static GameClientFactory()
-        {
-            gameClients = new ConcurrentDictionary<string, IGameClient>();
-        }
 
         public GameClientFactory(string gameServerUri)
         {
@@ -24,23 +16,14 @@ namespace Gamify.Client.Net.Client
             this.gameServerUri = gameServerUri;
         }
 
-        public IGameClient GetGameClient(string playerName)
+        public IGameClient Create()
         {
-            var gameClient = default(IGameClient);
+            var completeGameServerUri = this.GetCompleteGameServerUri();
 
-            if (!gameClients.TryGetValue(playerName, out gameClient))
-            {
-                var completeGameServerUri = this.GetCompleteGameServerUri(playerName);
-
-                gameClient = new GameClient(completeGameServerUri);
-
-                gameClients.TryAdd(playerName, gameClient);
-            }
-
-            return gameClient;
+            return new GameClient(completeGameServerUri);
         }
 
-        private string GetCompleteGameServerUri(string playerName)
+        private string GetCompleteGameServerUri()
         {
             var gameServerUriBuilder = new StringBuilder();
 
@@ -50,13 +33,6 @@ namespace Gamify.Client.Net.Client
             }
 
             gameServerUriBuilder.Append(this.gameServerUri);
-
-            if (!this.gameServerUri.EndsWith("?userName="))
-            {
-                gameServerUriBuilder.Append("?userName=");
-            }
-
-            gameServerUriBuilder.Append(playerName);
 
             return gameServerUriBuilder.ToString();
         }

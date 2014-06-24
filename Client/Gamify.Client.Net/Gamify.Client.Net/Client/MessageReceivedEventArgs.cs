@@ -1,4 +1,4 @@
-﻿using Gamify.Contracts.Notifications;
+﻿using Gamify.Client.Net.Contracts.Notifications;
 using System;
 
 namespace Gamify.Client.Net.Client
