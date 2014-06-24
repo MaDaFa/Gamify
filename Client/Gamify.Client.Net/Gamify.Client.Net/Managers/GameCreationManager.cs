@@ -1,7 +1,7 @@
 ﻿using Gamify.Client.Net.Client;
+using Gamify.Client.Net.Contracts.Notifications;
+using Gamify.Client.Net.Contracts.Requests;
 using Gamify.Client.Net.Services;
-using Gamify.Contracts.Notifications;
-using Gamify.Contracts.Requests;
 using System;
 
 namespace Gamify.Client.Net.Managers
@@ -16,9 +16,9 @@ namespace Gamify.Client.Net.Managers
         public event EventHandler<GameNotificationEventArgs<GameCreatedNotificationObject>> GameCreatedNotificationReceived;
         public event EventHandler<GameNotificationEventArgs<GameRejectedNotificationObject>> GameRejectedNotificationReceived;
 
-        public GameCreationManager(string playerName, IGameClientFactory clientFactory)
+        public GameCreationManager(IGameClientFactory clientFactory)
         {
-            var gameClient = clientFactory.GetGameClient(playerName);
+            var gameClient = clientFactory.Create();
 
             this.createGameService = new GameService<CreateGameRequestObject, GameInviteNotificationObject>(GameRequestType.CreateGame, GameNotificationType.GameInvite, gameClient);
             this.acceptGameService = new GameService<GameAcceptedRequestObject, GameCreatedNotificationObject>(GameRequestType.GameAccepted, GameNotificationType.GameCreated, gameClient);

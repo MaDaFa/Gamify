@@ -1,4 +1,4 @@
-﻿using Gamify.Contracts.Requests;
+﻿using Gamify.Client.Net.Contracts.Requests;
 using System;
 
 namespace Gamify.Client.Net.Client

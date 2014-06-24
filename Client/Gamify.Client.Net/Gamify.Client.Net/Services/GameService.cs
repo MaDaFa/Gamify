@@ -1,6 +1,6 @@
 ﻿using Gamify.Client.Net.Client;
-using Gamify.Contracts.Notifications;
-using Gamify.Contracts.Requests;
+using Gamify.Client.Net.Contracts.Notifications;
+using Gamify.Client.Net.Contracts.Requests;
 
 namespace Gamify.Client.Net.Services
 {
@@ -9,18 +9,18 @@ namespace Gamify.Client.Net.Services
         where UNotification : INotificationObject
     {
         private readonly GameRequestType requestType;
-        private readonly ISerializer<TRequest> requestSerializer;
+        private readonly ISerializer serializer;
 
         public GameService(GameRequestType requestType, GameNotificationType notificationType, IGameClient gameClient)
             : base(notificationType, gameClient)
         {
             this.requestType = requestType;
-            this.requestSerializer = new JsonSerializer<TRequest>();
+            this.serializer = new JsonSerializer();
         }
 
         public void Send(TRequest request)
         {
-            var serializedGameRequest = this.requestSerializer.Serialize(request);
+            var serializedGameRequest = this.serializer.Serialize(request);
             var gameRequest = new GameRequest
             {
                 Type = (int)this.requestType,

@@ -2,6 +2,6 @@
 {
     public interface IGameClientFactory
     {
-        IGameClient GetGameClient(string playerName);
+        IGameClient Create();
     }
 }

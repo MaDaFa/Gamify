@@ -1,7 +1,7 @@
 ﻿using Gamify.Client.Net.Client;
+using Gamify.Client.Net.Contracts.Notifications;
+using Gamify.Client.Net.Contracts.Requests;
 using Gamify.Client.Net.Services;
-using Gamify.Contracts.Notifications;
-using Gamify.Contracts.Requests;
 using System;
 
 namespace Gamify.Client.Net.Managers
@@ -16,9 +16,9 @@ namespace Gamify.Client.Net.Managers
         public event EventHandler<GameNotificationEventArgs<TypingMessageNotificationObject>> TypingMessageNotificationReceived;
         public event EventHandler<GameNotificationEventArgs<ErrorNotificationObject>> ErrorNotificationReceived;
 
-        public MessageManager(string playerName, IGameClientFactory clientFactory)
+        public MessageManager(IGameClientFactory clientFactory)
         {
-            var gameClient = clientFactory.GetGameClient(playerName);
+            var gameClient = clientFactory.Create();
 
             this.messageService = new GameService<MessageRequestObject, MessageNotificationObject>(GameRequestType.Message, GameNotificationType.Message, gameClient);
             this.typingMessageService = new GameService<TypingMessageRequestObject, TypingMessageNotificationObject>(GameRequestType.TypingMessage, GameNotificationType.TypingMessage, gameClient);

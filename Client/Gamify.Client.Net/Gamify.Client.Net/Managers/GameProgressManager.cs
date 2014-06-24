@@ -1,39 +1,39 @@
 ﻿using Gamify.Client.Net.Client;
+using Gamify.Client.Net.Contracts.Notifications;
+using Gamify.Client.Net.Contracts.Requests;
 using Gamify.Client.Net.Services;
-using Gamify.Contracts.Notifications;
-using Gamify.Contracts.Requests;
 using System;
 
 namespace Gamify.Client.Net.Managers
 {
-    public class GameProgressManager<TGameInformationNotification> where TGameInformationNotification : INotificationObject
+    public class GameProgressManager<TMoveResultNotification> where TMoveResultNotification : IMoveResultNotificationObject
     {
-        private readonly IGameService<OpenGameRequestObject, TGameInformationNotification> openGameService;
-        private readonly IGameService<GetActiveGamesRequestObject, SendActiveGamesNotificationObject> activeGamesService;
+        private readonly IGameService<MoveRequestObject, TMoveResultNotification> gameMoveService;
+        private readonly IGameListener<MoveNotificationObject> gameMoveListener;
         private readonly IGameService<AbandonGameRequestObject, GameAbandonedNotificationObject> abandonGameService;
         private readonly IGameListener<GameFinishedNotificationObject> gameFinishedListener;
 
-        public event EventHandler<GameNotificationEventArgs<TGameInformationNotification>> GameInformationNotificationReceived;
-        public event EventHandler<GameNotificationEventArgs<SendActiveGamesNotificationObject>> ActiveGamesNotificationReceived;
+        public event EventHandler<GameNotificationEventArgs<TMoveResultNotification>> GameMoveResultNotificationReceived;
+        public event EventHandler<GameNotificationEventArgs<MoveNotificationObject>> GameMoveNotificationReceived;
         public event EventHandler<GameNotificationEventArgs<GameAbandonedNotificationObject>> GameAbandonedNotificationReceived;
         public event EventHandler<GameNotificationEventArgs<GameFinishedNotificationObject>> GameFinishedNotificationReceived;
 
-        public GameProgressManager(string playerName, IGameClientFactory clientFactory)
+        public GameProgressManager(IGameClientFactory clientFactory)
         {
-            var gameClient = clientFactory.GetGameClient(playerName);
+            var gameClient = clientFactory.Create();
 
-            this.openGameService = new GameService<OpenGameRequestObject, TGameInformationNotification>(GameRequestType.OpenGame, GameNotificationType.SendGameInformation, gameClient);
-            this.activeGamesService = new GameService<GetActiveGamesRequestObject, SendActiveGamesNotificationObject>(GameRequestType.GetActiveGames, GameNotificationType.SendActiveGames, gameClient);
+            this.gameMoveService = new GameService<MoveRequestObject, TMoveResultNotification>(GameRequestType.GameMove, GameNotificationType.GameMoveResult, gameClient);
+            this.gameMoveListener = new GameListener<MoveNotificationObject>(GameNotificationType.GameMove, gameClient);
             this.abandonGameService = new GameService<AbandonGameRequestObject, GameAbandonedNotificationObject>(GameRequestType.AbandonGame, GameNotificationType.GameAbandoned, gameClient);
             this.gameFinishedListener = new GameListener<GameFinishedNotificationObject>(GameNotificationType.GameFinished, gameClient);
 
-            this.openGameService.NotificationReceived += (sender, args) =>
+            this.gameMoveService.NotificationReceived += (sender, args) =>
             {
-                this.NotifyGameInformation(args);
+                this.NotifyGameMoveResult(args);
             };
-            this.activeGamesService.NotificationReceived += (sender, args) =>
+            this.gameMoveListener.NotificationReceived += (sender, args) =>
             {
-                this.NotifyActiveGames(args);
+                this.NotifyGameMove(args);
             };
             this.abandonGameService.NotificationReceived += (sender, args) =>
             {
@@ -45,14 +45,9 @@ namespace Gamify.Client.Net.Managers
             };
         }
 
-        public void OpenGame(OpenGameRequestObject openGameRequest)
+        public void SendMove(MoveRequestObject gameMoveRequest)
         {
-            this.openGameService.Send(openGameRequest);
-        }
-
-        public void GetActiveGames(GetActiveGamesRequestObject getActiveGamesRequest)
-        {
-            this.activeGamesService.Send(getActiveGamesRequest);
+            this.gameMoveService.Send(gameMoveRequest);
         }
 
         public void AbandonGame(AbandonGameRequestObject abandonGameRequest)
@@ -60,19 +55,19 @@ namespace Gamify.Client.Net.Managers
             this.abandonGameService.Send(abandonGameRequest);
         }
 
-        private void NotifyGameInformation(GameNotificationEventArgs<TGameInformationNotification> args)
+        private void NotifyGameMoveResult(GameNotificationEventArgs<TMoveResultNotification> args)
         {
-            if (this.GameInformationNotificationReceived != null)
+            if (this.GameMoveResultNotificationReceived != null)
             {
-                this.GameInformationNotificationReceived(this, args);
+                this.GameMoveResultNotificationReceived(this, args);
             }
         }
 
-        private void NotifyActiveGames(GameNotificationEventArgs<SendActiveGamesNotificationObject> args)
+        private void NotifyGameMove(GameNotificationEventArgs<MoveNotificationObject> args)
         {
-            if (this.ActiveGamesNotificationReceived != null)
+            if (this.GameMoveNotificationReceived != null)
             {
-                this.ActiveGamesNotificationReceived(this, args);
+                this.GameMoveNotificationReceived(this, args);
             }
         }
 

@@ -1,5 +1,5 @@
-﻿using Gamify.Contracts.Notifications;
-using Gamify.Contracts.Requests;
+﻿using Gamify.Client.Net.Contracts.Notifications;
+using Gamify.Client.Net.Contracts.Requests;
 
 namespace Gamify.Client.Net.Services
 {

@@ -1,7 +1,7 @@
 ﻿using Gamify.Client.Net.Client;
+using Gamify.Client.Net.Contracts.Notifications;
+using Gamify.Client.Net.Contracts.Requests;
 using Gamify.Client.Net.Services;
-using Gamify.Contracts.Notifications;
-using Gamify.Contracts.Requests;
 using System;
 
 namespace Gamify.Client.Net.Managers
@@ -16,9 +16,9 @@ namespace Gamify.Client.Net.Managers
         public event EventHandler<GameNotificationEventArgs<PlayerDisconnectedNotificationObject>> PlayerDisconnectedNotificationReceived;
         public event EventHandler<GameNotificationEventArgs<SendConnectedPlayersNotificationObject>> ConnectedPlayersNotificationReceived;
 
-        public GameConnectionManager(string playerName, IGameClientFactory clientFactory)
+        public GameConnectionManager(IGameClientFactory clientFactory)
         {
-            var gameClient = clientFactory.GetGameClient(playerName);
+            var gameClient = clientFactory.Create();
 
             this.playerConnectService = new GameService<PlayerConnectRequestObject, PlayerConnectedNotificationObject>(GameRequestType.PlayerConnect, GameNotificationType.PlayerConnected, gameClient);
             this.playerDisconnectService = new GameService<PlayerDisconnectRequestObject, PlayerDisconnectedNotificationObject>(GameRequestType.PlayerDisconnect, GameNotificationType.PlayerDisconnected, gameClient);

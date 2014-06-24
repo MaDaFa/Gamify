@@ -64,7 +64,6 @@
     <Compile Include="Setup\TestResponseObject.cs" />
     <Compile Include="TestGameEventArgs.cs" />
     <Compile Include="TestGameHandler.cs" />
-    <Compile Include="GameIntegrationTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

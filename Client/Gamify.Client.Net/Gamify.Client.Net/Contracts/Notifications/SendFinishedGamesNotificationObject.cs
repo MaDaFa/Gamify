@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace Gamify.Sdk.Contracts.Notifications
+namespace Gamify.Client.Net.Contracts.Notifications
 {
     public class SendFinishedGamesNotificationObject : INotificationObject
     {

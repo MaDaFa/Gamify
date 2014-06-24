@@ -1,9 +1,9 @@
 ﻿namespace Gamify.Client.Net
 {
-    public interface ISerializer<TObject>
+    public interface ISerializer
     {
-        TObject Deserialize(string serializedObj);
+        TObject Deserialize<TObject>(string serializedObj);
 
-        string Serialize(TObject obj);
+        string Serialize<TObject>(TObject obj);
     }
 }
