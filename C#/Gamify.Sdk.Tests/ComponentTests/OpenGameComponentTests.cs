@@ -18,8 +18,8 @@ namespace Gamify.Sdk.UnitTests.ComponentTests
 
         private ISerializer serializer;
         private Mock<ISessionService> sessionServiceMock;
+        private Mock<ISessionHistoryService<TestMoveObject, TestResponseObject>>  sessionHistoryServiceMock;
         private Mock<INotificationService> notificationServiceMock;
-        private Mock<IGameInformationNotificationFactory<TestMoveObject, TestResponseObject>> gameInformationNotificationFactoryMock;
         private IGameComponent openGameComponent;
 
         [TestInitialize]
@@ -57,23 +57,25 @@ namespace Gamify.Sdk.UnitTests.ComponentTests
                 .Returns(session)
                 .Verifiable();
 
-            var sessionHistoryServiceMock = new Mock<ISessionHistoryService<TestMoveObject, TestResponseObject>>();
+            var player1SessionHistory = new SessionHistory<TestMoveObject, TestResponseObject>(this.sessionName, player1.Information.Name);
+            var player2SessionHistory = new SessionHistory<TestMoveObject, TestResponseObject>(this.sessionName, player2.Information.Name);
+            
+            this.sessionHistoryServiceMock = new Mock<ISessionHistoryService<TestMoveObject, TestResponseObject>>();
+            this.sessionHistoryServiceMock
+                .Setup(s => s.GetBySessionPlayer(It.Is<string>(x => x == this.sessionName), It.Is<string>(x => x == player1.Information.Name)))
+                .Returns(player1SessionHistory)
+                .Verifiable();
+            this.sessionHistoryServiceMock
+                .Setup(s => s.GetBySessionPlayer(It.Is<string>(x => x == this.sessionName), It.Is<string>(x => x == player2.Information.Name)))
+                .Returns(player2SessionHistory)
+                .Verifiable();
 
             this.notificationServiceMock = new Mock<INotificationService>();
 
             var playerHistoryItemFactory = Mock.Of<IPlayerHistoryItemFactory<TestMoveObject, TestResponseObject>>();
 
-            this.gameInformationNotificationFactoryMock = new Mock<IGameInformationNotificationFactory<TestMoveObject, TestResponseObject>>();
-            this.gameInformationNotificationFactoryMock
-                .Setup(f => f.Create(It.Is<IGameSession>(s => s == session),
-                    It.Is<ISessionHistoryService<TestMoveObject, TestResponseObject>>(x => x == sessionHistoryServiceMock.Object),
-                    It.Is<IPlayerHistoryItemFactory<TestMoveObject, TestResponseObject>>(x => x == playerHistoryItemFactory)))
-                .Returns(gameInformationNotification)
-                .Verifiable();
-
             this.openGameComponent = new OpenGameComponent<TestMoveObject, TestResponseObject>(this.sessionServiceMock.Object, 
-                sessionHistoryServiceMock.Object, this.notificationServiceMock.Object,
-                this.gameInformationNotificationFactoryMock.Object, playerHistoryItemFactory, this.serializer);
+                sessionHistoryServiceMock.Object, this.notificationServiceMock.Object, playerHistoryItemFactory, this.serializer);
         }
 
         [TestMethod]
@@ -98,7 +100,7 @@ namespace Gamify.Sdk.UnitTests.ComponentTests
             this.notificationServiceMock.Verify(s => s.Send(It.Is<GameNotificationType>(t => t == GameNotificationType.SendGameInformation),
                 It.Is<object>(o => ((GameInformationNotificationObject)o).SessionName == this.sessionName),
                 It.Is<string>(x => x == this.requestPlayer)));
-            this.gameInformationNotificationFactoryMock.VerifyAll();
+            this.sessionHistoryServiceMock.VerifyAll();
 
             Assert.IsTrue(canHandle);
         }

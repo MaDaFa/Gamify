@@ -17,8 +17,6 @@ namespace Gamify.Sdk.Setup.Definition
 
         IGameInviteDecorator GetGameInviteDecorator();
 
-        IGameInformationNotificationFactory<TMove, UResponse> GetGameInformationNotificationFactory();
-
         IPlayerHistoryItemFactory<TMove, UResponse> GetPlayerHistoryItemfactory();
 
         IEnumerable<IGameComponent> GetCustomComponents();

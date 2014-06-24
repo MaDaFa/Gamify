@@ -50,8 +50,31 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="UnitTest1.cs" />
+    <Compile Include="GameHelper.cs" />
+    <Compile Include="Setup\TestGameDefinition.cs" />
+    <Compile Include="Setup\TestMove.cs" />
+    <Compile Include="Setup\TestMoveFactory.cs" />
+    <Compile Include="Setup\TestMoveObject.cs" />
+    <Compile Include="Setup\TestMoveProcessor.cs" />
+    <Compile Include="Setup\TestMoveResultNotificationFactory.cs" />
+    <Compile Include="Setup\TestMoveResultNotificationObject.cs" />
+    <Compile Include="Setup\TestPlayerHistoryItem.cs" />
+    <Compile Include="Setup\TestPlayerHistoryItemFactory.cs" />
+    <Compile Include="Setup\TestResponse.cs" />
+    <Compile Include="Setup\TestResponseObject.cs" />
+    <Compile Include="TestGameEventArgs.cs" />
+    <Compile Include="TestGameHandler.cs" />
+    <Compile Include="GameIntegrationTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Gamify.Sdk\Gamify.Sdk.csproj">
+      <Project>{2ad62b4b-9d86-4cdd-abb5-02c1d905ee91}</Project>
+      <Name>Gamify.Sdk</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
