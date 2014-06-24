@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace Gamify.Sdk.Contracts.Notifications
 {
-    public class SendFinishedGamesNotificationObject
+    public class SendFinishedGamesNotificationObject : INotificationObject
     {
         private readonly IList<GameObject> finishedGames;
 
