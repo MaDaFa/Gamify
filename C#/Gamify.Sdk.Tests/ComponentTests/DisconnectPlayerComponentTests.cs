@@ -50,7 +50,7 @@ namespace Gamify.Sdk.UnitTests.ComponentTests
         }
 
         [TestMethod]
-        public void When_HandleDisconnectPlayer_Then_Success()
+        public void UT_When_HandleDisconnectPlayer_Then_Success()
         {
             var disconnectPlayerRequest = new PlayerDisconnectRequestObject
             {

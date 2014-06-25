@@ -9,7 +9,7 @@ namespace Gamify.Sdk.UnitTests.DataTests
     public class SessionHistoryRepositoryTests : RepositoryTests<SessionHistory<TestMoveObject, TestResponseObject>>
     {
         [TestMethod]
-        public void When_CreateSessionHistory_Then_Success()
+        public void UT_When_CreateSessionHistory_Then_Success()
         {
             var sessionName = GetUniqueName("Session");
             var playerName = GetUniqueName("player");
@@ -30,7 +30,7 @@ namespace Gamify.Sdk.UnitTests.DataTests
         }
 
         [TestMethod]
-        public void When_UpdateSessionHistory_Then_Success()
+        public void UT_When_UpdateSessionHistory_Then_Success()
         {
             var sessionName = GetUniqueName("Session");
             var playerName = GetUniqueName("player");
@@ -57,7 +57,7 @@ namespace Gamify.Sdk.UnitTests.DataTests
         }
 
         [TestMethod]
-        public void When_DeleteSessionHistory_Then_Success()
+        public void UT_When_DeleteSessionHistory_Then_Success()
         {
             var sessionName = GetUniqueName("Session");
             var playerName = GetUniqueName("player");
@@ -81,7 +81,7 @@ namespace Gamify.Sdk.UnitTests.DataTests
         }
 
         [TestMethod]
-        public void When_DeleteAllSessionHistories_Then_Success()
+        public void UT_When_DeleteAllSessionHistories_Then_Success()
         {
             var session1Name = GetUniqueName("Session");
             var player1Name = GetUniqueName("player");
@@ -121,7 +121,7 @@ namespace Gamify.Sdk.UnitTests.DataTests
         }
 
         [TestMethod]
-        public void When_GetSessionHistoriesWithPredicate_Then_Success()
+        public void UT_When_GetSessionHistoriesWithPredicate_Then_Success()
         {
             var session1Name = GetUniqueName("Session");
             var player1Name = GetUniqueName("player");

@@ -51,7 +51,7 @@ namespace Gamify.Sdk.UnitTests.ComponentTests
         }
 
         [TestMethod]
-        public void When_HandleConnectPlayer_Then_Success()
+        public void UT_When_HandleConnectPlayer_Then_Success()
         {
             var connectPlayerRequest = new PlayerConnectRequestObject
             {

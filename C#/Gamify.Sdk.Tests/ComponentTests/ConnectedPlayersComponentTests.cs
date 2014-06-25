@@ -65,7 +65,7 @@ namespace Gamify.Sdk.UnitTests.ComponentTests
         }
 
         [TestMethod]
-        public void When_HandleGetConnectedPlayers_Then_Success()
+        public void UT_When_HandleGetConnectedPlayers_Then_Success()
         {
             var getConnectedPlayersRequest = new GetConnectedPlayersRequestObject
             {

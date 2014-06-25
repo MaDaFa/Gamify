@@ -9,7 +9,7 @@ namespace Gamify.Sdk.UnitTests.DataTests
     public class GameSessionRepositoryTests : RepositoryTests<GameSession>
     {
         [TestMethod]
-        public void When_CreateGameSession_Then_Success()
+        public void UT_When_CreateGameSession_Then_Success()
         {
             var sessionName = GetUniqueName("Session");
             var player1 = new GamePlayer
@@ -57,7 +57,7 @@ namespace Gamify.Sdk.UnitTests.DataTests
         }
 
         [TestMethod]
-        public void When_UpdateGameSession_Then_Success()
+        public void UT_When_UpdateGameSession_Then_Success()
         {
             var sessionName = GetUniqueName("Session");
             var player1 = new GamePlayer
@@ -113,7 +113,7 @@ namespace Gamify.Sdk.UnitTests.DataTests
         }
 
         [TestMethod]
-        public void When_DeleteGameSession_Then_Success()
+        public void UT_When_DeleteGameSession_Then_Success()
         {
             var sessionName = GetUniqueName("Session");
             var player1 = new GamePlayer
@@ -156,7 +156,7 @@ namespace Gamify.Sdk.UnitTests.DataTests
         }
 
         [TestMethod]
-        public void When_DeleteAllGameSessions_Then_Success()
+        public void UT_When_DeleteAllGameSessions_Then_Success()
         {
             var session1Name = GetUniqueName("Session");
             var player1 = new GamePlayer
@@ -230,7 +230,7 @@ namespace Gamify.Sdk.UnitTests.DataTests
         }
 
         [TestMethod]
-        public void When_GetGameSessionsWithPredicate_Then_Success()
+        public void UT_When_GetGameSessionsWithPredicate_Then_Success()
         {
             var session1Name = GetUniqueName("Session x");
             var player1 = new GamePlayer

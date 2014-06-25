@@ -20,7 +20,7 @@ namespace Gamify.Sdk.UnitTests.ServiceTests
         }
 
         [TestMethod]
-        public void When_ConnectPlayer_Then_Success()
+        public void UT_When_ConnectPlayer_Then_Success()
         {
             this.playerService.Connect("player1", "Player 1");
             this.playerService.Connect("player2", "Player 2");
@@ -32,7 +32,7 @@ namespace Gamify.Sdk.UnitTests.ServiceTests
         }
 
         [TestMethod]
-        public void When_DisconnectPlayer_Then_Success()
+        public void UT_When_DisconnectPlayer_Then_Success()
         {
             this.playerService.Connect("player1", "Player 1");
             this.playerService.Connect("player2", "Player 2");
@@ -46,7 +46,7 @@ namespace Gamify.Sdk.UnitTests.ServiceTests
         }
 
         [TestMethod]
-        public void When_GetRandomWithoutUsers_Then_ReturnNull()
+        public void UT_When_GetRandomWithoutUsers_Then_ReturnNull()
         {
             this.playerService.Connect("player1", "Player 1");
 
@@ -56,7 +56,7 @@ namespace Gamify.Sdk.UnitTests.ServiceTests
         }
 
         [TestMethod]
-        public void When_GetRandomWithUsers_Then_Sucess()
+        public void UT_When_GetRandomWithUsers_Then_Sucess()
         {
             this.playerService.Connect("player1", "Player 1");
             this.playerService.Connect("player2", "Player 2");
@@ -69,7 +69,7 @@ namespace Gamify.Sdk.UnitTests.ServiceTests
         }
 
         [TestMethod]
-        public void When_GetByName_Then_Sucess()
+        public void UT_When_GetByName_Then_Sucess()
         {
             this.playerService.Connect("player1", "Player 1");
             this.playerService.Connect("player2", "Player 2");
@@ -84,7 +84,7 @@ namespace Gamify.Sdk.UnitTests.ServiceTests
         }
 
         [TestMethod]
-        public void When_GetAllConnectedWithoutExcluding_Then_Sucess()
+        public void UT_When_GetAllConnectedWithoutExcluding_Then_Sucess()
         {
             this.playerService.Connect("player1", "Player 1");
             this.playerService.Connect("player2", "Player 2");
@@ -101,7 +101,7 @@ namespace Gamify.Sdk.UnitTests.ServiceTests
         }
 
         [TestMethod]
-        public void When_GetAllConnectedExcluding_Then_Sucess()
+        public void UT_When_GetAllConnectedExcluding_Then_Sucess()
         {
             this.playerService.Connect("player1", "Player 1");
             this.playerService.Connect("player2", "Player 2");
@@ -118,7 +118,7 @@ namespace Gamify.Sdk.UnitTests.ServiceTests
         }
 
         [TestMethod]
-        public void When_GetAllWithoutExcluding_Then_Sucess()
+        public void UT_When_GetAllWithoutExcluding_Then_Sucess()
         {
             this.playerService.Connect("player1", "Player 1");
             this.playerService.Connect("player2", "Player 2");
@@ -135,7 +135,7 @@ namespace Gamify.Sdk.UnitTests.ServiceTests
         }
 
         [TestMethod]
-        public void When_GetAllExcluding_Then_Sucess()
+        public void UT_When_GetAllExcluding_Then_Sucess()
         {
             this.playerService.Connect("player1", "Player 1");
             this.playerService.Connect("player2", "Player 2");

@@ -16,7 +16,7 @@ namespace Gamify.Sdk.UnitTests.SetupTests
         }
 
         [TestMethod]
-        public void When_BuildDependencies_Then_Success()
+        public void UT_When_BuildDependencies_Then_Success()
         {
             var configuration = GameDataSection.Instance();
             var gameDependencyModuleBuilder = new GameDependencyModuleBuilder();

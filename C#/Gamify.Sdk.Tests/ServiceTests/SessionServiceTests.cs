@@ -19,7 +19,7 @@ namespace Gamify.Sdk.UnitTests.ServiceTests
         }
 
         [TestMethod]
-        public void When_CreateSessionWithBothPlayers_Then_Success()
+        public void UT_When_CreateSessionWithBothPlayers_Then_Success()
         {
             var playerService = Mock.Of<IPlayerService>();
             var sessionRepository = new TestRepository<GameSession>();
@@ -60,7 +60,7 @@ namespace Gamify.Sdk.UnitTests.ServiceTests
         }
 
         [TestMethod]
-        public void When_CreateSessionWithOnePlayer_Then_Success()
+        public void UT_When_CreateSessionWithOnePlayer_Then_Success()
         {
             var gamePlayer = new GamePlayer { Name = "player2", DisplayName = "Player 2" };
             var sessionPlayer2 = new TestSessionPlayer()
@@ -116,7 +116,7 @@ namespace Gamify.Sdk.UnitTests.ServiceTests
         }
 
         [TestMethod]
-        public void When_StartSession_Then_Success()
+        public void UT_When_StartSession_Then_Success()
         {
             var playerService = Mock.Of<IPlayerService>();
             var sessionRepository = new TestRepository<GameSession>();
@@ -161,7 +161,7 @@ namespace Gamify.Sdk.UnitTests.ServiceTests
         }
 
         [TestMethod]
-        public void When_AbandonSession_Then_Success()
+        public void UT_When_AbandonSession_Then_Success()
         {
             var playerService = Mock.Of<IPlayerService>();
             var sessionRepository = new TestRepository<GameSession>();
@@ -210,7 +210,7 @@ namespace Gamify.Sdk.UnitTests.ServiceTests
         }
 
         [TestMethod]
-        public void When_FinishSession_Then_Success()
+        public void UT_When_FinishSession_Then_Success()
         {
             var playerService = Mock.Of<IPlayerService>();
             var sessionRepository = new TestRepository<GameSession>();
@@ -259,7 +259,7 @@ namespace Gamify.Sdk.UnitTests.ServiceTests
         }
 
         [TestMethod]
-        public void When_GetSessionsByPlayer_Then_Success()
+        public void UT_When_GetSessionsByPlayer_Then_Success()
         {
             var playerService = Mock.Of<IPlayerService>();
             var sessionRepository = new TestRepository<GameSession>();
@@ -365,7 +365,7 @@ namespace Gamify.Sdk.UnitTests.ServiceTests
         }
 
         [TestMethod]
-        public void When_GetPendingSessions_Then_Success()
+        public void UT_When_GetPendingSessions_Then_Success()
         {
             var playerService = Mock.Of<IPlayerService>();
             var sessionRepository = new TestRepository<GameSession>();
@@ -474,7 +474,7 @@ namespace Gamify.Sdk.UnitTests.ServiceTests
         }
 
         [TestMethod]
-        public void When_GetActiveSessions_Then_Success()
+        public void UT_When_GetActiveSessions_Then_Success()
         {
             var playerService = Mock.Of<IPlayerService>();
             var sessionRepository = new TestRepository<GameSession>();
@@ -583,7 +583,7 @@ namespace Gamify.Sdk.UnitTests.ServiceTests
         }
 
         [TestMethod]
-        public void When_GetFinishedSessions_Then_Success()
+        public void UT_When_GetFinishedSessions_Then_Success()
         {
             var playerService = Mock.Of<IPlayerService>();
             var sessionRepository = new TestRepository<GameSession>();

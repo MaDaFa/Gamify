@@ -30,7 +30,7 @@ namespace Gamify.Sdk.UnitTests.SetupTests
         }
 
         [TestMethod]
-        public void When_BuildGameWithBasicDefinition_Then_Success()
+        public void UT_When_BuildGameWithBasicDefinition_Then_Success()
         {
             var testGameDefinitionMock = new Mock<GameDefinition<TestMoveObject, TestResponseObject>>();
 
@@ -42,7 +42,7 @@ namespace Gamify.Sdk.UnitTests.SetupTests
         }
 
         [TestMethod]
-        public void When_BuildGameWithCustomComponents_Then_Success()
+        public void UT_When_BuildGameWithCustomComponents_Then_Success()
         {
             var notificationServiceMock = Mock.Of<INotificationService>();
             var testGameDefinitionMock = new Mock<GameDefinition<TestMoveObject, TestResponseObject>>();

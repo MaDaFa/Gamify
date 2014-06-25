@@ -51,6 +51,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="GameHelper.cs" />
+    <Compile Include="GameIntegrationTests.cs" />
     <Compile Include="Setup\TestGameDefinition.cs" />
     <Compile Include="Setup\TestMove.cs" />
     <Compile Include="Setup\TestMoveFactory.cs" />

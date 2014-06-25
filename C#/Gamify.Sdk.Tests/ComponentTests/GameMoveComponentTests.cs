@@ -116,7 +116,7 @@ namespace Gamify.Sdk.UnitTests.ComponentTests
         }
 
         [TestMethod]
-        public void When_HandleGameMove_Then_Success()
+        public void UT_When_HandleGameMove_Then_Success()
         {
             var moveComponent = this.GetMoveComponent(toWin: false);
 
@@ -154,7 +154,7 @@ namespace Gamify.Sdk.UnitTests.ComponentTests
         }
 
         [TestMethod]
-        public void When_HandleWinnerGameMove_Then_Success()
+        public void UT_When_HandleWinnerGameMove_Then_Success()
         {
             var moveComponent = this.GetMoveComponent(toWin: true);
 

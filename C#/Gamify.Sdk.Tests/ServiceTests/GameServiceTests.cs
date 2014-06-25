@@ -23,7 +23,7 @@ namespace Gamify.Sdk.UnitTests.ServiceTests
         }
 
         [TestMethod]
-        public void When_Connect_Then_Success()
+        public void UT_When_Connect_Then_Success()
         {
             var userName = "player1";
             var accessToken = Guid.NewGuid().ToString();
@@ -49,7 +49,7 @@ namespace Gamify.Sdk.UnitTests.ServiceTests
         }
 
         [TestMethod]
-        public void When_SendMessage_Then_Success()
+        public void UT_When_SendMessage_Then_Success()
         {
             var testRequestType = 144;
             var userName = "player1";
@@ -85,7 +85,7 @@ namespace Gamify.Sdk.UnitTests.ServiceTests
         }
 
         [TestMethod]
-        public void When_Disconnect_Then_Success()
+        public void UT_When_Disconnect_Then_Success()
         {
             var userName = "player1";
             var notification = new GameNotification

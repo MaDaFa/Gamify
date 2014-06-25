@@ -8,7 +8,7 @@ namespace Gamify.Sdk.UnitTests.DataTests
     public class GamePlayerRepositoryTests : RepositoryTests<GamePlayer>
     {
         [TestMethod]
-        public void When_CreateGamePlayer_Then_Success()
+        public void UT_When_CreateGamePlayer_Then_Success()
         {
             var playerName = GetUniqueName("player");
             var player = new GamePlayer
@@ -28,7 +28,7 @@ namespace Gamify.Sdk.UnitTests.DataTests
         }
 
         [TestMethod]
-        public void When_UpdateGamePlayer_Then_Success()
+        public void UT_When_UpdateGamePlayer_Then_Success()
         {
             var playerName = GetUniqueName("player");
             var player = new GamePlayer
@@ -53,7 +53,7 @@ namespace Gamify.Sdk.UnitTests.DataTests
         }
 
         [TestMethod]
-        public void When_DeleteGamePlayer_Then_Success()
+        public void UT_When_DeleteGamePlayer_Then_Success()
         {
             var playerName = GetUniqueName("player");
             var player = new GamePlayer
@@ -74,7 +74,7 @@ namespace Gamify.Sdk.UnitTests.DataTests
         }
 
         [TestMethod]
-        public void When_DeleteAllPlayers_Then_Success()
+        public void UT_When_DeleteAllPlayers_Then_Success()
         {
             var player1Name = GetUniqueName("player");
             var player1 = new GamePlayer
@@ -110,7 +110,7 @@ namespace Gamify.Sdk.UnitTests.DataTests
         }
 
         [TestMethod]
-        public void When_GetGamePlayersWithPredicate_Then_Success()
+        public void UT_When_GetGamePlayersWithPredicate_Then_Success()
         {
             var player1Name = GetUniqueName("player");
             var player1 = new GamePlayer

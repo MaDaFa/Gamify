@@ -86,7 +86,7 @@ namespace Gamify.Sdk.UnitTests.ComponentTests
         }
 
         [TestMethod]
-        public void When_HandleGetPendingGames_Then_Success()
+        public void UT_When_HandleGetPendingGames_Then_Success()
         {
             var getPendingGamesRequest = new GetPendingGamesRequestObject
             {

@@ -79,7 +79,7 @@ namespace Gamify.Sdk.UnitTests.ComponentTests
         }
 
         [TestMethod]
-        public void When_HandleOpenGame_Then_Success()
+        public void UT_When_HandleOpenGame_Then_Success()
         {
             var openGameRequest = new OpenGameRequestObject
             {
