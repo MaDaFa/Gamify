@@ -19,7 +19,7 @@ namespace Gamify.Sdk.UnitTests.ServiceTests
         }
 
         [TestMethod]
-        public void When_Send_Then_Success()
+        public void UT_When_Send_Then_Success()
         {
             var userName = "player1";
             var notificationType = 204;

@@ -104,7 +104,7 @@ namespace Gamify.Sdk.UnitTests.ComponentTests
         }
 
         [TestMethod]
-        public void When_HandleCreateGame_Then_Success()
+        public void UT_When_HandleCreateGame_Then_Success()
         {
             var connectPlayerRequest = new CreateGameRequestObject
             {

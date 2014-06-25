@@ -27,7 +27,7 @@ namespace Gamify.Sdk.UnitTests.ComponentTests
         }
 
         [TestMethod]
-        public void When_HandleMessage_Then_Success()
+        public void UT_When_HandleMessage_Then_Success()
         {
             var messageRequest = new MessageRequestObject
             {
@@ -53,7 +53,7 @@ namespace Gamify.Sdk.UnitTests.ComponentTests
         }
 
         [TestMethod]
-        public void When_HandleTypingMessage_Then_Success()
+        public void UT_When_HandleTypingMessage_Then_Success()
         {
             var typingMessageRequest = new TypingMessageRequestObject
             {

@@ -8,7 +8,7 @@ namespace Gamify.Sdk.UnitTests.DataTests
     public class TestRepositoryTests : RepositoryTests<TestGameEntity>
     {
         [TestMethod]
-        public void When_CreateTestEntity_Then_Success()
+        public void UT_When_CreateTestEntity_Then_Success()
         {
             var testEntityName = GetUniqueName("test");
             var testEntity = new TestGameEntity
@@ -29,7 +29,7 @@ namespace Gamify.Sdk.UnitTests.DataTests
         }
 
         [TestMethod]
-        public void When_UpdateTestEntity_Then_Success()
+        public void UT_When_UpdateTestEntity_Then_Success()
         {
             var testEntityName = GetUniqueName("test");
             var testEntity = new TestGameEntity
@@ -57,7 +57,7 @@ namespace Gamify.Sdk.UnitTests.DataTests
         }
 
         [TestMethod]
-        public void When_DeleteTestEntity_Then_Success()
+        public void UT_When_DeleteTestEntity_Then_Success()
         {
             var testEntityName = GetUniqueName("test");
             var testEntity = new TestGameEntity
@@ -79,7 +79,7 @@ namespace Gamify.Sdk.UnitTests.DataTests
         }
 
         [TestMethod]
-        public void When_DeleteAllTestEntities_Then_Success()
+        public void UT_When_DeleteAllTestEntities_Then_Success()
         {
             var testEntityName1 = GetUniqueName("test");
             var testEntity1 = new TestGameEntity
@@ -118,7 +118,7 @@ namespace Gamify.Sdk.UnitTests.DataTests
         }
 
         [TestMethod]
-        public void When_GetTestEntitiesWithPredicate_Then_Success()
+        public void UT_When_GetTestEntitiesWithPredicate_Then_Success()
         {
             var testEntityName1 = GetUniqueName("test");
             var testEntity1 = new TestGameEntity

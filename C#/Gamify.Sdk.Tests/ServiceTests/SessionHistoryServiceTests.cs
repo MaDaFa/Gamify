@@ -20,7 +20,7 @@ namespace Gamify.Sdk.UnitTests.ServiceTests
         }
 
         [TestMethod]
-        public void When_CreateHistory_Then_Success()
+        public void UT_When_CreateHistory_Then_Success()
         {
             var sessionName = "Session 1";
             var playerName = "player1";
@@ -39,7 +39,7 @@ namespace Gamify.Sdk.UnitTests.ServiceTests
         }
 
         [TestMethod]
-        public void When_UpdateHistory_Then_Success()
+        public void UT_When_UpdateHistory_Then_Success()
         {
             var sessionName = "Session 1";
             var playerName = "player1";
@@ -72,7 +72,7 @@ namespace Gamify.Sdk.UnitTests.ServiceTests
         }
 
         [TestMethod]
-        public void When_CheckExistingHistory_Then_Success()
+        public void UT_When_CheckExistingHistory_Then_Success()
         {
             var sessionName = "Session 1";
             var playerName = "player1";

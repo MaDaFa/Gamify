@@ -18,7 +18,7 @@ namespace Gamify.Sdk.UnitTests.ServiceTests
         }
 
         [TestMethod]
-        public void When_HandleMove_Then_Success()
+        public void UT_When_HandleMove_Then_Success()
         {
             var sessionName = "player1-vs-player2";
             var player1 = new TestSessionPlayer()

@@ -61,7 +61,7 @@ namespace Gamify.Sdk.UnitTests.ComponentTests
         }
 
         [TestMethod]
-        public void When_HandleAcceptGame_Then_Success()
+        public void UT_When_HandleAcceptGame_Then_Success()
         {
             var rejectGameRequest = new GameRejectedRequestObject
             {

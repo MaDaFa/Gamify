@@ -15,7 +15,7 @@ namespace Gamify.Sdk.UnitTests.SetupTests
         }
 
         [TestMethod]
-        public void When_InitializeGame_Then_Success()
+        public void UT_When_InitializeGame_Then_Success()
         {
             var moveProcessor = Mock.Of<IMoveProcessor<TestMoveObject, TestResponseObject>>();
             var testSessionPlayerFactory = Mock.Of<ISessionPlayerFactory>();

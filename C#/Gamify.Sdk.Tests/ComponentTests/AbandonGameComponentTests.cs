@@ -64,7 +64,7 @@ namespace Gamify.Sdk.UnitTests.ComponentTests
         }
 
         [TestMethod]
-        public void When_HandleAbandonGame_Then_Success()
+        public void UT_When_HandleAbandonGame_Then_Success()
         {
             var abandonGameRequest = new AbandonGameRequestObject
             {

@@ -86,7 +86,7 @@ namespace Gamify.Sdk.UnitTests.ComponentTests
         }
 
         [TestMethod]
-        public void When_HandleGetActiveGames_Then_Success()
+        public void UT_When_HandleGetActiveGames_Then_Success()
         {
             var getActiveGamesRequest = new GetActiveGamesRequestObject
             {
