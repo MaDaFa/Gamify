@@ -230,8 +230,7 @@ namespace Gamify.Sdk.IntegrationTests
         {
             var playerConnectRequestObject = new PlayerConnectRequestObject
             {
-                PlayerName = playerName,
-                AccessToken = Guid.NewGuid().ToString()
+                PlayerName = playerName
             };
             var playerConnectRequest = new GameRequest(GameRequestType.PlayerConnect)
             {

@@ -40,12 +40,11 @@ namespace Gamify.Sdk.Services
             this.components.Add(component);
         }
 
-        public void Connect(string userName, string accessToken)
+        public void Connect(string userName)
         {
             var playerConnectRequest = new PlayerConnectRequestObject
             {
-                PlayerName = userName,
-                AccessToken = accessToken
+                PlayerName = userName
             };
             var gameRequest = new GameRequest
             {
