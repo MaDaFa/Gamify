@@ -56,7 +56,7 @@ namespace Gamify.Sdk.Data
         {
             var filteredCollection = this.GetAll(predicate);
 
-            return filteredCollection.FirstOrDefault();
+            return filteredCollection.SingleOrDefault();
         }
 
         public bool Exist(Expression<Func<T, bool>> predicate = null)
