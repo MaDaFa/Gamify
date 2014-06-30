@@ -15,7 +15,7 @@ namespace Gamify.Sdk.Services
     {
         event EventHandler<GameNotificationEventArgs> Notification;
 
-        void Connect(string userName, string accessToken);
+        void Connect(string userName);
 
         ///<exception cref="GameServiceException">GameServiceException</exception>
         void Send(string message);

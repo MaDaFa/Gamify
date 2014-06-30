@@ -59,7 +59,7 @@ namespace Gamify.Sdk.IntegrationTests
 
                 this.UserName = playerConnectRequest.PlayerName;
 
-                this.gameService.Connect(playerConnectRequest.PlayerName, playerConnectRequest.AccessToken);
+                this.gameService.Connect(playerConnectRequest.PlayerName);
             }
             else
             {

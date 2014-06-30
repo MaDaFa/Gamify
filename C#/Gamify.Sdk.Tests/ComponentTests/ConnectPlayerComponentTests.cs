@@ -55,8 +55,7 @@ namespace Gamify.Sdk.UnitTests.ComponentTests
         {
             var connectPlayerRequest = new PlayerConnectRequestObject
             {
-                PlayerName = this.requestPlayer,
-                AccessToken = Guid.NewGuid().ToString()
+                PlayerName = this.requestPlayer
             };
             var gameRequest = new GameRequest
             {

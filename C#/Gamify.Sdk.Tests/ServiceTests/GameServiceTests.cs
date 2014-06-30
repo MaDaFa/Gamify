@@ -26,7 +26,6 @@ namespace Gamify.Sdk.UnitTests.ServiceTests
         public void UT_When_Connect_Then_Success()
         {
             var userName = "player1";
-            var accessToken = Guid.NewGuid().ToString();
             var notification = new GameNotification
             {
                 Type = (int)GameNotificationType.PlayerConnected,
@@ -43,7 +42,7 @@ namespace Gamify.Sdk.UnitTests.ServiceTests
                 .Verifiable();
 
             this.gameService.RegisterComponent(connectComponentMock.Object);
-            this.gameService.Connect(userName, accessToken);
+            this.gameService.Connect(userName);
 
             connectComponentMock.VerifyAll();
         }
