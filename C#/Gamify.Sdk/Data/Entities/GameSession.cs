@@ -1,8 +1,9 @@
-﻿using System;
+﻿using Gamify.Sdk.Interfaces;
+using ThinkUp.Sdk.Data.Entities;
 
 namespace Gamify.Sdk.Data.Entities
 {
-    public class GameSession : GameEntity, IGameSession
+    public class GameSession : DataEntity, IGameSession
     {
         public SessionState State { get; set; }
 

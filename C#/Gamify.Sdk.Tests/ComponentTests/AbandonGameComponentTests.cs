@@ -1,6 +1,6 @@
 ﻿using Gamify.Sdk.Components;
-using Gamify.Sdk.Contracts.Notifications;
-using Gamify.Sdk.Contracts.Requests;
+using Gamify.Sdk.Contracts.ServerMessages;
+using Gamify.Sdk.Contracts.ClientMessages;
 using Gamify.Sdk.Data.Entities;
 using Gamify.Sdk.Services;
 using Gamify.Sdk.UnitTests.TestModels;
@@ -66,10 +66,10 @@ namespace Gamify.Sdk.UnitTests.ComponentTests
         [TestMethod]
         public void UT_When_HandleAbandonGame_Then_Success()
         {
-            var abandonGameRequest = new AbandonGameRequestObject
+            var abandonGameRequest = new AbandonGameClientMessage
             {
                 SessionName = this.sessionName,
-                PlayerName = this.requestPlayer
+                UserName = this.requestPlayer
             };
             var gameRequest = new GameRequest
             {
@@ -83,7 +83,7 @@ namespace Gamify.Sdk.UnitTests.ComponentTests
 
             this.sessionServiceMock.VerifyAll();
             this.notificationServiceMock.Verify(s => s.SendBroadcast(It.Is<GameNotificationType>(t => t == GameNotificationType.GameAbandoned),
-                    It.Is<object>(o => ((GameAbandonedNotificationObject)o).SessionName == this.session.Name),
+                    It.Is<object>(o => ((GameAbandonedServerMessage)o).SessionName == this.session.Name),
                     It.Is<string>(x => x == this.session.Player1Name),
                     It.Is<string>(x => x == this.session.Player2Name)));
 

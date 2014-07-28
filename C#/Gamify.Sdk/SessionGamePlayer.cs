@@ -1,4 +1,6 @@
-﻿namespace Gamify.Sdk
+﻿using ThinkUp.Sdk.Interfaces;
+
+namespace Gamify.Sdk
 {
     public class SessionGamePlayer
     {
@@ -6,7 +8,7 @@
 
         public bool IsReady { get; private set; }
 
-        public IGamePlayer Information { get; set; }
+        public IUser Information { get; set; }
 
         public string SessionName
         {

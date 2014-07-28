@@ -1,5 +1,5 @@
-﻿using Gamify.Sdk.Contracts.Notifications;
-using Gamify.Sdk.Contracts.Requests;
+﻿using Gamify.Sdk.Contracts.ServerMessages;
+using Gamify.Sdk.Contracts.ClientMessages;
 using Gamify.Sdk.IntegrationTests.Setup;
 using Gamify.Sdk.Services;
 using Gamify.Sdk.Setup;

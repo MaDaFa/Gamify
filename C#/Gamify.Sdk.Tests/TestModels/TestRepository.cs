@@ -58,7 +58,7 @@ namespace Gamify.Sdk.UnitTests.TestModels
 
             if (existingEntity == null)
             {
-                throw new GameDataException("The entity doesn't exist");
+                throw new DataException("The entity doesn't exist");
             }
 
             this.entityList.Remove(existingEntity);

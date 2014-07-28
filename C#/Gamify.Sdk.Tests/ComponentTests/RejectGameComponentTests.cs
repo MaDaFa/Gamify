@@ -1,6 +1,6 @@
 ﻿using Gamify.Sdk.Components;
-using Gamify.Sdk.Contracts.Notifications;
-using Gamify.Sdk.Contracts.Requests;
+using Gamify.Sdk.Contracts.ServerMessages;
+using Gamify.Sdk.Contracts.ClientMessages;
 using Gamify.Sdk.Data.Entities;
 using Gamify.Sdk.Services;
 using Gamify.Sdk.UnitTests.TestModels;
@@ -63,10 +63,10 @@ namespace Gamify.Sdk.UnitTests.ComponentTests
         [TestMethod]
         public void UT_When_HandleAcceptGame_Then_Success()
         {
-            var rejectGameRequest = new GameRejectedRequestObject
+            var rejectGameRequest = new RejectGameClientMessage
             {
                 SessionName = this.sessionName,
-                PlayerName = this.requestPlayer
+                UserName = this.requestPlayer
             };
             var gameRequest = new GameRequest
             {
@@ -80,9 +80,9 @@ namespace Gamify.Sdk.UnitTests.ComponentTests
 
             this.sessionServiceMock.VerifyAll();
             this.notificationServiceMock.Verify(s => s.Send(It.Is<GameNotificationType>(t => t == GameNotificationType.GameRejected),
-                It.Is<object>(o => ((GameRejectedNotificationObject)o).SessionName == this.session.Name
-                    && ((GameRejectedNotificationObject)o).Player1Name == this.session.Player1Name
-                    && ((GameRejectedNotificationObject)o).Player2Name == this.session.Player2Name),
+                It.Is<object>(o => ((GameRejectedServerMessage)o).SessionName == this.session.Name
+                    && ((GameRejectedServerMessage)o).Player1Name == this.session.Player1Name
+                    && ((GameRejectedServerMessage)o).Player2Name == this.session.Player2Name),
                 It.Is<string>(x => x == this.session.Player1Name)));
 
             Assert.IsTrue(canHandle);

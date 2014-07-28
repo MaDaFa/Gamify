@@ -1,5 +1,5 @@
-﻿using Gamify.Sdk.Contracts.Notifications;
-using Gamify.Sdk.Contracts.Requests;
+﻿using Gamify.Sdk.Contracts.ServerMessages;
+using Gamify.Sdk.Contracts.ClientMessages;
 using Gamify.Sdk.Setup;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
@@ -64,10 +64,10 @@ namespace Gamify.Sdk.IntegrationTests
                 notificationObject = this.serializer.Deserialize<object>(notification.SerializedNotificationObject);
             };
 
-            var createGameRequestObject = new CreateGameRequestObject
+            var createGameRequestObject = new CreateGameClientMessage
             {
-                PlayerName = player1Name,
-                InvitedPlayerName = player2Name
+                UserName = player1Name,
+                InvitedUserName = player2Name
             };
             var createGameRequest = new GameRequest(GameRequestType.CreateGame)
             {
@@ -79,9 +79,9 @@ namespace Gamify.Sdk.IntegrationTests
 
             Assert.AreEqual((int)GameNotificationType.GameInvite, notification.Type);
             Assert.IsNotNull(notificationObject);
-            Assert.IsTrue(notificationObject is GameInviteNotificationObject);
+            Assert.IsTrue(notificationObject is GameInviteReceivedServerMessage);
 
-            var gameInviteNotificationObject = notificationObject as GameInviteNotificationObject;
+            var gameInviteNotificationObject = notificationObject as GameInviteReceivedServerMessage;
 
             Assert.AreEqual(player1Name, gameInviteNotificationObject.Player1Name);
             Assert.AreEqual(string.Format("{0}-vs-{1}", player1Name, player2Name), gameInviteNotificationObject.SessionName);
@@ -113,11 +113,11 @@ namespace Gamify.Sdk.IntegrationTests
                     return;
                 }
 
-                var gameInviteNotificationObject = this.serializer.Deserialize<GameInviteNotificationObject>(gameInviteNotification.SerializedNotificationObject);
+                var gameInviteNotificationObject = this.serializer.Deserialize<GameInviteReceivedServerMessage>(gameInviteNotification.SerializedNotificationObject);
 
-                var acceptGameRequestObject = new GameAcceptedRequestObject
+                var acceptGameRequestObject = new AcceptGameClientMessage
                 {
-                    PlayerName = player2Name,
+                    UserName = player2Name,
                     SessionName = gameInviteNotificationObject.SessionName
                 };
                 var acceptGameRequest = new GameRequest(GameRequestType.GameAccepted)
@@ -129,10 +129,10 @@ namespace Gamify.Sdk.IntegrationTests
                 player2GameHandler.OnMessage(this.serializer.Serialize(acceptGameRequest));
             };
 
-            var createGameRequestObject = new CreateGameRequestObject
+            var createGameRequestObject = new CreateGameClientMessage
             {
-                PlayerName = player1Name,
-                InvitedPlayerName = player2Name
+                UserName = player1Name,
+                InvitedUserName = player2Name
             };
             var createGameRequest = new GameRequest(GameRequestType.CreateGame)
             {
@@ -144,9 +144,9 @@ namespace Gamify.Sdk.IntegrationTests
 
             Assert.AreEqual((int)GameNotificationType.GameCreated, notification.Type);
             Assert.IsNotNull(notificationObject);
-            Assert.IsTrue(notificationObject is GameCreatedNotificationObject);
+            Assert.IsTrue(notificationObject is GameCreatedServerMessage);
 
-            var gameCreatedNotificationObject = notificationObject as GameCreatedNotificationObject;
+            var gameCreatedNotificationObject = notificationObject as GameCreatedServerMessage;
 
             Assert.AreEqual(player1Name, gameCreatedNotificationObject.Player1Name);
             Assert.AreEqual(player2Name, gameCreatedNotificationObject.Player2Name);
@@ -179,11 +179,11 @@ namespace Gamify.Sdk.IntegrationTests
                     return;
                 }
 
-                var gameInviteNotificationObject = this.serializer.Deserialize<GameInviteNotificationObject>(gameInviteNotification.SerializedNotificationObject);
+                var gameInviteNotificationObject = this.serializer.Deserialize<GameInviteReceivedServerMessage>(gameInviteNotification.SerializedNotificationObject);
 
-                var rejectGameRequestObject = new GameRejectedRequestObject
+                var rejectGameRequestObject = new RejectGameClientMessage
                 {
-                    PlayerName = player2Name,
+                    UserName = player2Name,
                     SessionName = gameInviteNotificationObject.SessionName
                 };
                 var rejectGameRequest = new GameRequest(GameRequestType.GameRejected)
@@ -195,10 +195,10 @@ namespace Gamify.Sdk.IntegrationTests
                 player2GameHandler.OnMessage(this.serializer.Serialize(rejectGameRequest));
             };
 
-            var createGameRequestObject = new CreateGameRequestObject
+            var createGameRequestObject = new CreateGameClientMessage
             {
-                PlayerName = player1Name,
-                InvitedPlayerName = player2Name
+                UserName = player1Name,
+                InvitedUserName = player2Name
             };
             var createGameRequest = new GameRequest(GameRequestType.CreateGame)
             {
@@ -210,9 +210,9 @@ namespace Gamify.Sdk.IntegrationTests
 
             Assert.AreEqual((int)GameNotificationType.GameRejected, notification.Type);
             Assert.IsNotNull(notificationObject);
-            Assert.IsTrue(notificationObject is GameRejectedNotificationObject);
+            Assert.IsTrue(notificationObject is GameRejectedServerMessage);
 
-            var gameRejectedNotificationObject = notificationObject as GameRejectedNotificationObject;
+            var gameRejectedNotificationObject = notificationObject as GameRejectedServerMessage;
 
             Assert.AreEqual(player1Name, gameRejectedNotificationObject.Player1Name);
             Assert.AreEqual(player2Name, gameRejectedNotificationObject.Player2Name);

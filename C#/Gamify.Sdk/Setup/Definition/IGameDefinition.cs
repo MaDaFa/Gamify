@@ -1,7 +1,4 @@
-﻿using Gamify.Sdk.Components;
-using System.Collections.Generic;
-
-namespace Gamify.Sdk.Setup.Definition
+﻿namespace Gamify.Sdk.Setup.Definition
 {
     public interface IGameDefinition<TMove, UResponse>
     {
@@ -18,7 +15,5 @@ namespace Gamify.Sdk.Setup.Definition
         IGameInviteDecorator GetGameInviteDecorator();
 
         IPlayerHistoryItemFactory<TMove, UResponse> GetPlayerHistoryItemfactory();
-
-        IEnumerable<IGameComponent> GetCustomComponents();
     }
 }

@@ -1,5 +1,7 @@
-﻿using Gamify.Sdk.Data;
-using Gamify.Sdk.Data.Entities;
+﻿using Gamify.Sdk.Data.Entities;
+using Gamify.Sdk.Interfaces;
+using ThinkUp.Sdk.Data;
+using ThinkUp.Sdk.Services;
 
 namespace Gamify.Sdk.Services
 {
@@ -22,7 +24,7 @@ namespace Gamify.Sdk.Services
             return this.sessionHistoryRepository.Exist(h => h.SessionName == sessionName && h.PlayerName == playerName);
         }
 
-        ///<exception cref="GameServiceException">GameServiceException</exception>
+        ///<exception cref="ServiceException">ServiceException</exception>
         public void Add(string sessionName, string playerName, ISessionHistoryItem<TMove, UResponse> historyItem)
         {
             var historyExists = true;
@@ -47,12 +49,12 @@ namespace Gamify.Sdk.Services
                     this.sessionHistoryRepository.Create(existingHistory);
                 }
             }
-            catch (GameDataException gameDataEx)
+            catch (DataException gameDataEx)
             {
                 var actionKeyword = historyExists ? "updating" : "creating";
                 var errorMessage = string.Format("An error occured when {0} the history for player {1} and session {2}", actionKeyword, playerName, sessionName);
 
-                throw new GameServiceException(errorMessage, gameDataEx);
+                throw new ServiceException(errorMessage, gameDataEx);
             }
         }
     }

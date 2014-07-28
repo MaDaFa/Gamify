@@ -1,6 +1,6 @@
 ﻿using Gamify.Sdk.Components;
-using Gamify.Sdk.Contracts.Notifications;
-using Gamify.Sdk.Contracts.Requests;
+using Gamify.Sdk.Contracts.ServerMessages;
+using Gamify.Sdk.Contracts.ClientMessages;
 using Gamify.Sdk.Data.Entities;
 using Gamify.Sdk.Services;
 using Gamify.Sdk.Setup.Definition;
@@ -60,20 +60,20 @@ namespace Gamify.Sdk.UnitTests.ComponentTests
             this.notificationServiceMock = new Mock<INotificationService>();
 
             this.playerSetupMock = new Mock<ISessionPlayerSetup>();
-            this.playerSetupMock.Setup(s => s.GetPlayerReady(It.Is<GameAcceptedRequestObject>(x => x.SessionName == this.sessionName),
+            this.playerSetupMock.Setup(s => s.GetPlayerReady(It.Is<AcceptGameClientMessage>(x => x.SessionName == this.sessionName),
                 It.Is<TestSessionPlayer>(p => p.Information.Name == "player2")))
                 .Verifiable();
 
-            this.acceptGameComponent = new AcceptGameComponent(sessionServiceMock.Object, notificationServiceMock.Object, this.playerSetupMock.Object, this.serializer);
+            this.acceptGameComponent = new GameCreationComponent(sessionServiceMock.Object, notificationServiceMock.Object, this.playerSetupMock.Object, this.serializer);
         }
 
         [TestMethod]
         public void UT_When_HandleAcceptGame_Then_Success()
         {
-            var acceptGameRequest = new GameAcceptedRequestObject
+            var acceptGameRequest = new AcceptGameClientMessage
             {
                 SessionName = this.sessionName,
-                PlayerName = this.requestPlayer,
+                UserName = this.requestPlayer,
                 AdditionalInformation = "Test"
             };
             var gameRequest = new GameRequest
@@ -88,7 +88,7 @@ namespace Gamify.Sdk.UnitTests.ComponentTests
 
             this.sessionServiceMock.VerifyAll();
             this.notificationServiceMock.Verify(s => s.SendBroadcast(It.Is<GameNotificationType>(t => t == GameNotificationType.GameCreated),
-                It.Is<object>(o => ((GameCreatedNotificationObject)o).SessionName == this.session.Name),
+                It.Is<object>(o => ((GameCreatedServerMessage)o).SessionName == this.session.Name),
                 It.Is<string>(x => x == this.session.Player1Name),
                 It.Is<string>(x => x == this.session.Player2Name)));
             this.playerSetupMock.VerifyAll();

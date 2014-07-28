@@ -1,4 +1,6 @@
-﻿namespace Gamify.Sdk.Setup.Definition
+﻿using Gamify.Sdk.Interfaces;
+
+namespace Gamify.Sdk.Setup.Definition
 {
     public interface IMoveProcessor<TMove, UResponse>
     {

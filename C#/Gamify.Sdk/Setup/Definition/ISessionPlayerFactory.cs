@@ -1,7 +1,9 @@
-﻿namespace Gamify.Sdk.Setup.Definition
+﻿using ThinkUp.Sdk.Interfaces;
+
+namespace Gamify.Sdk.Setup.Definition
 {
     public interface ISessionPlayerFactory
     {
-        SessionGamePlayer Create(IGamePlayer gamePlayer);
+        SessionGamePlayer Create(IUser gamePlayer);
     }
 }

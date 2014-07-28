@@ -1,4 +1,6 @@
-﻿namespace Gamify.Sdk.Services
+﻿using Gamify.Sdk.Interfaces;
+
+namespace Gamify.Sdk.Services
 {
     public interface ISessionHistoryService
     {
@@ -7,7 +9,7 @@
 
     public interface ISessionHistoryService<TMove, UResponse> : ISessionHistoryService
     {
-        ///<exception cref="GameServiceException">GameServiceException</exception>
+        ///<exception cref="ServiceException">ServiceException</exception>
         void Add(string sessionName, string playerName, ISessionHistoryItem<TMove, UResponse> historyItem);
 
         ISessionHistory<TMove, UResponse> GetBySessionPlayer(string sessionName, string playerName);

@@ -1,8 +1,10 @@
-﻿namespace Gamify.Sdk.Services
+﻿using Gamify.Sdk.Interfaces;
+
+namespace Gamify.Sdk.Services
 {
     public interface IMoveService<TMove, UResponse>
     {
-        ///<exception cref="GameServiceException">GameServiceException</exception>
+        ///<exception cref="ServiceException">ServiceException</exception>
         IGameMoveResponse<UResponse> Handle(string sessionName, string playerName, IGameMove<TMove> move);
     }
 }
