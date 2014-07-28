@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("Gamify.Sdk")]
-[assembly: AssemblyDescription("A small and lightweight framework to define your game basis and forget about architecture issues")]
+[assembly: AssemblyDescription("A small and lightweight framework on top of ThinkUp, to define your game basis and forget about architecture issues")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Think Up Studios")]
 [assembly: AssemblyProduct("Gamify.Sdk")]
@@ -32,5 +32,5 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.0.1")]
-[assembly: AssemblyFileVersion("1.0.1")]
+[assembly: AssemblyVersion("1.0.2")]
+[assembly: AssemblyFileVersion("1.0.2")]
