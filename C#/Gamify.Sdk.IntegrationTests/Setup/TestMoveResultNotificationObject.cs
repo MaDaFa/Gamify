@@ -1,8 +1,8 @@
-﻿using Gamify.Sdk.Contracts.Notifications;
+﻿using Gamify.Sdk.Contracts.ServerMessages;
 
 namespace Gamify.Sdk.IntegrationTests.Setup
 {
-    public class TestMoveResultNotificationObject : IMoveResultNotificationObject
+    public class TestMoveResultNotificationObject : IMoveResultReceivedServerMessage
     {
         public string SessionName { get; set; }
 

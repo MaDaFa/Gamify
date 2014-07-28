@@ -1,10 +1,11 @@
-﻿using Gamify.Sdk.Contracts.Notifications;
-using Gamify.Sdk.Contracts.Requests;
+﻿using Gamify.Sdk.Contracts.ClientMessages;
+using Gamify.Sdk.Contracts.ServerMessages;
+using Gamify.Sdk.Interfaces;
 
 namespace Gamify.Sdk.Setup.Definition
 {
     public interface IMoveResultNotificationFactory
     {
-        IMoveResultNotificationObject Create(MoveRequestObject moveRequest, IGameMoveResponse moveResponse);
+        IMoveResultReceivedServerMessage Create(SendMoveClientMessage moveRequest, IGameMoveResponse moveResponse);
     }
 }

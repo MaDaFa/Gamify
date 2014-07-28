@@ -1,11 +1,11 @@
-﻿using Gamify.Sdk.Contracts.Requests;
+﻿using Gamify.Sdk.Contracts.ClientMessages;
 
 namespace Gamify.Sdk.Setup.Definition
 {
     public interface ISessionPlayerSetup
     {
-        void GetPlayerReady(CreateGameRequestObject createGameRequest, SessionGamePlayer gamePlayer);
+        void GetPlayerReady(CreateGameClientMessage createGameRequest, SessionGamePlayer gamePlayer);
 
-        void GetPlayerReady(GameAcceptedRequestObject gameAcceptedRequest, SessionGamePlayer gamePlayer);
+        void GetPlayerReady(AcceptGameClientMessage gameAcceptedRequest, SessionGamePlayer gamePlayer);
     }
 }

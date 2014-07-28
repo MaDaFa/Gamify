@@ -1,7 +1,4 @@
-﻿using Gamify.Sdk.Components;
-using System.Collections.Generic;
-
-namespace Gamify.Sdk.Setup.Definition
+﻿namespace Gamify.Sdk.Setup.Definition
 {
     public abstract class GameDefinition<TMove, UResponse> : IGameDefinition<TMove, UResponse>
     {
@@ -27,10 +24,5 @@ namespace Gamify.Sdk.Setup.Definition
         }
 
         public abstract IPlayerHistoryItemFactory<TMove, UResponse> GetPlayerHistoryItemfactory();
-
-        public virtual IEnumerable<IGameComponent> GetCustomComponents()
-        {
-            return new List<IGameComponent>();
-        }
     }
 }

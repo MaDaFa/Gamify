@@ -1,6 +1,6 @@
 ﻿using Gamify.Sdk.Components;
-using Gamify.Sdk.Contracts.Notifications;
-using Gamify.Sdk.Contracts.Requests;
+using Gamify.Sdk.Contracts.ServerMessages;
+using Gamify.Sdk.Contracts.ClientMessages;
 using Gamify.Sdk.Data.Entities;
 using Gamify.Sdk.Services;
 using Gamify.Sdk.Setup.Definition;
@@ -49,7 +49,7 @@ namespace Gamify.Sdk.UnitTests.ComponentTests
             };
 
             var session = new GameSession(player1, player2);
-            var gameInformationNotification = Mock.Of<GameInformationNotificationObject>(n => n.SessionName == this.sessionName);
+            var gameInformationNotification = Mock.Of<GameInformationReceivedServerMessage>(n => n.SessionName == this.sessionName);
 
             this.sessionServiceMock = new Mock<ISessionService>();
             this.sessionServiceMock
@@ -74,17 +74,17 @@ namespace Gamify.Sdk.UnitTests.ComponentTests
 
             var playerHistoryItemFactory = Mock.Of<IPlayerHistoryItemFactory<TestMoveObject, TestResponseObject>>();
 
-            this.openGameComponent = new OpenGameComponent<TestMoveObject, TestResponseObject>(this.sessionServiceMock.Object, 
+            this.openGameComponent = new GameSelectionComponent<TestMoveObject, TestResponseObject>(this.sessionServiceMock.Object, 
                 sessionHistoryServiceMock.Object, this.notificationServiceMock.Object, playerHistoryItemFactory, this.serializer);
         }
 
         [TestMethod]
         public void UT_When_HandleOpenGame_Then_Success()
         {
-            var openGameRequest = new OpenGameRequestObject
+            var openGameRequest = new OpenGameClientMessage
             {
                 SessionName = this.sessionName,
-                PlayerName = this.requestPlayer
+                UserName = this.requestPlayer
             };
             var gameRequest = new GameRequest
             {
@@ -98,7 +98,7 @@ namespace Gamify.Sdk.UnitTests.ComponentTests
 
             this.sessionServiceMock.VerifyAll();
             this.notificationServiceMock.Verify(s => s.Send(It.Is<GameNotificationType>(t => t == GameNotificationType.SendGameInformation),
-                It.Is<object>(o => ((GameInformationNotificationObject)o).SessionName == this.sessionName),
+                It.Is<object>(o => ((GameInformationReceivedServerMessage)o).SessionName == this.sessionName),
                 It.Is<string>(x => x == this.requestPlayer)));
             this.sessionHistoryServiceMock.VerifyAll();
 

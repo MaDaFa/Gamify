@@ -1,6 +1,6 @@
 ﻿using Gamify.Sdk.Components;
-using Gamify.Sdk.Contracts.Notifications;
-using Gamify.Sdk.Contracts.Requests;
+using Gamify.Sdk.Contracts.ServerMessages;
+using Gamify.Sdk.Contracts.ClientMessages;
 using Gamify.Sdk.Data.Entities;
 using Gamify.Sdk.Services;
 using Gamify.Sdk.UnitTests.TestModels;
@@ -88,9 +88,9 @@ namespace Gamify.Sdk.UnitTests.ComponentTests
         [TestMethod]
         public void UT_When_HandleGetActiveGames_Then_Success()
         {
-            var getActiveGamesRequest = new GetActiveGamesRequestObject
+            var getActiveGamesRequest = new GetActiveGamesClientMessage
             {
-                PlayerName = this.requestPlayer
+                UserName = this.requestPlayer
             };
             var gameRequest = new GameRequest
             {
@@ -104,8 +104,8 @@ namespace Gamify.Sdk.UnitTests.ComponentTests
 
             this.sessionServiceMock.VerifyAll();
             this.notificationServiceMock.Verify(s => s.Send(It.Is<GameNotificationType>(t => t == GameNotificationType.SendActiveGames),
-                It.Is<object>(o => (((SendActiveGamesNotificationObject)o).ActiveGamesCount == 2) 
-                    && ((SendActiveGamesNotificationObject)o).PlayerName == this.requestPlayer),
+                It.Is<object>(o => (((ActiveGamesListServerMessage)o).ActiveGamesCount == 2) 
+                    && ((ActiveGamesListServerMessage)o).PlayerName == this.requestPlayer),
                 It.Is<string>(x => x == this.requestPlayer)));
 
             Assert.IsTrue(canHandle);

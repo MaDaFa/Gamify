@@ -1,4 +1,4 @@
-﻿using Gamify.Sdk.Contracts.Notifications;
+﻿using Gamify.Sdk.Contracts.ServerMessages;
 using Gamify.Sdk.Setup.Definition;
 
 namespace Gamify.Sdk.IntegrationTests.Setup

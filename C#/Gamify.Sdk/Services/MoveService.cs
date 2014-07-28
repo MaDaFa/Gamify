@@ -1,5 +1,6 @@
-﻿using Gamify.Sdk.Setup.Definition;
-using System;
+﻿using Gamify.Sdk.Interfaces;
+using Gamify.Sdk.Setup.Definition;
+using ThinkUp.Sdk.Services;
 
 namespace Gamify.Sdk.Services
 {
@@ -14,7 +15,7 @@ namespace Gamify.Sdk.Services
             this.moveProcessor = moveProcessor;
         }
 
-        ///<exception cref="GameServiceException">GameServiceException</exception>
+        ///<exception cref="ServiceException">ServiceException</exception>
         public IGameMoveResponse<UResponse> Handle(string sessionName, string playerName, IGameMove<TMove> move)
         {
             var existingSession = this.sessionService.GetByName(sessionName);
@@ -23,7 +24,7 @@ namespace Gamify.Sdk.Services
             {
                 var errorMessage = string.Format("Player {0} does not belong to the session {1}", playerName, sessionName);
 
-                throw new GameServiceException(errorMessage);
+                throw new ServiceException(errorMessage);
             }
 
             var playerToCall = existingSession.GetVersusPlayer(playerName);

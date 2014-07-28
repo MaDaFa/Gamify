@@ -1,8 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using Gamify.Sdk.Interfaces;
+using System.Collections.Generic;
+using ThinkUp.Sdk.Data.Entities;
 
 namespace Gamify.Sdk.Data.Entities
 {
-    public class SessionHistory<TMove, UResponse> : GameEntity, ISessionHistory<TMove, UResponse>
+    public class SessionHistory<TMove, UResponse> : DataEntity, ISessionHistory<TMove, UResponse>
     {
         public List<SessionHistoryItem<TMove, UResponse>> Moves { get; set; }
 

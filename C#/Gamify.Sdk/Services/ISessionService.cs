@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Gamify.Sdk.Interfaces;
+using System.Collections.Generic;
 
 namespace Gamify.Sdk.Services
 {
@@ -16,16 +17,16 @@ namespace Gamify.Sdk.Services
 
         IGameSession GetByName(string sessionName);
 
-        ///<exception cref="GameServiceException">GameServiceException</exception>
+        ///<exception cref="ServiceException">ServiceException</exception>
         IGameSession Create(SessionGamePlayer sessionPlayer1, SessionGamePlayer sessionPlayer2 = null);
 
-        ///<exception cref="GameServiceException">GameServiceException</exception>
+        ///<exception cref="ServiceException">ServiceException</exception>
         void Start(IGameSession currentSession);
 
-        ///<exception cref="GameServiceException">GameServiceException</exception>
+        ///<exception cref="ServiceException">ServiceException</exception>
         void Abandon(string sessionName);
 
-        ///<exception cref="GameServiceException">GameServiceException</exception>
+        ///<exception cref="ServiceException">ServiceException</exception>
         void Finish(string sessionName);
     }
 }
