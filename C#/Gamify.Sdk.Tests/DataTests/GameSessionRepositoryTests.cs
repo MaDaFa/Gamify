@@ -1,7 +1,9 @@
 ﻿using Gamify.Sdk.Data.Entities;
+using Gamify.Sdk.Interfaces;
 using Gamify.Sdk.UnitTests.TestModels;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Linq;
+using ThinkUp.Sdk.Data.Entities;
 
 namespace Gamify.Sdk.UnitTests.DataTests
 {
@@ -12,7 +14,7 @@ namespace Gamify.Sdk.UnitTests.DataTests
         public void UT_When_CreateGameSession_Then_Success()
         {
             var sessionName = GetUniqueName("Session");
-            var player1 = new GamePlayer
+            var player1 = new User
             {
                 DisplayName = GetUniqueName("Player"),
                 Name = GetUniqueName("player")
@@ -23,7 +25,7 @@ namespace Gamify.Sdk.UnitTests.DataTests
                 PendingToMove = true,
                 Information = player1
             };
-            var player2 = new GamePlayer
+            var player2 = new User
             {
                 DisplayName = GetUniqueName("Player"),
                 Name = GetUniqueName("player")
@@ -60,7 +62,7 @@ namespace Gamify.Sdk.UnitTests.DataTests
         public void UT_When_UpdateGameSession_Then_Success()
         {
             var sessionName = GetUniqueName("Session");
-            var player1 = new GamePlayer
+            var player1 = new User
             {
                 DisplayName = GetUniqueName("Player"),
                 Name = GetUniqueName("player")
@@ -71,7 +73,7 @@ namespace Gamify.Sdk.UnitTests.DataTests
                 PendingToMove = true,
                 Information = player1
             };
-            var player2 = new GamePlayer
+            var player2 = new User
             {
                 DisplayName = GetUniqueName("Player"),
                 Name = GetUniqueName("player")
@@ -116,7 +118,7 @@ namespace Gamify.Sdk.UnitTests.DataTests
         public void UT_When_DeleteGameSession_Then_Success()
         {
             var sessionName = GetUniqueName("Session");
-            var player1 = new GamePlayer
+            var player1 = new User
             {
                 DisplayName = GetUniqueName("Player"),
                 Name = GetUniqueName("player")
@@ -127,7 +129,7 @@ namespace Gamify.Sdk.UnitTests.DataTests
                 PendingToMove = true,
                 Information = player1
             };
-            var player2 = new GamePlayer
+            var player2 = new User
             {
                 DisplayName = GetUniqueName("Player"),
                 Name = GetUniqueName("player")
@@ -159,7 +161,7 @@ namespace Gamify.Sdk.UnitTests.DataTests
         public void UT_When_DeleteAllGameSessions_Then_Success()
         {
             var session1Name = GetUniqueName("Session");
-            var player1 = new GamePlayer
+            var player1 = new User
             {
                 DisplayName = GetUniqueName("Player"),
                 Name = GetUniqueName("player")
@@ -170,7 +172,7 @@ namespace Gamify.Sdk.UnitTests.DataTests
                 PendingToMove = true,
                 Information = player1
             };
-            var player2 = new GamePlayer
+            var player2 = new User
             {
                 DisplayName = GetUniqueName("Player"),
                 Name = GetUniqueName("player")
@@ -188,7 +190,7 @@ namespace Gamify.Sdk.UnitTests.DataTests
             };
 
             var session2Name = GetUniqueName("Session");
-            var player3 = new GamePlayer
+            var player3 = new User
             {
                 DisplayName = GetUniqueName("Player"),
                 Name = GetUniqueName("player")
@@ -199,7 +201,7 @@ namespace Gamify.Sdk.UnitTests.DataTests
                 PendingToMove = true,
                 Information = player2
             };
-            var player4 = new GamePlayer
+            var player4 = new User
             {
                 DisplayName = GetUniqueName("Player"),
                 Name = GetUniqueName("player")
@@ -233,7 +235,7 @@ namespace Gamify.Sdk.UnitTests.DataTests
         public void UT_When_GetGameSessionsWithPredicate_Then_Success()
         {
             var session1Name = GetUniqueName("Session x");
-            var player1 = new GamePlayer
+            var player1 = new User
             {
                 DisplayName = GetUniqueName("Player"),
                 Name = GetUniqueName("player")
@@ -244,7 +246,7 @@ namespace Gamify.Sdk.UnitTests.DataTests
                 PendingToMove = true,
                 Information = player1
             };
-            var player2 = new GamePlayer
+            var player2 = new User
             {
                 DisplayName = GetUniqueName("Player"),
                 Name = GetUniqueName("player")
@@ -262,7 +264,7 @@ namespace Gamify.Sdk.UnitTests.DataTests
             };
 
             var session2Name = GetUniqueName("Session Number");
-            var player3 = new GamePlayer
+            var player3 = new User
             {
                 DisplayName = GetUniqueName("User"),
                 Name = GetUniqueName("user")
@@ -273,7 +275,7 @@ namespace Gamify.Sdk.UnitTests.DataTests
                 PendingToMove = true,
                 Information = player3
             };
-            var player4 = new GamePlayer
+            var player4 = new User
             {
                 DisplayName = GetUniqueName("User"),
                 Name = GetUniqueName("userx")

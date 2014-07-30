@@ -51,14 +51,15 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="ThinkUp.Sdk">
-      <HintPath>..\packages\ThinkUp.Sdk.1.0.0.0\lib\net451\ThinkUp.Sdk.dll</HintPath>
+    <Reference Include="ThinkUp.Sdk, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\ThinkUp.Sdk.1.0.1.0\lib\net451\ThinkUp.Sdk.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="PluginComponents\GameCreationPluginComponent.cs" />
     <Compile Include="PluginComponents\GameProgressPluginComponent.cs" />
-    <Compile Include="PluginComponents\GameSelectionComponent.cs" />
+    <Compile Include="PluginComponents\GameSelectionPluginComponent.cs" />
     <Compile Include="Contracts\ClientMessages\GamifyClientMessageType.cs" />
     <Compile Include="Contracts\ServerMessages\GameAbandonedServerMessage.cs" />
     <Compile Include="Contracts\ServerMessages\GameCreatedServerMessage.cs" />

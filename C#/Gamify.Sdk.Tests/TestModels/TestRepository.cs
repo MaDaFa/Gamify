@@ -1,14 +1,14 @@
-﻿using Gamify.Sdk.Data;
-using Gamify.Sdk.Data.Entities;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using ThinkUp.Sdk.Data;
+using ThinkUp.Sdk.Data.Entities;
 
 namespace Gamify.Sdk.UnitTests.TestModels
 {
     public class TestRepository<T> : IRepository<T>
-        where T : GameEntity
+        where T : DataEntity
     {
         private IList<T> entityList;
 

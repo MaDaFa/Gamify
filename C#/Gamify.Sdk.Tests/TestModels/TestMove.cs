@@ -1,4 +1,6 @@
-﻿namespace Gamify.Sdk.UnitTests.TestModels
+﻿using Gamify.Sdk.Interfaces;
+
+namespace Gamify.Sdk.UnitTests.TestModels
 {
     public class TestMove : IGameMove<TestMoveObject>
     {

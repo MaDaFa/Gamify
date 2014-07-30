@@ -1,9 +1,11 @@
 ﻿using Gamify.Sdk.Data.Entities;
+using Gamify.Sdk.Interfaces;
 using Gamify.Sdk.Services;
 using Gamify.Sdk.Setup.Definition;
 using Gamify.Sdk.UnitTests.TestModels;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
+using ThinkUp.Sdk.Data.Entities;
 
 namespace Gamify.Sdk.UnitTests.ServiceTests
 {
@@ -25,7 +27,7 @@ namespace Gamify.Sdk.UnitTests.ServiceTests
             {
                 SessionName = sessionName,
                 PendingToMove = false,
-                Information = new GamePlayer
+                Information = new User
                 {
                     DisplayName = "Player 1",
                     Name = "player1"
@@ -35,7 +37,7 @@ namespace Gamify.Sdk.UnitTests.ServiceTests
             {
                 SessionName = sessionName,
                 PendingToMove = true,
-                Information = new GamePlayer
+                Information = new User
                 {
                     DisplayName = "Player 2",
                     Name = "player2"

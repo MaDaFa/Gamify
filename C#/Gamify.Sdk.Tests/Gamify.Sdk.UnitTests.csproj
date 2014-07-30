@@ -35,11 +35,27 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Autofac">
+      <HintPath>..\packages\Autofac.3.5.0\lib\net40\Autofac.dll</HintPath>
+    </Reference>
+    <Reference Include="MongoDB.Bson">
+      <HintPath>..\packages\mongocsharpdriver.1.9.2\lib\net35\MongoDB.Bson.dll</HintPath>
+    </Reference>
+    <Reference Include="MongoDB.Driver">
+      <HintPath>..\packages\mongocsharpdriver.1.9.2\lib\net35\MongoDB.Driver.dll</HintPath>
+    </Reference>
     <Reference Include="Moq">
       <HintPath>..\packages\Moq.4.2.1402.2112\lib\net40\Moq.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.6.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
+    <Reference Include="ThinkUp.Sdk">
+      <HintPath>..\packages\ThinkUp.Sdk.1.0.0.0\lib\net451\ThinkUp.Sdk.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <Choose>
     <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
@@ -54,46 +70,22 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="ComponentTests\AbandonGameComponentTests.cs" />
-    <Compile Include="ComponentTests\AcceptGameComponentTests.cs" />
-    <Compile Include="ComponentTests\ActiveGamesComponentTests.cs" />
-    <Compile Include="ComponentTests\ConnectedPlayersComponentTests.cs" />
-    <Compile Include="ComponentTests\ConnectPlayerComponentTests.cs" />
-    <Compile Include="ComponentTests\CreateGameComponentTests.cs" />
-    <Compile Include="ComponentTests\DisconnectPlayerComponentTests.cs" />
-    <Compile Include="ComponentTests\FinishedGamesComponentTests.cs" />
-    <Compile Include="ComponentTests\GameMoveComponentTests.cs" />
-    <Compile Include="ComponentTests\MessageComponentTests.cs" />
-    <Compile Include="ComponentTests\OpenGameComponentTests.cs" />
-    <Compile Include="ComponentTests\PendingGamesComponentTests.cs" />
-    <Compile Include="DataTests\GamePlayerRepositoryTests.cs" />
+    <Compile Include="PluginComponentTests\GameProgressPluginComponentTests.cs" />
+    <Compile Include="PluginComponentTests\GameCreationPluginComponentTests.cs" />
+    <Compile Include="PluginComponentTests\GameSelectionPluginComponentTests.cs" />
     <Compile Include="DataTests\GameSessionRepositoryTests.cs" />
     <Compile Include="DataTests\RepositoryTests.cs" />
     <Compile Include="DataTests\SessionHistoryRepositoryTests.cs" />
-    <Compile Include="DataTests\TestRepositoryTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ServiceTests\GameServiceTests.cs" />
     <Compile Include="ServiceTests\MoveServiceTests.cs" />
-    <Compile Include="ServiceTests\NotificationServiceTests.cs" />
-    <Compile Include="ServiceTests\PlayerServiceTests.cs" />
-    <Compile Include="ComponentTests\RejectGameComponentTests.cs" />
     <Compile Include="ServiceTests\SessionHistoryServiceTests.cs" />
     <Compile Include="ServiceTests\SessionServiceTests.cs" />
-    <Compile Include="SetupTests\GameBuilderTests.cs" />
-    <Compile Include="SetupTests\GameDependencyModuleTests.cs" />
-    <Compile Include="SetupTests\GameInitializerTests.cs" />
-    <Compile Include="TestModels\ITestService.cs" />
-    <Compile Include="TestModels\ITestServiceBar.cs" />
-    <Compile Include="TestModels\TestGameEntity.cs" />
+    <Compile Include="SetupTests\GamifyConfiguratorTests.cs" />
     <Compile Include="TestModels\TestMove.cs" />
     <Compile Include="TestModels\TestMoveObject.cs" />
-    <Compile Include="TestModels\TestNotificationObject.cs" />
     <Compile Include="TestModels\TestRepository.cs" />
-    <Compile Include="TestModels\TestRequestObject.cs" />
     <Compile Include="TestModels\TestResponse.cs" />
     <Compile Include="TestModels\TestResponseObject.cs" />
-    <Compile Include="TestModels\TestServiceBar.cs" />
-    <Compile Include="TestModels\TestServiceFoo.cs" />
     <Compile Include="TestModels\TestSessionPlayer.cs" />
   </ItemGroup>
   <ItemGroup>
