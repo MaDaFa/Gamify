@@ -1,10 +1,14 @@
 ﻿using Gamify.Sdk.Data.Entities;
+using Gamify.Sdk.Interfaces;
 using Gamify.Sdk.Services;
 using Gamify.Sdk.Setup.Definition;
 using Gamify.Sdk.UnitTests.TestModels;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System.Linq;
+using ThinkUp.Sdk.Data.Entities;
+using ThinkUp.Sdk.Interfaces;
+using ThinkUp.Sdk.Services;
 
 namespace Gamify.Sdk.UnitTests.ServiceTests
 {
@@ -21,7 +25,7 @@ namespace Gamify.Sdk.UnitTests.ServiceTests
         [TestMethod]
         public void UT_When_CreateSessionWithBothPlayers_Then_Success()
         {
-            var playerService = Mock.Of<IPlayerService>();
+            var playerService = Mock.Of<IUserService>();
             var sessionRepository = new TestRepository<GameSession>();
             var sessionPlayerFactory = Mock.Of<ISessionPlayerFactory>();
 
@@ -29,7 +33,7 @@ namespace Gamify.Sdk.UnitTests.ServiceTests
 
             var sessionPlayer1 = new TestSessionPlayer()
             {
-                Information = new GamePlayer
+                Information = new User
                 {
                     Name = "player1",
                     DisplayName = "Player 1"
@@ -37,7 +41,7 @@ namespace Gamify.Sdk.UnitTests.ServiceTests
             };
             var sessionPlayer2 = new TestSessionPlayer()
             {
-                Information = new GamePlayer
+                Information = new User
                 {
                     Name = "player2",
                     DisplayName = "Player 2"
@@ -62,12 +66,12 @@ namespace Gamify.Sdk.UnitTests.ServiceTests
         [TestMethod]
         public void UT_When_CreateSessionWithOnePlayer_Then_Success()
         {
-            var gamePlayer = new GamePlayer { Name = "player2", DisplayName = "Player 2" };
+            var gamePlayer = new User { Name = "player2", DisplayName = "Player 2" };
             var sessionPlayer2 = new TestSessionPlayer()
             {
                 Information = gamePlayer
             };
-            var playerServiceMock = new Mock<IPlayerService>();
+            var playerServiceMock = new Mock<IUserService>();
 
             playerServiceMock
                 .Setup(s => s.GetRandom(It.Is<string>(n => n == "player1")))
@@ -80,7 +84,7 @@ namespace Gamify.Sdk.UnitTests.ServiceTests
             var sessionPlayerFactoryMock = new Mock<ISessionPlayerFactory>();
 
             sessionPlayerFactoryMock
-                .Setup(f => f.Create(It.Is<IGamePlayer>(p => p.Name == gamePlayer.Name)))
+                .Setup(f => f.Create(It.Is<IUser>(p => p.Name == gamePlayer.Name)))
                 .Returns(sessionPlayer2)
                 .Verifiable();
 
@@ -90,7 +94,7 @@ namespace Gamify.Sdk.UnitTests.ServiceTests
 
             var sessionPlayer1 = new TestSessionPlayer()
             {
-                Information = new GamePlayer
+                Information = new User
                 {
                     Name = "player1",
                     DisplayName = "Player 1"
@@ -118,7 +122,7 @@ namespace Gamify.Sdk.UnitTests.ServiceTests
         [TestMethod]
         public void UT_When_StartSession_Then_Success()
         {
-            var playerService = Mock.Of<IPlayerService>();
+            var playerService = Mock.Of<IUserService>();
             var sessionRepository = new TestRepository<GameSession>();
             var sessionPlayerFactory = Mock.Of<ISessionPlayerFactory>();
 
@@ -126,7 +130,7 @@ namespace Gamify.Sdk.UnitTests.ServiceTests
 
             var sessionPlayer1 = new TestSessionPlayer()
             {
-                Information = new GamePlayer
+                Information = new User
                 {
                     Name = "player1",
                     DisplayName = "Player 1"
@@ -134,7 +138,7 @@ namespace Gamify.Sdk.UnitTests.ServiceTests
             };
             var sessionPlayer2 = new TestSessionPlayer()
             {
-                Information = new GamePlayer
+                Information = new User
                 {
                     Name = "player2",
                     DisplayName = "Player 2"
@@ -163,7 +167,7 @@ namespace Gamify.Sdk.UnitTests.ServiceTests
         [TestMethod]
         public void UT_When_AbandonSession_Then_Success()
         {
-            var playerService = Mock.Of<IPlayerService>();
+            var playerService = Mock.Of<IUserService>();
             var sessionRepository = new TestRepository<GameSession>();
             var sessionPlayerFactory = Mock.Of<ISessionPlayerFactory>();
 
@@ -171,7 +175,7 @@ namespace Gamify.Sdk.UnitTests.ServiceTests
 
             var sessionPlayer1 = new TestSessionPlayer()
             {
-                Information = new GamePlayer
+                Information = new User
                 {
                     Name = "player1",
                     DisplayName = "Player 1"
@@ -179,7 +183,7 @@ namespace Gamify.Sdk.UnitTests.ServiceTests
             };
             var sessionPlayer2 = new TestSessionPlayer()
             {
-                Information = new GamePlayer
+                Information = new User
                 {
                     Name = "player2",
                     DisplayName = "Player 2"
@@ -212,7 +216,7 @@ namespace Gamify.Sdk.UnitTests.ServiceTests
         [TestMethod]
         public void UT_When_FinishSession_Then_Success()
         {
-            var playerService = Mock.Of<IPlayerService>();
+            var playerService = Mock.Of<IUserService>();
             var sessionRepository = new TestRepository<GameSession>();
             var sessionPlayerFactory = Mock.Of<ISessionPlayerFactory>();
 
@@ -220,7 +224,7 @@ namespace Gamify.Sdk.UnitTests.ServiceTests
 
             var sessionPlayer1 = new TestSessionPlayer()
             {
-                Information = new GamePlayer
+                Information = new User
                 {
                     Name = "player1",
                     DisplayName = "Player 1"
@@ -228,7 +232,7 @@ namespace Gamify.Sdk.UnitTests.ServiceTests
             };
             var sessionPlayer2 = new TestSessionPlayer()
             {
-                Information = new GamePlayer
+                Information = new User
                 {
                     Name = "player2",
                     DisplayName = "Player 2"
@@ -261,7 +265,7 @@ namespace Gamify.Sdk.UnitTests.ServiceTests
         [TestMethod]
         public void UT_When_GetSessionsByPlayer_Then_Success()
         {
-            var playerService = Mock.Of<IPlayerService>();
+            var playerService = Mock.Of<IUserService>();
             var sessionRepository = new TestRepository<GameSession>();
             var sessionPlayerFactory = Mock.Of<ISessionPlayerFactory>();
 
@@ -269,7 +273,7 @@ namespace Gamify.Sdk.UnitTests.ServiceTests
 
             var sessionPlayer1_1 = new TestSessionPlayer()
             {
-                Information = new GamePlayer
+                Information = new User
                 {
                     Name = "player1",
                     DisplayName = "Player 1"
@@ -277,7 +281,7 @@ namespace Gamify.Sdk.UnitTests.ServiceTests
             };
             var sessionPlayer1_3 = new TestSessionPlayer()
             {
-                Information = new GamePlayer
+                Information = new User
                 {
                     Name = "player1",
                     DisplayName = "Player 1"
@@ -285,7 +289,7 @@ namespace Gamify.Sdk.UnitTests.ServiceTests
             };
             var sessionPlayer1_4 = new TestSessionPlayer()
             {
-                Information = new GamePlayer
+                Information = new User
                 {
                     Name = "player1",
                     DisplayName = "Player 1"
@@ -293,7 +297,7 @@ namespace Gamify.Sdk.UnitTests.ServiceTests
             };
             var sessionPlayer2 = new TestSessionPlayer()
             {
-                Information = new GamePlayer
+                Information = new User
                 {
                     Name = "player2",
                     DisplayName = "Player 2"
@@ -301,7 +305,7 @@ namespace Gamify.Sdk.UnitTests.ServiceTests
             };
             var sessionPlayer3 = new TestSessionPlayer()
             {
-                Information = new GamePlayer
+                Information = new User
                 {
                     Name = "player3",
                     DisplayName = "Player 3"
@@ -309,7 +313,7 @@ namespace Gamify.Sdk.UnitTests.ServiceTests
             };
             var sessionPlayer4 = new TestSessionPlayer()
             {
-                Information = new GamePlayer
+                Information = new User
                 {
                     Name = "player4",
                     DisplayName = "Player 4"
@@ -367,7 +371,7 @@ namespace Gamify.Sdk.UnitTests.ServiceTests
         [TestMethod]
         public void UT_When_GetPendingSessions_Then_Success()
         {
-            var playerService = Mock.Of<IPlayerService>();
+            var playerService = Mock.Of<IUserService>();
             var sessionRepository = new TestRepository<GameSession>();
             var sessionPlayerFactory = Mock.Of<ISessionPlayerFactory>();
 
@@ -375,7 +379,7 @@ namespace Gamify.Sdk.UnitTests.ServiceTests
 
             var sessionPlayer1_1 = new TestSessionPlayer()
             {
-                Information = new GamePlayer
+                Information = new User
                 {
                     Name = "player1",
                     DisplayName = "Player 1"
@@ -383,7 +387,7 @@ namespace Gamify.Sdk.UnitTests.ServiceTests
             };
             var sessionPlayer1_3 = new TestSessionPlayer()
             {
-                Information = new GamePlayer
+                Information = new User
                 {
                     Name = "player1",
                     DisplayName = "Player 1"
@@ -391,7 +395,7 @@ namespace Gamify.Sdk.UnitTests.ServiceTests
             };
             var sessionPlayer1_4 = new TestSessionPlayer()
             {
-                Information = new GamePlayer
+                Information = new User
                 {
                     Name = "player1",
                     DisplayName = "Player 1"
@@ -399,7 +403,7 @@ namespace Gamify.Sdk.UnitTests.ServiceTests
             };
             var sessionPlayer2 = new TestSessionPlayer()
             {
-                Information = new GamePlayer
+                Information = new User
                 {
                     Name = "player2",
                     DisplayName = "Player 2"
@@ -407,7 +411,7 @@ namespace Gamify.Sdk.UnitTests.ServiceTests
             };
             var sessionPlayer3 = new TestSessionPlayer()
             {
-                Information = new GamePlayer
+                Information = new User
                 {
                     Name = "player3",
                     DisplayName = "Player 3"
@@ -415,7 +419,7 @@ namespace Gamify.Sdk.UnitTests.ServiceTests
             };
             var sessionPlayer4 = new TestSessionPlayer()
             {
-                Information = new GamePlayer
+                Information = new User
                 {
                     Name = "player4",
                     DisplayName = "Player 4"
@@ -476,7 +480,7 @@ namespace Gamify.Sdk.UnitTests.ServiceTests
         [TestMethod]
         public void UT_When_GetActiveSessions_Then_Success()
         {
-            var playerService = Mock.Of<IPlayerService>();
+            var playerService = Mock.Of<IUserService>();
             var sessionRepository = new TestRepository<GameSession>();
             var sessionPlayerFactory = Mock.Of<ISessionPlayerFactory>();
 
@@ -484,7 +488,7 @@ namespace Gamify.Sdk.UnitTests.ServiceTests
 
             var sessionPlayer1_1 = new TestSessionPlayer()
             {
-                Information = new GamePlayer
+                Information = new User
                 {
                     Name = "player1",
                     DisplayName = "Player 1"
@@ -492,7 +496,7 @@ namespace Gamify.Sdk.UnitTests.ServiceTests
             };
             var sessionPlayer1_3 = new TestSessionPlayer()
             {
-                Information = new GamePlayer
+                Information = new User
                 {
                     Name = "player1",
                     DisplayName = "Player 1"
@@ -500,7 +504,7 @@ namespace Gamify.Sdk.UnitTests.ServiceTests
             };
             var sessionPlayer1_4 = new TestSessionPlayer()
             {
-                Information = new GamePlayer
+                Information = new User
                 {
                     Name = "player1",
                     DisplayName = "Player 1"
@@ -508,7 +512,7 @@ namespace Gamify.Sdk.UnitTests.ServiceTests
             };
             var sessionPlayer2 = new TestSessionPlayer()
             {
-                Information = new GamePlayer
+                Information = new User
                 {
                     Name = "player2",
                     DisplayName = "Player 2"
@@ -516,7 +520,7 @@ namespace Gamify.Sdk.UnitTests.ServiceTests
             };
             var sessionPlayer3 = new TestSessionPlayer()
             {
-                Information = new GamePlayer
+                Information = new User
                 {
                     Name = "player3",
                     DisplayName = "Player 3"
@@ -524,7 +528,7 @@ namespace Gamify.Sdk.UnitTests.ServiceTests
             };
             var sessionPlayer4 = new TestSessionPlayer()
             {
-                Information = new GamePlayer
+                Information = new User
                 {
                     Name = "player4",
                     DisplayName = "Player 4"
@@ -585,7 +589,7 @@ namespace Gamify.Sdk.UnitTests.ServiceTests
         [TestMethod]
         public void UT_When_GetFinishedSessions_Then_Success()
         {
-            var playerService = Mock.Of<IPlayerService>();
+            var playerService = Mock.Of<IUserService>();
             var sessionRepository = new TestRepository<GameSession>();
             var sessionPlayerFactory = Mock.Of<ISessionPlayerFactory>();
 
@@ -593,7 +597,7 @@ namespace Gamify.Sdk.UnitTests.ServiceTests
 
             var sessionPlayer1_1 = new TestSessionPlayer()
             {
-                Information = new GamePlayer
+                Information = new User
                 {
                     Name = "player1",
                     DisplayName = "Player 1"
@@ -601,7 +605,7 @@ namespace Gamify.Sdk.UnitTests.ServiceTests
             };
             var sessionPlayer1_3 = new TestSessionPlayer()
             {
-                Information = new GamePlayer
+                Information = new User
                 {
                     Name = "player1",
                     DisplayName = "Player 1"
@@ -609,7 +613,7 @@ namespace Gamify.Sdk.UnitTests.ServiceTests
             };
             var sessionPlayer1_4 = new TestSessionPlayer()
             {
-                Information = new GamePlayer
+                Information = new User
                 {
                     Name = "player1",
                     DisplayName = "Player 1"
@@ -617,7 +621,7 @@ namespace Gamify.Sdk.UnitTests.ServiceTests
             };
             var sessionPlayer2 = new TestSessionPlayer()
             {
-                Information = new GamePlayer
+                Information = new User
                 {
                     Name = "player2",
                     DisplayName = "Player 2"
@@ -625,7 +629,7 @@ namespace Gamify.Sdk.UnitTests.ServiceTests
             };
             var sessionPlayer3 = new TestSessionPlayer()
             {
-                Information = new GamePlayer
+                Information = new User
                 {
                     Name = "player3",
                     DisplayName = "Player 3"
@@ -633,7 +637,7 @@ namespace Gamify.Sdk.UnitTests.ServiceTests
             };
             var sessionPlayer4 = new TestSessionPlayer()
             {
-                Information = new GamePlayer
+                Information = new User
                 {
                     Name = "player4",
                     DisplayName = "Player 4"

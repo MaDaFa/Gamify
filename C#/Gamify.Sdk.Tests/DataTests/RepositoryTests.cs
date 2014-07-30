@@ -1,13 +1,13 @@
-﻿using Gamify.Sdk.Data;
-using Gamify.Sdk.Data.Configuration;
-using Gamify.Sdk.Data.Entities;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using ThinkUp.Sdk.Data;
+using ThinkUp.Sdk.Data.Configuration;
+using ThinkUp.Sdk.Data.Entities;
 
 namespace Gamify.Sdk.UnitTests.DataTests
 {
     [TestClass]
-    public abstract class RepositoryTests<T> where T : GameEntity
+    public abstract class RepositoryTests<T> where T : DataEntity
     {
         private readonly bool cleanDbWhenFinishes;
 
@@ -21,7 +21,7 @@ namespace Gamify.Sdk.UnitTests.DataTests
         [TestInitialize]
         public void Initialize()
         {
-            var configuration = GameDataSection.Instance();
+            var configuration = DataSection.Instance();
 
             this.testRepository = new Repository<T>(configuration);
         }
