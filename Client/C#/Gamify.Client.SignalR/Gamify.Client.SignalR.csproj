@@ -1,0 +1,105 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <MinimumVisualStudioVersion>10.0</MinimumVisualStudioVersion>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{FA578F59-0950-44DD-B466-0E0AE4CC939E}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Gamify.Client.SignalR</RootNamespace>
+    <AssemblyName>Gamify.Client.SignalR</AssemblyName>
+    <DefaultLanguage>en-US</DefaultLanguage>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <TargetFrameworkProfile>Profile78</TargetFrameworkProfile>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Contracts\ClientMessages\AbandonGameClientMessage.cs" />
+    <Compile Include="Contracts\ClientMessages\AcceptGameClientMessage.cs" />
+    <Compile Include="Contracts\ClientMessages\CreateGameClientMessage.cs" />
+    <Compile Include="Contracts\ClientMessages\GamifyClientMessageType.cs" />
+    <Compile Include="Contracts\ClientMessages\GetActiveGamesClientMessage.cs" />
+    <Compile Include="Contracts\ClientMessages\GetFinishedGamesClientMessage.cs" />
+    <Compile Include="Contracts\ClientMessages\GetPendingGamesClientMessage.cs" />
+    <Compile Include="Contracts\ClientMessages\OpenGameClientMessage.cs" />
+    <Compile Include="Contracts\ClientMessages\RejectGameClientMessage.cs" />
+    <Compile Include="Contracts\ClientMessages\SendMoveClientMessage.cs" />
+    <Compile Include="Contracts\ServerMessages\ActiveGamesListServerMessage.cs" />
+    <Compile Include="Contracts\ServerMessages\FinishedGamesListServerMessage.cs" />
+    <Compile Include="Contracts\ServerMessages\GameAbandonedServerMessage.cs" />
+    <Compile Include="Contracts\ServerMessages\GameCreatedServerMessage.cs" />
+    <Compile Include="Contracts\ServerMessages\GameFinishedServerMessage.cs" />
+    <Compile Include="Contracts\ServerMessages\GameInformationReceivedServerMessage.cs" />
+    <Compile Include="Contracts\ServerMessages\GameInviteReceivedServerMessage.cs" />
+    <Compile Include="Contracts\ServerMessages\GameObject.cs" />
+    <Compile Include="Contracts\ServerMessages\GameRejectedServerMessage.cs" />
+    <Compile Include="Contracts\ServerMessages\GamifyServerMessageType.cs" />
+    <Compile Include="Contracts\ServerMessages\IMoveResultReceivedServerMessage.cs" />
+    <Compile Include="Contracts\ServerMessages\MoveReceivedServerMessage.cs" />
+    <Compile Include="Contracts\ServerMessages\PendingGamesListServerMessage.cs" />
+    <Compile Include="Managers\GameCreationManager.cs" />
+    <Compile Include="Managers\GameProgressManager.cs" />
+    <Compile Include="Managers\GameSelectionManager.cs" />
+    <Compile Include="Managers\IGameCreationManager.cs" />
+    <Compile Include="Managers\IGameProgressManager.cs" />
+    <Compile Include="Managers\IGameSelectionManager.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.AspNet.SignalR.Client">
+      <HintPath>..\packages\Microsoft.AspNet.SignalR.Client.2.1.1\lib\portable-net45+sl5+netcore45+wp8+wp81+wpa81\Microsoft.AspNet.SignalR.Client.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.5.0.1\lib\portable-net45+wp80+win8\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http">
+      <HintPath>..\packages\Microsoft.Net.Http.2.1.10\lib\portable-net40+sl4+win8+wp71\System.Net.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.Extensions">
+      <HintPath>..\packages\Microsoft.Net.Http.2.1.10\lib\portable-net40+sl4+win8+wp71\System.Net.Http.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.Primitives">
+      <HintPath>..\packages\Microsoft.Net.Http.2.1.10\lib\portable-net40+sl4+win8+wp71\System.Net.Http.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="ThinkUp.Client.SignalR">
+      <HintPath>..\packages\ThinkUp.Client.SignalR.1.0.1.0\lib\portable-net45+win+wp80+MonoAndroid10+MonoTouch10\ThinkUp.Client.SignalR.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
+  <Import Project="..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" />
+  <Target Name="EnsureBclBuildImported" BeforeTargets="BeforeBuild" Condition="'$(BclBuildImported)' == ''">
+    <Error Condition="!Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" Text="This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=317567." HelpKeyword="BCLBUILD2001" />
+    <Error Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" Text="The build restored NuGet packages. Build the project again to include these packages in the build. For more information, see http://go.microsoft.com/fwlink/?LinkID=317568." HelpKeyword="BCLBUILD2002" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
