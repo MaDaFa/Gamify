@@ -8,7 +8,7 @@
     <owners>$author$</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
-    <releaseNotes>Minor fixes and ThinkUp NuGet package version updated</releaseNotes>
+    <releaseNotes>ThinkUp NuGet package version updated</releaseNotes>
     <copyright>Copyright 2014</copyright>
     <tags>gamify gamifysdk</tags>
   </metadata>
